@@ -12,11 +12,10 @@ public interface CustomerDao {
 
     void create(Customer customer);
     void remove(Customer customer);
-    void updateName(Customer customer, String name);
-    void updateBirthday(Customer customer, LocalDate birthday);
-    void updateNumber(Customer customer, String number);
+    void update(Customer customer);
     Customer findById(Long id);
-    Customer findByNumber(String number);
+    Customer findByPhoneNumber(Long number);
+    Customer findByName(String name,String surname);
 
 
 }

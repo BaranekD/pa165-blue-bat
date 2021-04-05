@@ -15,10 +15,13 @@ public class Customer {
 
     }
 
-    public Customer(String number) {
+    public Customer(Long number) {
 
-        this.number = number;
+        this.phoneNumber = number;
     }
+
+    @OneToOne
+    private Reservation reservation;
 
     @Id
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
@@ -29,9 +32,19 @@ public class Customer {
 
     private String name;
 
+    private String surname;
+
+    public String getSurname() {
+        return surname;
+    }
+
+    public void setSurname(String surname) {
+        this.surname = surname;
+    }
+
     @NotNull
     @Column(nullable = false, unique = true)
-    private String number;
+    private Long phoneNumber;
 
 
 
@@ -59,12 +72,12 @@ public class Customer {
         this.name = name;
     }
 
-    public String getNumber() {
-        return number;
+    public Long getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public void setNumber(String number) {
-        this.number = number;
+    public void setPhoneNumber(Long number) {
+        this.phoneNumber = number;
     }
 
     @Override
@@ -72,11 +85,11 @@ public class Customer {
         if (this == o) return true;
         if (!(o instanceof Customer)) return false;
         Customer customer = (Customer) o;
-        return getNumber().equals(customer.getNumber());
+        return getPhoneNumber().equals(customer.getPhoneNumber());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getNumber());
+        return Objects.hash(getPhoneNumber());
     }
 }

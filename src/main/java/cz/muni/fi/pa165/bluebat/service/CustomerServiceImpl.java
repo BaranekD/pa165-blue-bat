@@ -16,7 +16,11 @@ import java.time.LocalDate;
 public class CustomerServiceImpl implements CustomerService{
 
     @Autowired
-    private CustomerDao customerDao;
+    private final CustomerDao customerDao;
+
+    public CustomerServiceImpl(CustomerDao customerDao) {
+        this.customerDao = customerDao;
+    }
 
     @Override
     public void removeCustomer(Customer customer) {
@@ -29,19 +33,10 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public void updateCustomerName(Customer customer, String name) {
-        customerDao.updateName(customer,name);
+    public void updateCustomerName(Customer customer) {
+        customerDao.update(customer);
     }
 
-    @Override
-    public void updateCustomerNumber(Customer customer, String name) {
-        customerDao.updateNumber(customer,name);
-    }
-
-    @Override
-    public void updateCustomerBirthday(Customer customer, LocalDate birthday) {
-        customerDao.updateBirthday(customer,birthday);
-    }
 
     @Override
     public Customer findCustomerById(Long id) {
@@ -49,7 +44,12 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public Customer findCustomerByNumber(String number) {
-        return customerDao.findByNumber(number);
+    public Customer findCustomerByName(String name, String surname) {
+        return customerDao.findByName(name,surname);
+    }
+
+    @Override
+    public Customer findCustomerByPhoneNumber(Long number) {
+        return customerDao.findByPhoneNumber(number);
     }
 }

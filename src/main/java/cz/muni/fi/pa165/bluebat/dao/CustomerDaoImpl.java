@@ -30,30 +30,27 @@ public class CustomerDaoImpl implements CustomerDao{
     }
 
     @Override
-    public void updateName(Customer customer, String name) {
-        em.find(Customer.class,customer.getId()).setName(name);
+    public void update(Customer customer) {
+        em.merge(customer);
     }
 
-    @Override
-    public void updateBirthday(Customer customer, LocalDate birthday) {
-        em.find(Customer.class,customer.getId()).setBirthday(birthday);
-    }
-
-    @Override
-    public void updateNumber(Customer customer, String number) {
-        em.find(Customer.class,customer.getId()).setNumber(number);
-    }
 
     @Override
     public Customer findById(Long id) {
+
         return em.find(Customer.class,id);
     }
 
     @Override
-    public Customer findByNumber(String number) {
-        return em.createQuery("select e from Customer e where e.number = :number", Customer.class).setParameter(number,number).getSingleResult();
+    public Customer findByPhoneNumber(Long number) {
+        return em.createQuery("select e from Customer e where e.phoneNumber = :number", Customer.class).setParameter(Math.toIntExact(number),number).getSingleResult();
     }
 
+    @Override
+    public Customer findByName(String name, String surname) {
+        return em.createQuery("select e from Customer e where e.name = :name and e.surname = :surname", Customer.class)
+                .setParameter(name,name).setParameter(surname,surname).getSingleResult();
+    }
 
 
 }

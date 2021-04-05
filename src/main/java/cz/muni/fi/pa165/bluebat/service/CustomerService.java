@@ -12,11 +12,10 @@ public interface CustomerService {
 
     void removeCustomer(Customer customer);
     void addCustomer(Customer customer);
-    void updateCustomerName(Customer customer, String name);
-    void updateCustomerNumber(Customer customer, String name);
-    void updateCustomerBirthday(Customer customer, LocalDate birthday);
+    void updateCustomerName(Customer customer);
     Customer findCustomerById(Long id);
-    Customer findCustomerByNumber(String number);
+    Customer findCustomerByName(String name,String surname);
+    Customer findCustomerByPhoneNumber(Long number);
 
 
 
