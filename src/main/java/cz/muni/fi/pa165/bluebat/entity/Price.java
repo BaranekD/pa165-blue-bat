@@ -35,11 +35,9 @@ public class Price {
 
         Price price = (Price) o;
 
-        if (getAmount() != null ? getAmount().equals(price.getAmount()) : price.getAmount() != null)
+        if (getAmount() != null ? !getAmount().equals(price.getAmount()) : price.getAmount() != null)
             return false;
-        if (getValidFrom() != null ? getValidFrom().equals(price.getValidFrom()) : price.getValidFrom() != null)
-            return false;
-        return true;
+        return getValidFrom() != null ? getValidFrom().equals(price.getValidFrom()) : price.getValidFrom() == null;
     }
 
     @Override
