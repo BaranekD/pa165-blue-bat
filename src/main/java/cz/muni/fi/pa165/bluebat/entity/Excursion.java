@@ -3,14 +3,14 @@ package cz.muni.fi.pa165.bluebat.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
-import javax.persistence.Column;
+import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
-import javax.persistence.JoinTable;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
