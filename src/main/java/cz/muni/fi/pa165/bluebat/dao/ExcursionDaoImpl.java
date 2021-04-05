@@ -28,7 +28,7 @@ public class ExcursionDaoImpl implements ExcursionDao{
 
     @Override
     public void delete(Excursion excursion) {
-        em.detach(excursion);
+        em.remove(excursion);
     }
 
     @Override

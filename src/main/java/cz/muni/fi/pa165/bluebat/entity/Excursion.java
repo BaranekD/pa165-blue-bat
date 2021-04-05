@@ -1,6 +1,16 @@
 package cz.muni.fi.pa165.bluebat.entity;
 
-import javax.persistence.*;
+import lombok.Getter;
+import lombok.Setter;
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Column;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.persistence.JoinTable;
 import java.sql.Timestamp;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -15,72 +25,36 @@ import java.util.List;
 public class Excursion {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter
+    @Getter
     private Long id;
 
+    @Setter
+    @Getter
     private String name;
 
     @Column(nullable = false)
+    @Setter
+    @Getter
     private LocalDate dateFrom;
 
     @Column(nullable = false)
+    @Setter
+    @Getter
     private Timestamp duration;
 
+    @Setter
+    @Getter
     private String destination;
 
+    @Setter
+    @Getter
     private String description;
 
     @OneToMany()
     @OrderBy("validFrom DESC")
     @JoinTable(name = "EXCURSION_PRICE")
     private List<Price> prices = new ArrayList<>();
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public LocalDate getDateFrom() {
-        return dateFrom;
-    }
-
-    public void setDateFrom(LocalDate dateFrom) {
-        this.dateFrom = dateFrom;
-    }
-
-    public Timestamp getDuration() {
-        return duration;
-    }
-
-    public void setDuration(Timestamp duration) {
-        this.duration = duration;
-    }
-
-    public String getDestination() {
-        return destination;
-    }
-
-    public void setDestination(String destination) {
-        this.destination = destination;
-    }
-
-    public String getDescription() {
-        return description;
-    }
-
-    public void setDescription(String description) {
-        this.description = description;
-    }
 
     public List<Price> getPrices() {
         return Collections.unmodifiableList(prices);
@@ -103,11 +77,7 @@ public class Excursion {
             return false;
         if (getDuration() != null ? getDuration().equals(excursion.getDuration()) : excursion.getDuration() != null)
             return false;
-        if (getDestination() != null ? getDestination().equals(excursion.getDestination()) : excursion.getDestination() != null)
-            return false;
-        if (getDescription() != null ? getDescription().equals(excursion.getDescription()) : excursion.getDescription() != null)
-            return false;
-        return true;
+        return getDestination() != null ? !getDestination().equals(excursion.getDestination()) : excursion.getDestination() == null;
     }
 
     @Override

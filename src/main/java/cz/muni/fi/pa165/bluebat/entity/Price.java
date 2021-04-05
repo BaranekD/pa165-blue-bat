@@ -1,5 +1,8 @@
 package cz.muni.fi.pa165.bluebat.entity;
 
+import lombok.Getter;
+import lombok.Setter;
+
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +15,8 @@ import java.time.LocalDate;
  */
 
 @Entity
+@Getter
+@Setter
 public class Price {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,30 +25,6 @@ public class Price {
     private BigDecimal amount;
 
     private LocalDate validFrom;
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public BigDecimal getAmount() {
-        return amount;
-    }
-
-    public void setAmount(BigDecimal amount) {
-        this.amount = amount;
-    }
-
-    public LocalDate getValidFrom() {
-        return validFrom;
-    }
-
-    public void setValidFrom(LocalDate validFrom) {
-        this.validFrom = validFrom;
-    }
 
     @Override
     public boolean equals(Object o) {
