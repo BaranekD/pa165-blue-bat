@@ -14,6 +14,7 @@
         <maven.compiler.target>11</maven.compiler.target>
         <maven.compiler.source>11</maven.compiler.source>
         <version.javax-inject>1</version.javax-inject>
+        <version.testng>7.4.0</version.testng>
     </properties>
 
     <groupId>cz.muni.fi.pa165</groupId>
@@ -75,8 +76,9 @@
 
         <!-- TESTING -->
         <dependency>
-            <groupId>org.assertj</groupId>
-            <artifactId>assertj-core</artifactId>
+            <groupId>org.testng</groupId>
+            <artifactId>testng</artifactId>
+            <version>${version.testng}</version>
             <scope>test</scope>
         </dependency>
         <dependency>
