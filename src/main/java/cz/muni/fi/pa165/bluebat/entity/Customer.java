@@ -1,8 +1,15 @@
 package cz.muni.fi.pa165.bluebat.entity;
 
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
+
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.GenerationType;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -11,84 +18,41 @@ import java.util.Objects;
  */
 @Entity
 public class Customer {
-    public Customer() {
-
-    }
 
     @OneToOne
     private Reservation reservation;
 
     @Id
+    @Setter
+    @Getter
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @Getter
+    @Setter
     private LocalDate birthday;
 
+    @Getter
+    @Setter
     private String name;
 
+    @Getter
+    @Setter
     private String email;
 
+    @Getter
+    @Setter
     private String address;
 
+    @Getter
+    @Setter
     private String surname;
 
+    @Getter
+    @Setter
     private Long phoneNumber;
 
-    public String getSurname() {
-        return surname;
-    }
 
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public LocalDate getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(Long number) {
-        this.phoneNumber = number;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getAddress() {
-        return address;
-    }
-
-    public void setAddress(String address) {
-        this.address = address;
-    }
 
     @Override
     public boolean equals(Object o) {

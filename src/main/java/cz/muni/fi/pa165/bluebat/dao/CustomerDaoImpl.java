@@ -2,11 +2,8 @@ package cz.muni.fi.pa165.bluebat.dao;
 
 import cz.muni.fi.pa165.bluebat.entity.Customer;
 import org.springframework.stereotype.Repository;
-
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
-import javax.transaction.Transactional;
-import java.time.LocalDate;
 import java.util.List;
 
 

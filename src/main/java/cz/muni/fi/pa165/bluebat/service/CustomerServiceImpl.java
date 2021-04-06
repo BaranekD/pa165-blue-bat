@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.bluebat.service;/* created by rudolf */
+package cz.muni.fi.pa165.bluebat.service;
 
 import cz.muni.fi.pa165.bluebat.dao.CustomerDao;
 import cz.muni.fi.pa165.bluebat.entity.Customer;
