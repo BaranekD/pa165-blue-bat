@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.bluebat.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -22,6 +23,7 @@ public class Price {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
+    @Column(nullable = false)
     private BigDecimal amount;
 
     private LocalDate validFrom;
@@ -33,11 +35,9 @@ public class Price {
 
         Price price = (Price) o;
 
-        if (getAmount() != null ? getAmount().equals(price.getAmount()) : price.getAmount() != null)
+        if (getAmount() != null ? !getAmount().equals(price.getAmount()) : price.getAmount() != null)
             return false;
-        if (getValidFrom() != null ? getValidFrom().equals(price.getValidFrom()) : price.getValidFrom() != null)
-            return false;
-        return true;
+        return getValidFrom() != null ? getValidFrom().equals(price.getValidFrom()) : price.getValidFrom() == null;
     }
 
     @Override

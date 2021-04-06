@@ -15,8 +15,12 @@ import javax.transaction.Transactional;
 @Transactional
 public class PriceServiceImpl implements PriceService{
 
+    private final PriceDao priceDao;
+
     @Autowired
-    private PriceDao priceDao;
+    public PriceServiceImpl(PriceDao priceDao) {
+        this.priceDao = priceDao;
+    }
 
     @Override
     public void create(Price price) {
