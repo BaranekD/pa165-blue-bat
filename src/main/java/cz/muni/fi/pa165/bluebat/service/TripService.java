@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.bluebat.service;
 
 import cz.muni.fi.pa165.bluebat.entity.Trip;
+import java.util.List;
 
 /**
  * A service layer interface for the Trip entity.
@@ -28,7 +29,7 @@ public interface TripService {
      *
      * @param trip Trip trip to be removed
      */
-    void remove(Trip trip);
+    void delete(Trip trip);
 
     /**
      * Finds a trip
@@ -37,4 +38,11 @@ public interface TripService {
      * @return Trip when found, null otherwise
      */
     Trip findById(Long id);
+
+    /**
+     * Finds all trips
+     *
+     * @return List<Trip> list of all trips
+     */
+    List<Trip> findAll();
 }

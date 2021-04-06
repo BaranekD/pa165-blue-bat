@@ -1,13 +1,17 @@
 package cz.muni.fi.pa165.bluebat.dao;
 
 import cz.muni.fi.pa165.bluebat.entity.Trip;
+import org.springframework.stereotype.Repository;
+
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
+import java.util.List;
 
 /**
  * @author Ondrej Vaca
  */
 
+@Repository
 public class TripDaoImpl implements TripDao{
 
     @PersistenceContext
@@ -24,7 +28,7 @@ public class TripDaoImpl implements TripDao{
     }
 
     @Override
-    public void remove(Trip trip) {
+    public void delete(Trip trip) {
         em.remove(trip);
     }
 
@@ -33,4 +37,8 @@ public class TripDaoImpl implements TripDao{
         return em.find(Trip.class, id);
     }
 
+    @Override
+    public List<Trip> findAll(){
+        return em.createQuery("select t from Trip t",Trip.class).getResultList();
+    }
 }
