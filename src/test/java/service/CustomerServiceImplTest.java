@@ -1,12 +1,13 @@
-package cz.muni.fi.pa165.bluebat.service;
+package service;
 
 import cz.muni.fi.pa165.bluebat.PersistenceTravelAgencyApplicationContext;
 import cz.muni.fi.pa165.bluebat.entity.Price;
-import org.junit.jupiter.api.Test;
+import cz.muni.fi.pa165.bluebat.service.PriceService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
 
