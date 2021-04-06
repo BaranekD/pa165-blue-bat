@@ -26,6 +26,7 @@ public class Price {
     @Column(nullable = false)
     private BigDecimal amount;
 
+    @Column(nullable = false)
     private LocalDate validFrom;
 
     @Override

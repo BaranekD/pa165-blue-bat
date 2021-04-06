@@ -11,7 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
-import java.sql.Timestamp;
+import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -29,6 +29,7 @@ public class Excursion {
     @Getter
     private Long id;
 
+    @Column(nullable = false)
     @Setter
     @Getter
     private String name;
@@ -41,7 +42,7 @@ public class Excursion {
     @Column(nullable = false)
     @Setter
     @Getter
-    private Timestamp duration;
+    private Duration duration;
 
     @Column(nullable = false)
     @Setter
@@ -52,7 +53,7 @@ public class Excursion {
     @Getter
     private String description;
 
-    @OneToMany()
+    @OneToMany
     @OrderBy("validFrom DESC")
     @JoinTable
     private List<Price> prices = new ArrayList<>();
