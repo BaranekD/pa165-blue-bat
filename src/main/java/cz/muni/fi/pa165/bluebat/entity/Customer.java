@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.bluebat.entity;/* created by rudolf */
+package cz.muni.fi.pa165.bluebat.entity;
 
 
 import javax.persistence.*;
@@ -15,11 +15,6 @@ public class Customer {
 
     }
 
-    public Customer(Long number) {
-
-        this.phoneNumber = number;
-    }
-
     @OneToOne
     private Reservation reservation;
 
@@ -29,10 +24,15 @@ public class Customer {
 
     private LocalDate birthday;
 
-
     private String name;
 
+    private String email;
+
+    private String address;
+
     private String surname;
+
+    private Long phoneNumber;
 
     public String getSurname() {
         return surname;
@@ -41,12 +41,6 @@ public class Customer {
     public void setSurname(String surname) {
         this.surname = surname;
     }
-
-    @NotNull
-    @Column(nullable = false, unique = true)
-    private Long phoneNumber;
-
-
 
     public Long getId() {
         return id;
@@ -80,16 +74,33 @@ public class Customer {
         this.phoneNumber = number;
     }
 
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+
+    public String getAddress() {
+        return address;
+    }
+
+    public void setAddress(String address) {
+        this.address = address;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Customer)) return false;
         Customer customer = (Customer) o;
-        return getPhoneNumber().equals(customer.getPhoneNumber());
+        return Objects.equals(getBirthday(), customer.getBirthday()) && Objects.equals(getName(), customer.getName()) && Objects.equals(getEmail(), customer.getEmail()) && Objects.equals(getAddress(), customer.getAddress()) && Objects.equals(getSurname(), customer.getSurname()) && Objects.equals(getPhoneNumber(), customer.getPhoneNumber());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getPhoneNumber());
+        return Objects.hash(getBirthday(), getName(), getEmail(), getAddress(), getSurname(), getPhoneNumber());
     }
+
 }
