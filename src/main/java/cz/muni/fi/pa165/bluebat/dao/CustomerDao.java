@@ -5,8 +5,11 @@ import cz.muni.fi.pa165.bluebat.entity.Customer;
 import java.util.List;
 
 /**
- * @author rudolf
- */
+ * Dao layer for Customer entity.
+ *
+ * @author : Rudolf Madoran
+ * @since : 7. 4. 2021, Wed
+ **/
 public interface CustomerDao {
 
     /**

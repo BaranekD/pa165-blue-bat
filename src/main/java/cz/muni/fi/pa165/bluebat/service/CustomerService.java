@@ -8,8 +8,10 @@ import java.util.Set;
 
 
 /**
- * @author rudolf
- */
+ * A service layer for Customer entity.
+ * @author : Rudolf Madoran
+ * @since : 7. 4. 2021, Wed
+ **/
 public interface CustomerService {
 
     /**
