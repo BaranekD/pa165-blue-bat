@@ -5,14 +5,12 @@ import cz.muni.fi.pa165.bluebat.PersistenceTravelAgencyApplicationContext;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.Assert;
 import org.testng.annotations.Test;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceException;
 import javax.persistence.PersistenceUnit;
-import javax.persistence.RollbackException;
 import java.time.LocalDate;
 
 
@@ -50,18 +48,7 @@ public class CustomerTest extends AbstractTestNGSpringContextTests {
     @Test
     public void customer_fullyInitialized() {
         Customer customer = getFullyInitializedCustomer();
-        EntityManager em = null;
-        try {
-            em = emf.createEntityManager();
-            em.getTransaction().begin();
-            em.persist(customer);
-            em.getTransaction().commit();
-        } catch (RollbackException ex) {
-            Assert.fail("Persist of fully initialized customer failed");
-        }
-        finally {
-            if (em != null) em.close();
-        }
+        Assertions.assertDoesNotThrow(() -> persisCustomer(customer));
     }
 
     @Test
