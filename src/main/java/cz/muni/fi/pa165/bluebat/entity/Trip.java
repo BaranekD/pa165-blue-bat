@@ -14,6 +14,7 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.OrderBy;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.List;
 import java.util.Objects;
@@ -53,7 +54,7 @@ public class Trip {
     @OneToMany()
     @OrderBy("validFrom DESC")
     @JoinTable(name = "TRIP_PRICE")
-    private Set<Price> price;
+    private List<Price> prices = new ArrayList<>();
 
     @OneToMany
     @JoinTable()
@@ -63,8 +64,8 @@ public class Trip {
         return Collections.unmodifiableSet(excursions);
     }
 
-    public Set<Price> getPrices(){
-        return Collections.unmodifiableSet(price);
+    public List<Price> getPrices() {
+        return Collections.unmodifiableList(prices);
     }
 
     @Override
