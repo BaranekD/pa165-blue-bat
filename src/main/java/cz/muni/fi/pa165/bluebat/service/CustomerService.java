@@ -3,21 +3,44 @@ package cz.muni.fi.pa165.bluebat.service;
 
 import cz.muni.fi.pa165.bluebat.entity.Customer;
 
-import java.time.LocalDate;
+import java.util.List;
+import java.util.Set;
+
 
 /**
  * @author rudolf
  */
 public interface CustomerService {
 
-    void removeCustomer(Customer customer);
+    /**
+     * Delete a Customer in database
+     * @param customer is Customer to be deleted
+     */
+    void deleteCustomer(Customer customer);
+
+    /**
+     * Create a new Customer
+     * @param customer is Customer to be created
+     */
     void addCustomer(Customer customer);
-    void updateCustomerName(Customer customer);
+
+    /**
+     * Update a new Customer
+     * @param customer is Customer to be updated
+     */
+    void updateCustomer(Customer customer);
+
+    /**
+     * Find a Customer
+     * @param id of Customer to be found
+     * @return found Customer
+     */
     Customer findCustomerById(Long id);
-    Customer findCustomerByName(String name,String surname);
-    Customer findCustomerByPhoneNumber(Long number);
 
-
-
+    /**
+     * Find Customers
+     * @return found Customers
+     */
+    List<Customer> findAllCustomers();
 
 }

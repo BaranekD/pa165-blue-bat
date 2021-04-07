@@ -1,8 +1,15 @@
-package cz.muni.fi.pa165.bluebat.entity;/* created by rudolf */
+package cz.muni.fi.pa165.bluebat.entity;
 
 
-import javax.persistence.*;
-import javax.validation.constraints.NotNull;
+import lombok.Getter;
+import lombok.Setter;
+
+
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.Id;
+import javax.persistence.OneToOne;
+import javax.persistence.GenerationType;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -11,85 +18,53 @@ import java.util.Objects;
  */
 @Entity
 public class Customer {
-    public Customer() {
-
-    }
-
-    public Customer(Long number) {
-
-        this.phoneNumber = number;
-    }
 
     @OneToOne
     private Reservation reservation;
 
     @Id
+    @Setter
+    @Getter
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
+    @Getter
+    @Setter
     private LocalDate birthday;
 
-
+    @Getter
+    @Setter
     private String name;
 
+    @Getter
+    @Setter
+    private String email;
+
+    @Getter
+    @Setter
+    private String address;
+
+    @Getter
+    @Setter
     private String surname;
 
-    public String getSurname() {
-        return surname;
-    }
-
-    public void setSurname(String surname) {
-        this.surname = surname;
-    }
-
-    @NotNull
-    @Column(nullable = false, unique = true)
+    @Getter
+    @Setter
     private Long phoneNumber;
 
 
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public LocalDate getBirthday() {
-        return birthday;
-    }
-
-    public void setBirthday(LocalDate birthday) {
-        this.birthday = birthday;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public Long getPhoneNumber() {
-        return phoneNumber;
-    }
-
-    public void setPhoneNumber(Long number) {
-        this.phoneNumber = number;
-    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Customer)) return false;
         Customer customer = (Customer) o;
-        return getPhoneNumber().equals(customer.getPhoneNumber());
+        return Objects.equals(getBirthday(), customer.getBirthday()) && Objects.equals(getName(), customer.getName()) && Objects.equals(getEmail(), customer.getEmail()) && Objects.equals(getAddress(), customer.getAddress()) && Objects.equals(getSurname(), customer.getSurname()) && Objects.equals(getPhoneNumber(), customer.getPhoneNumber());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getPhoneNumber());
+        return Objects.hash(getBirthday(), getName(), getEmail(), getAddress(), getSurname(), getPhoneNumber());
     }
+
 }
