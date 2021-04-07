@@ -3,39 +3,35 @@ package cz.muni.fi.pa165.bluebat.entity;
 import cz.muni.fi.pa165.bluebat.PersistenceTravelAgencyApplicationContext;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
-import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
+import org.testng.annotations.Test;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceException;
 import javax.persistence.PersistenceUnit;
 import javax.persistence.RollbackException;
 import java.time.LocalDate;
 
 
-@SpringBootTest(classes = PersistenceTravelAgencyApplicationContext.class)
+@ContextConfiguration(classes = PersistenceTravelAgencyApplicationContext.class)
 public class CustomerTest extends AbstractTestNGSpringContextTests {
 
     @PersistenceUnit
     private EntityManagerFactory emf;
 
-    private void persisCustomer(Customer customer, String assertMessage) {
+    private void persisCustomer(Customer customer) {
         EntityManager em = null;
         try {
             em = emf.createEntityManager();
             em.getTransaction().begin();
             em.persist(customer);
             em.getTransaction().commit();
-        } catch (RollbackException ex) {
-            return;
-        }
-        finally {
+        } finally {
             if (em != null) em.close();
         }
-
-        Assertions.fail(assertMessage);
     }
 
     private Customer getFullyInitializedCustomer() {
@@ -72,41 +68,41 @@ public class CustomerTest extends AbstractTestNGSpringContextTests {
     public void customerName_null() {
         Customer customer = getFullyInitializedCustomer();
         customer.setName(null);
-        persisCustomer(customer, "Entity is allowed to persis with Name that is null");
+        Assertions.assertThrows(PersistenceException.class, () -> persisCustomer(customer));
     }
 
     @Test
     public void customerSurname_null() {
         Customer customer = getFullyInitializedCustomer();
         customer.setSurname(null);
-        persisCustomer(customer, "Entity is allowed to persis with Surname that is null");
+        Assertions.assertThrows(PersistenceException.class, () -> persisCustomer(customer));
     }
 
     @Test
     public void customerAddress_null() {
         Customer customer = getFullyInitializedCustomer();
         customer.setAddress(null);
-        persisCustomer(customer, "Entity is allowed to persis with Address that is null");
+        Assertions.assertThrows(PersistenceException.class, () -> persisCustomer(customer));
     }
 
     @Test
     public void customerEmail_null() {
         Customer customer = getFullyInitializedCustomer();
         customer.setEmail(null);
-        persisCustomer(customer, "Entity is allowed to persis with Email that is null");
+        Assertions.assertThrows(PersistenceException.class, () -> persisCustomer(customer));
     }
 
     @Test
     public void customerPhoneNumber_null() {
         Customer customer = getFullyInitializedCustomer();
         customer.setPhoneNumber(null);
-        persisCustomer(customer, "Entity is allowed to persis with PhoneNumber that is null");
+        Assertions.assertThrows(PersistenceException.class, () -> persisCustomer(customer));
     }
 
     @Test
     public void customerBirthday_null() {
         Customer customer = getFullyInitializedCustomer();
         customer.setBirthday(null);
-        persisCustomer(customer, "Entity is allowed to persis with Birthday that is null");
+        Assertions.assertThrows(PersistenceException.class, () -> persisCustomer(customer));
     }
 }
