@@ -32,16 +32,20 @@ public class Reservation {
     @ToString.Exclude
     private Long id;
 
-    @OneToOne()
+    @OneToOne
     @Getter
+    @Column(nullable = false)
     private Customer customer;
 
     @OneToOne()
     @Getter
+    //@JoinTable()
+    //@Column(nullable = false)
     private Trip trip;
 
     @OneToOne
     @Getter
+    //@Column(nullable = false)
     private Price price;
 
     @OneToMany()
