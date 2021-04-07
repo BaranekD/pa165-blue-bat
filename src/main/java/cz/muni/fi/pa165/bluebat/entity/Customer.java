@@ -21,7 +21,7 @@ import java.util.Objects;
 @Entity
 public class Customer {
 
-    @OneToOne(mappedBy = "reservation")
+    @OneToOne(mappedBy = "customer")
     @Setter
     @Getter
     private Reservation reservation;
