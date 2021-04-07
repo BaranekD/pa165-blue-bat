@@ -35,6 +35,9 @@ public class Trip {
     @Getter
     private Long id;
 
+    @Getter
+    private String name;
+
     @Column(nullable = false)
     @Getter
     private LocalDate dateFrom;
