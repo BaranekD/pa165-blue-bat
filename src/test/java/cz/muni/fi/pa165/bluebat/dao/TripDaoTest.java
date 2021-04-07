@@ -1,29 +1,20 @@
-package cz.muni.fi.pa165.bluebat.entity;
+package cz.muni.fi.pa165.bluebat.dao;
 
 
 import cz.muni.fi.pa165.bluebat.PersistenceTravelAgencyApplicationContext;
-import cz.muni.fi.pa165.bluebat.dao.CustomerDaoImpl;
-import cz.muni.fi.pa165.bluebat.dao.TripDao;
-import cz.muni.fi.pa165.bluebat.service.CustomerService;
-import cz.muni.fi.pa165.bluebat.service.CustomerServiceImpl;
+import cz.muni.fi.pa165.bluebat.entity.Excursion;
+import cz.muni.fi.pa165.bluebat.entity.Trip;
 import cz.muni.fi.pa165.bluebat.service.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.AnnotationConfigApplicationContext;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
-import org.springframework.orm.jpa.JpaSystemException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import javax.transaction.Transactional;
-import java.sql.Timestamp;
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 
 /**
  * Test for service of Trip entity.
@@ -37,11 +28,8 @@ public class TripDaoTest extends AbstractTestNGSpringContextTests {
     @Autowired
     TripService service;
 
-
     public Trip testTrip = null;
     public Trip testTrip2 = null;
-
-
 
     @BeforeClass
     void setup() {
@@ -61,16 +49,11 @@ public class TripDaoTest extends AbstractTestNGSpringContextTests {
 
     }
 
-
-
-
     @Test
     void createTest() {
         service.create(testTrip);
         Assert.assertEquals(service.findById(testTrip.getId()),testTrip);
     }
-
-
 
     @Test
     void updateTest() {
