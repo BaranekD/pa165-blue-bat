@@ -28,9 +28,7 @@ public class TripDaoImpl implements TripDao{
     }
 
     @Override
-    public void delete(Trip trip) {
-        em.remove(trip);
-    }
+    public void delete(Trip trip) { em.remove(trip);}
 
     @Override
     public Trip findById(Long id) {
