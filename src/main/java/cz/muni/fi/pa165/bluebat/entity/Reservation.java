@@ -22,12 +22,12 @@ import java.util.Set;
  * @author Dominik Baranek <460705@mail.muni.cz/>
  */
 @Entity
-@Setter
 @ToString
 public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Setter
     @Getter
     @ToString.Exclude
     private Long id;
@@ -37,16 +37,24 @@ public class Reservation {
     private Customer customer;
 
     @OneToOne()
+    @Setter
     @Getter
     private Trip trip;
 
     @OneToOne
+    @Setter
     @Getter
     private Price price;
 
     @OneToMany()
     @JoinTable()
+    @Setter
     private Set<Excursion> excursions;
+
+    public void setCustomer(Customer customer) {
+        this.customer = customer;
+        this.customer.setReservation(this);
+    }
 
     public Set<Excursion> getExcursions() {
         return Collections.unmodifiableSet(excursions);
