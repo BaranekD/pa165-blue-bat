@@ -74,13 +74,6 @@ public class CustomerServiceImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void testTest() {
-        setupCustomer();
-        Customer found = customerService.findCustomerById(customer.getId());
-        Assert.assertNotNull(found);
-    }
-
-    @Test
     public void updateCustomer_null_InvalidDataAccessApiUsageException() {
         Assertions.assertThrows(InvalidDataAccessApiUsageException.class, () -> customerService.updateCustomer(null));
     }
