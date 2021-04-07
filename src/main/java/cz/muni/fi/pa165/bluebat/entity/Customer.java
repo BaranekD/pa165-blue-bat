@@ -3,8 +3,7 @@ package cz.muni.fi.pa165.bluebat.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-
-
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -65,7 +64,6 @@ public class Customer {
     public boolean equals(Object o) {
         if (this == o) return true;
         if (!(o instanceof Customer)) return false;
-
         Customer customer = (Customer) o;
 
         if (getBirthday() != null ? !getBirthday().equals(customer.getBirthday()) : customer.getBirthday() != null)
