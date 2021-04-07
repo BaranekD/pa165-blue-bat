@@ -28,7 +28,7 @@ public class PriceDaoImpl implements PriceDao{
 
     @Override
     public void delete(Price price) {
-        em.remove(price);
+        em.remove(em.contains(price) ? price : em.merge(price));
     }
 
     @Override
