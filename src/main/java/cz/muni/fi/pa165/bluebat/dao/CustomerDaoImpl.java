@@ -8,8 +8,9 @@ import java.util.List;
 
 
 /**
- * @author rudolf
- */
+ * @author : Rudolf Madoran
+ * @since : 7. 4. 2021, Wed
+ **/
 @Repository
 public class CustomerDaoImpl implements CustomerDao{
 
@@ -24,7 +25,7 @@ public class CustomerDaoImpl implements CustomerDao{
 
     @Override
     public void delete(Customer customer) {
-        em.remove(customer);
+        em.remove(em.find(Customer.class,customer.getId()));
 
     }
 

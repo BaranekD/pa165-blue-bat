@@ -10,8 +10,9 @@ import java.util.List;
 
 
 /**
- * @author rudolf
- */
+ * @author : Rudolf Madoran
+ * @since : 7. 4. 2021, Wed
+ **/
 @Service
 @Transactional
 public class CustomerServiceImpl implements CustomerService{
