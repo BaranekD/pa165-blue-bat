@@ -25,7 +25,7 @@ public class CustomerDaoImpl implements CustomerDao{
 
     @Override
     public void delete(Customer customer) {
-        em.remove(em.find(Customer.class,customer.getId()));
+        em.remove(em.contains(customer) ? customer : em.merge(customer));
 
     }
 

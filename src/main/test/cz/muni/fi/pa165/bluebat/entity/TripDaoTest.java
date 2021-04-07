@@ -1,0 +1,116 @@
+package cz.muni.fi.pa165.bluebat.entity;
+
+
+import cz.muni.fi.pa165.bluebat.PersistenceTravelAgencyApplicationContext;
+import cz.muni.fi.pa165.bluebat.dao.CustomerDaoImpl;
+import cz.muni.fi.pa165.bluebat.dao.TripDao;
+import cz.muni.fi.pa165.bluebat.service.CustomerService;
+import cz.muni.fi.pa165.bluebat.service.CustomerServiceImpl;
+import cz.muni.fi.pa165.bluebat.service.TripService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.annotation.AnnotationConfigApplicationContext;
+import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.orm.jpa.JpaSystemException;
+import org.springframework.test.context.ContextConfiguration;
+import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.Assert;
+import org.testng.annotations.AfterClass;
+import org.testng.annotations.BeforeClass;
+import org.testng.annotations.Test;
+
+import javax.transaction.Transactional;
+import java.sql.Timestamp;
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+
+/**
+ * Test for service of Trip entity.
+ *
+ * @author : Rudolf Madoran
+ * @since : 7. 4. 2021, Wed
+ **/
+@ContextConfiguration(classes = PersistenceTravelAgencyApplicationContext.class)
+public class TripDaoTest extends AbstractTestNGSpringContextTests {
+
+    @Autowired
+    TripService service;
+
+
+    public Trip testTrip = null;
+    public Trip testTrip2 = null;
+
+
+
+    @BeforeClass
+    void setup() {
+        testTrip = new Trip();
+        testTrip.setAvailableTrips(5);
+        testTrip.setDateFrom(LocalDate.of(2020,5,1));
+        testTrip.setDestination("Turkey");
+        testTrip.setExcursions(new HashSet<Excursion>() {});
+        testTrip.setDateTo(LocalDate.of(2020,5,15));
+
+        testTrip2 = new Trip();
+        testTrip2.setAvailableTrips(5);
+        testTrip2.setDateFrom(LocalDate.of(2020,5,1));
+        testTrip2.setDestination("Japan");
+        testTrip2.setExcursions(new HashSet<Excursion>() {});
+        testTrip2.setDateTo(LocalDate.of(2020,5,15));
+
+    }
+
+
+
+
+    @Test
+    void createTest() {
+        service.create(testTrip);
+        Assert.assertEquals(service.findById(testTrip.getId()),testTrip);
+    }
+
+
+
+    @Test
+    void updateTest() {
+        Trip found = service.findById(testTrip.getId());
+        found.setDestination("England");
+        service.update(found);
+        Assert.assertEquals(service.findById(testTrip.getId()).getDestination(),"England");
+    }
+
+    @Test
+    void deleteTest() {
+        service.create(testTrip2);
+        Assert.assertEquals(service.findAll().size(),2);
+        service.delete(service.findById(testTrip2.getId()));
+        Assert.assertEquals(service.findAll().size(),1);
+    }
+
+    @Test
+    void findNullTest() {
+        Assert.assertThrows( InvalidDataAccessApiUsageException.class,() -> service.findById(null));
+    }
+
+    @Test
+    void deleteNullTest() {
+        Assert.assertThrows( InvalidDataAccessApiUsageException.class,() -> service.delete(null));
+    }
+
+    @Test
+    void createNullTest() {
+        Assert.assertThrows( InvalidDataAccessApiUsageException.class,() -> service.create(null));
+    }
+
+    @Test
+    void findNonExistingTripTest() {
+        Assert.assertNull(service.findById(150L));
+    }
+
+    @Test
+    void createWithNullTest() {
+        Assert.assertThrows( InvalidDataAccessApiUsageException.class,() -> service.create(null));
+    }
+
+}
