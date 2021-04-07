@@ -19,7 +19,7 @@ import java.util.Objects;
 @Entity
 public class Customer {
 
-    @OneToOne
+    @OneToOne(mappedBy = "customer")
     private Reservation reservation;
 
     @Id

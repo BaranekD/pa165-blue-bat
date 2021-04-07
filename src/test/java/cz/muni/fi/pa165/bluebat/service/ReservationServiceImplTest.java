@@ -14,8 +14,14 @@ import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
+import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceContext;
 import javax.persistence.PersistenceUnit;
+import java.math.BigDecimal;
+import java.sql.Timestamp;
+import java.time.Duration;
+import java.time.LocalDate;
 import java.util.HashSet;
 import java.util.Set;
 
@@ -36,74 +42,108 @@ public class ReservationServiceImplTest extends AbstractTestNGSpringContextTests
     @PersistenceUnit
     private EntityManagerFactory emf;
 
-    private Reservation reservation1;
+    @PersistenceContext
+    private EntityManager em;
 
     private Reservation reservation2;
 
-    private Trip trip1;
+    private Reservation reservation1;
 
-    private Trip trip2;
+    private Customer getCustomer1() {
+        Customer result = new Customer();
+        result.setName("Karel");
+        result.setSurname("Novák");
+        result.setAddress("Botanická 68A, 602 00 Brno");
+        result.setEmail("karel.novak@test.cz");
+        result.setPhoneNumber(123456789L);
+        result.setBirthday(LocalDate.of(1990, 3, 25));
 
-    private Trip updatedTrip;
+        return result;
+    }
 
-    private Customer customer1;
+    private Customer getCustomer2() {
+        Customer result = new Customer();
+        result.setName("Petr");
+        result.setSurname("Horák");
+        result.setAddress("Vranovská 68A, 602 00 Brno");
+        result.setEmail("petr.horak@test.cz");
+        result.setPhoneNumber(123456987L);
+        result.setBirthday(LocalDate.of(1995, 3, 25));
 
-    private Customer customer2;
+        return result;
+    }
 
-    private Price price1;
+    private Price getPrice(){
+        Price price=new Price();
+        price.setAmount(BigDecimal.ZERO);
+        price.setValidFrom(LocalDate.now());
 
-    private Price price2;
+        return price;
+    }
 
-    private Excursion excursion1;
+    private Excursion getExcursion(){
+        Excursion excursion = new Excursion();
+        excursion.setName("testName");
+        excursion.setDateFrom(LocalDate.now());
+        excursion.setDestination("testDestination");
+        excursion.setDescription("testDescription");
 
-    private Excursion excursion2;
+        return excursion;
+    }
+
+    private Trip getTrip(){
+        Trip trip=new Trip();
+        trip.setDateFrom(LocalDate.now());
+        trip.setDestination("test");
+        trip.setName("test");
+        trip.setPrice(getPrice());
+        trip.setDateTo(LocalDate.now());
+        trip.setAvailableTrips(5);
+
+        return trip;
+    }
 
     @BeforeClass
     public void createTestData(){
-        trip1 = new Trip();
-        trip1.setName("Trip1");
-        trip2 = new Trip();
-        trip2.setName("Trip2");
-        updatedTrip = new Trip();
-        updatedTrip.setName("UpdatedTrip");
-
-        customer1 = new Customer();
-        customer1.setSurname("Customer1");
-        customer2=new Customer();
-        customer2.setSurname("Customer2");
-
-        price1 = new Price();
-        price2 = new Price();
-
-        excursion1 = new Excursion();
-        excursion2 = new Excursion();
-        Set<Excursion> excursions = new HashSet<>();
-        excursions.add(excursion1);
-        excursions.add(excursion2);
+        EntityManager em=null;
 
         reservation1 = new Reservation();
-        reservation1.setTrip(trip1);
-        reservation1.setCustomer(customer1);
-        reservation1.setPrice(price1);
-        reservation1.setExcursions(excursions);
+        reservation1.setTrip(getTrip());
+        reservation1.setCustomer(getCustomer1());
+        reservation1.setPrice(getPrice());
 
         reservation2 = new Reservation();
-        reservation2.setTrip(trip2);
-        reservation2.setCustomer(customer2);
-        reservation2.setPrice(price2);
+        reservation2.setTrip(getTrip());
+        reservation2.setCustomer(getCustomer2());
+        reservation2.setPrice(getPrice());
+
+        try{
+            em=emf.createEntityManager();
+            em.getTransaction().begin();
+            em.persist(getCustomer1());
+            em.persist(getCustomer2());
+            em.persist(getPrice());
+            em.persist(getTrip());
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) em.close();
+        }
+
     }
 
     @Test
     public void createFindUpdateDeleteTest(){
         reservationService.create(reservation1);
         reservationService.create(reservation2);
-        Assert.assertEquals(reservationService.findById(reservation1.getId()).getTrip().getName(),"Trip1");
-        Assert.assertEquals(reservationService.findById(reservation1.getId()).getCustomer().getName(),"Customer1");
+        Assert.assertEquals(reservationService.findById(reservation1.getId()).getCustomer().getSurname(),"Novák");
         Assert.assertEquals(reservationService.findAll().size(), 2);
 
-        reservation1.setTrip(updatedTrip);
+        Customer updatedCustomer=new Customer();
+        updatedCustomer=getCustomer1();
+        updatedCustomer.setSurname("Dolák");
+        reservation1.setCustomer(updatedCustomer);
         reservationService.update(reservation1);
-        Assert.assertEquals(reservationService.findById(reservation1.getId()).getTrip().getName(),"UpdatedTrip");
+        Assert.assertEquals(reservationService.findById(reservation1.getId()).getCustomer().getSurname(),"Dolák");
 
         reservationService.delete(reservation2);
         Assert.assertEquals(reservationService.findAll().size(), 1);
@@ -129,9 +169,4 @@ public class ReservationServiceImplTest extends AbstractTestNGSpringContextTests
     public void deleteReservationNullArgumentThrowsInvalidDataAccessApiUsageException() {
         assertThrows(InvalidDataAccessApiUsageException.class, () -> reservationService.delete(null));
     }
-
-
-
-
-
 }

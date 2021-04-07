@@ -38,6 +38,6 @@ public class ReservationDaoImpl implements ReservationDao {
 
     @Override
     public void delete(Reservation r) {
-        em.remove(r);
+        em.remove(em.contains(r) ? r : em.merge(r));
     }
 }
