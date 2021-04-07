@@ -15,8 +15,12 @@ import javax.transaction.Transactional;
 @Transactional
 public class ExcursionServiceImpl implements ExcursionService {
 
+    private final ExcursionDao excursionDao;
+
     @Autowired
-    private ExcursionDao excursionDao;
+    public ExcursionServiceImpl(ExcursionDao excursionDao) {
+        this.excursionDao = excursionDao;
+    }
 
     @Override
     public void create(Excursion excursion) {
