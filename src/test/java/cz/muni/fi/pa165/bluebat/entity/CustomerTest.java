@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.bluebat.PersistenceTravelAgencyApplicationContext;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import javax.persistence.EntityManager;
@@ -20,7 +21,7 @@ public class CustomerTest extends AbstractTestNGSpringContextTests {
     @PersistenceUnit
     private EntityManagerFactory emf;
 
-    private void persisCustomer(Customer customer) {
+    private void persistCustomer(Customer customer) {
         EntityManager em = null;
         try {
             em = emf.createEntityManager();
@@ -45,51 +46,70 @@ public class CustomerTest extends AbstractTestNGSpringContextTests {
         return result;
     }
 
+    @DataProvider(name = "valuesNotBlank")
+    private static Object[][] getInvalidValues() {
+        return new String[][] { { null }, { "" }, { " " }, { "\t" }, { "\n" } };
+    }
+
     @Test
     public void customer_fullyInitialized() {
         Customer customer = getFullyInitializedCustomer();
-        Assertions.assertDoesNotThrow(() -> persisCustomer(customer));
+        Assertions.assertDoesNotThrow(() -> persistCustomer(customer));
     }
 
-    @Test
-    public void customerName_null() {
+    @Test(dataProvider = "valuesNotBlank")
+    public void customerName_invalid(String name) {
         Customer customer = getFullyInitializedCustomer();
-        customer.setName(null);
-        Assertions.assertThrows(PersistenceException.class, () -> persisCustomer(customer));
+        customer.setName(name);
+        Assertions.assertThrows(PersistenceException.class, () -> persistCustomer(customer));
     }
 
-    @Test
-    public void customerSurname_null() {
+    @Test(dataProvider = "valuesNotBlank")
+    public void customerSurname_invalid(String surname) {
         Customer customer = getFullyInitializedCustomer();
-        customer.setSurname(null);
-        Assertions.assertThrows(PersistenceException.class, () -> persisCustomer(customer));
+        customer.setSurname(surname);
+        Assertions.assertThrows(PersistenceException.class, () -> persistCustomer(customer));
     }
 
-    @Test
-    public void customerAddress_null() {
+    @Test(dataProvider = "valuesNotBlank")
+    public void customerAddress_invalid(String address) {
         Customer customer = getFullyInitializedCustomer();
-        customer.setAddress(null);
-        Assertions.assertThrows(PersistenceException.class, () -> persisCustomer(customer));
+        customer.setAddress(address);
+        Assertions.assertThrows(PersistenceException.class, () -> persistCustomer(customer));
     }
 
-    @Test
-    public void customerEmail_null() {
+    @Test(dataProvider = "valuesNotBlank")
+    public void customerEmail_invalid(String email) {
         Customer customer = getFullyInitializedCustomer();
-        customer.setEmail(null);
-        Assertions.assertThrows(PersistenceException.class, () -> persisCustomer(customer));
+        customer.setEmail(email);
+        Assertions.assertThrows(PersistenceException.class, () -> persistCustomer(customer));
     }
 
     @Test
     public void customerPhoneNumber_null() {
         Customer customer = getFullyInitializedCustomer();
         customer.setPhoneNumber(null);
-        Assertions.assertThrows(PersistenceException.class, () -> persisCustomer(customer));
+        Assertions.assertThrows(PersistenceException.class, () -> persistCustomer(customer));
+    }
+
+    @Test
+    public void customerPhoneNumber_negativeValue() {
+        Customer customer = getFullyInitializedCustomer();
+        customer.setPhoneNumber(-15L);
+        Assertions.assertThrows(PersistenceException.class, () -> persistCustomer(customer));
     }
 
     @Test
     public void customerBirthday_null() {
         Customer customer = getFullyInitializedCustomer();
         customer.setBirthday(null);
-        Assertions.assertThrows(PersistenceException.class, () -> persisCustomer(customer));
+        Assertions.assertThrows(PersistenceException.class, () -> persistCustomer(customer));
+    }
+
+    @Test
+    public void customerBirthday_inFuture() {
+        Customer customer = getFullyInitializedCustomer();
+        customer.setBirthday(LocalDate.now().plusDays(1L));
+        Assertions.assertThrows(PersistenceException.class, () -> persistCustomer(customer));
     }
 }

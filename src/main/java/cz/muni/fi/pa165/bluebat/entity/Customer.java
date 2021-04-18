@@ -9,8 +9,10 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.GenerationType;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Past;
+import javax.validation.constraints.Positive;
 import java.time.LocalDate;
-import java.util.Objects;
 
 /**
  * Entiny for basic data about customer.
@@ -35,31 +37,37 @@ public class Customer {
     @Getter
     @Setter
     @Column(nullable = false)
+    @Past
     private LocalDate birthday;
 
     @Getter
     @Setter
     @Column(nullable = false)
+    @NotBlank
     private String name;
 
     @Getter
     @Setter
     @Column(nullable = false)
+    @NotBlank
     private String email;
 
     @Getter
     @Setter
     @Column(nullable = false)
+    @NotBlank
     private String address;
 
     @Getter
     @Setter
     @Column(nullable = false)
+    @NotBlank
     private String surname;
 
     @Getter
     @Setter
     @Column(nullable = false)
+    @Positive
     private Long phoneNumber;
 
     @Override
