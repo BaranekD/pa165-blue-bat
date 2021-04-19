@@ -1,19 +1,20 @@
 package cz.muni.fi.pa165.bluebat.entity;
 
 import cz.muni.fi.pa165.bluebat.PersistenceTravelAgencyApplicationContext;
+import org.junit.jupiter.api.Assertions;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceException;
 import javax.persistence.PersistenceUnit;
+import javax.validation.ConstraintViolationException;
 
 import java.time.Duration;
 import java.time.LocalDate;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author Dominik Baranek <460705@mail.muni.cz>
@@ -24,87 +25,81 @@ public class ExcursionTest extends AbstractTestNGSpringContextTests {
     @PersistenceUnit
     private EntityManagerFactory emf;
 
-    @Test
-    public void nullDateFromThrowsPersistenceException() {
-        assertThrows(PersistenceException.class, () -> {
-            Excursion e = createTestingExcursion();
-            e.setDateFrom(null);
+    private void persistExcursion(Excursion excursion) {
+        EntityManager em = null;
+        try {
+            em = emf.createEntityManager();
+            em.getTransaction().begin();
+            em.persist(excursion);
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) em.close();
+        }
+    }
 
-            EntityManager em = null;
-            try {
-                em = emf.createEntityManager();
-                em.getTransaction().begin();
-                em.persist(e);
-                em.getTransaction().commit();
-            } finally {
-                if (em != null) em.close();
-            }
-        });
+    private Excursion getFullyInitializedExcursion() {
+        Excursion result = new Excursion();
+        result.setName("testName");
+        result.setDuration(Duration.ofDays(1));
+        result.setDateFrom(LocalDate.now());
+        result.setDestination("testDestination");
+        result.setDescription("testDescription");
+
+        return result;
+    }
+
+    @DataProvider(name = "valuesNotBlank")
+    private static Object[][] getInvalidValues() {
+        return new String[][] { { null }, { "" }, { " " }, { "\t" }, { "\n" } };
     }
 
     @Test
-    public void nullDurationThrowsPersistenceException() {
-        assertThrows(PersistenceException.class, () -> {
-            Excursion e = createTestingExcursion();
-            e.setDuration(null);
-
-            EntityManager em = null;
-            try {
-                em = emf.createEntityManager();
-                em.getTransaction().begin();
-                em.persist(e);
-                em.getTransaction().commit();
-            } finally {
-                if (em != null) em.close();
-            }
-        });
+    public void excursion_fullyInitialized() {
+        Excursion excursion = getFullyInitializedExcursion();
+        Assertions.assertDoesNotThrow(() -> persistExcursion(excursion));
     }
 
     @Test
-    public void nullDestinationThrowsPersistenceException() {
-        assertThrows(PersistenceException.class, () -> {
-            Excursion e = createTestingExcursion();
-            e.setDestination(null);
-
-            EntityManager em = null;
-            try {
-                em = emf.createEntityManager();
-                em.getTransaction().begin();
-                em.persist(e);
-                em.getTransaction().commit();
-            } finally {
-                if (em != null) em.close();
-            }
-        });
+    public void excursionName_null() {
+        Excursion excursion = getFullyInitializedExcursion();
+        excursion.setName(null);
+        Assertions.assertThrows(ConstraintViolationException.class, () -> persistExcursion(excursion));
     }
 
     @Test
-    public void nullNameThrowsPersistenceException() {
-        assertThrows(PersistenceException.class, () -> {
-            Excursion e = createTestingExcursion();
-            e.setName(null);
-
-            EntityManager em = null;
-            try {
-                em = emf.createEntityManager();
-                em.getTransaction().begin();
-                em.persist(e);
-                em.getTransaction().commit();
-            } finally {
-                if (em != null) em.close();
-            }
-        });
+    public void excursionDuration_null() {
+        Excursion excursion = getFullyInitializedExcursion();
+        excursion.setDuration(null);
+        Assertions.assertThrows(PersistenceException.class, () -> persistExcursion(excursion));
     }
 
+    @Test
+    public void excursionDateFrom_null() {
+        Excursion excursion = getFullyInitializedExcursion();
+        excursion.setDateFrom(null);
+        Assertions.assertThrows(PersistenceException.class, () -> persistExcursion(excursion));
+    }
 
-    private Excursion createTestingExcursion() {
-        Excursion e = new Excursion();
+    @Test
+    public void excursionDestination_null() {
+        Excursion excursion = getFullyInitializedExcursion();
+        excursion.setDestination(null);
+        Assertions.assertThrows(ConstraintViolationException.class, () -> persistExcursion(excursion));
+    }
 
-        e.setDateFrom(LocalDate.now());
-        e.setName("testName");
-        e.setDuration(Duration.ZERO);
-        e.setDestination("testDestination");
+    @Test(dataProvider = "valuesNotBlank")
+    public void excursionName_invalid(String name) {
+        Excursion excursion = getFullyInitializedExcursion();
+        excursion.setName(name);
 
-        return e;
+        Assertions.assertThrows(ConstraintViolationException.class, () -> persistExcursion(excursion));
+    }
+
+    @Test(dataProvider = "valuesNotBlank")
+    public void excursionDestination_invalid(String destination) {
+        Excursion excursion = getFullyInitializedExcursion();
+        excursion.setDestination(destination);
+
+        Assertions.assertThrows(ConstraintViolationException.class, () -> persistExcursion(excursion));
     }
 }

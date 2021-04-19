@@ -21,44 +21,4 @@ import static org.testng.AssertJUnit.assertNull;
 @ContextConfiguration(classes = PersistenceTravelAgencyApplicationContext.class)
 public class PriceServiceImplTest extends AbstractTestNGSpringContextTests {
 
-    @Autowired
-    private PriceService priceService;
-
-    @Test
-    public void createFindUpdateDeleteTest(){
-        Price p = new Price();
-        p.setAmount(BigDecimal.ONE);
-        p.setValidFrom(LocalDate.now());
-
-        priceService.create(p);
-        assertEquals(priceService.findById(p.getId()).getAmount(), BigDecimal.ONE.setScale(2));
-
-        p.setAmount(BigDecimal.TEN);
-        priceService.update(p);
-        assertEquals(priceService.findById(p.getId()).getAmount(), BigDecimal.TEN.setScale(2));
-
-        priceService.delete(p);
-        assertNull(priceService.findById(p.getId()));
-    }
-
-    @Test
-    public void createPriceNullArgumentThrowsInvalidDataAccessApiUsageException() {
-        assertThrows(InvalidDataAccessApiUsageException.class, () -> priceService.create(null));
-    }
-
-    @Test
-    public void updatePriceNullArgumentThrowsInvalidDataAccessApiUsageException() {
-        assertThrows(InvalidDataAccessApiUsageException.class, () -> priceService.update(null));
-    }
-
-    @Test
-    public void deletePriceNullArgumentThrowsInvalidDataAccessApiUsageException() {
-        assertThrows(InvalidDataAccessApiUsageException.class, () -> priceService.delete(null));
-    }
-
-    @Test
-    public void findPriceNonExistingIdReturnsNull() {
-        Price p = priceService.findById(2048L);
-        assertNull(p);
-    }
 }

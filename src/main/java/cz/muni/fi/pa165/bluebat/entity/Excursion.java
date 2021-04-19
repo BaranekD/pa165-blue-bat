@@ -11,6 +11,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+import javax.validation.constraints.NotBlank;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -29,24 +30,26 @@ public class Excursion {
     @Getter
     private Long id;
 
-    @Column(nullable = false)
     @Setter
     @Getter
+    @Column(nullable = false)
+    @NotBlank
     private String name;
 
-    @Column(nullable = false)
     @Setter
     @Getter
+    @Column(nullable = false)
     private LocalDate dateFrom;
 
-    @Column(nullable = false)
     @Setter
     @Getter
+    @Column(nullable = false)
     private Duration duration;
 
-    @Column(nullable = false)
     @Setter
     @Getter
+    @Column(nullable = false)
+    @NotBlank
     private String destination;
 
     @Setter
@@ -56,7 +59,7 @@ public class Excursion {
     @OneToMany
     @OrderBy("validFrom DESC")
     @JoinTable
-    private List<Price> prices = new ArrayList<>();
+    private final List<Price> prices = new ArrayList<>();
 
     public List<Price> getPrices() {
         return Collections.unmodifiableList(prices);
