@@ -9,6 +9,7 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.GenerationType;
+import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Positive;
@@ -50,6 +51,7 @@ public class Customer {
     @Setter
     @Column(nullable = false)
     @NotBlank
+    @Email
     private String email;
 
     @Getter

@@ -51,6 +51,13 @@ public class CustomerTest extends AbstractTestNGSpringContextTests {
         return new String[][] { { null }, { "" }, { " " }, { "\t" }, { "\n" } };
     }
 
+    @DataProvider(name = "valuesNotEmail")
+    private static Object[][] getInvalidEmailValues() {
+        return new String[][] { { "test" }, { "test@" }, { "@test.com" }, { "a@b@test.com" }, { "abc@test..com" },
+                { "abc..def@test.com" }, { ".abc@test.com" }, { "abc@-test.com" }, { "abc.@test.com" },
+                { "a\"b\"c@test.com" } };
+    }
+
     @Test
     public void customer_fullyInitialized() {
         Customer customer = getFullyInitializedCustomer();
@@ -79,7 +86,14 @@ public class CustomerTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test(dataProvider = "valuesNotBlank")
-    public void customerEmail_invalid(String email) {
+    public void customerEmail_invalid_blank(String email) {
+        Customer customer = getFullyInitializedCustomer();
+        customer.setEmail(email);
+        Assertions.assertThrows(PersistenceException.class, () -> persistCustomer(customer));
+    }
+
+    @Test(dataProvider = "valuesNotEmail")
+    public void customerEmail_invalid_notEmail(String email) {
         Customer customer = getFullyInitializedCustomer();
         customer.setEmail(email);
         Assertions.assertThrows(PersistenceException.class, () -> persistCustomer(customer));
