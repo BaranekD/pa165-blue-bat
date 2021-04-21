@@ -3,6 +3,8 @@ package cz.muni.fi.pa165.bluebat.entity;
 
 import lombok.Getter;
 import lombok.Setter;
+
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -10,7 +12,6 @@ import javax.persistence.Id;
 import javax.persistence.OneToOne;
 import javax.persistence.GenerationType;
 import java.time.LocalDate;
-import java.util.Objects;
 
 /**
  * Entiny for basic data about customer.
@@ -62,6 +63,8 @@ public class Customer {
     @Column(nullable = false)
     private Long phoneNumber;
 
+
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -89,4 +92,5 @@ public class Customer {
         result = 31 * result + (getPhoneNumber() != null ? getPhoneNumber().hashCode() : 0);
         return result;
     }
+
 }

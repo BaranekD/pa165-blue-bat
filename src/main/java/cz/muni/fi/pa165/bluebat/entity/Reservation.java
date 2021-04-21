@@ -9,9 +9,11 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
 import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
+import javax.persistence.Table;
 import java.util.Collections;
 import java.util.Objects;
 import java.util.Set;
@@ -32,18 +34,21 @@ public class Reservation {
     @ToString.Exclude
     private Long id;
 
-    @OneToOne()
+    @OneToOne
     @Getter
+    @JoinColumn(nullable = false)
     private Customer customer;
 
     @OneToOne()
     @Setter
     @Getter
+    @JoinColumn(nullable = false)
     private Trip trip;
 
     @OneToOne
     @Setter
     @Getter
+    @JoinColumn(nullable = false)
     private Price price;
 
     @OneToMany()
