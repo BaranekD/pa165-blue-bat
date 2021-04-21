@@ -28,7 +28,7 @@ public class ExcursionDaoImpl implements ExcursionDao{
 
     @Override
     public void delete(Excursion excursion) {
-        em.remove(excursion);
+        em.remove(em.contains(excursion) ? excursion : em.merge(excursion));
     }
 
     @Override
