@@ -33,17 +33,19 @@ public class CustomerDaoImplTest extends AbstractTestNGSpringContextTests {
     private EntityManagerFactory emf;
 
     private Customer customer;
+    private Customer secondCustomer;
     private Customer notInsertedCustomer;
 
     @BeforeMethod
     public void setup(){
         setupCustomer();
+        setupSecondCustomer();
         setupNotInsertedCustomer();
     }
 
     @AfterMethod
     public void cleanup() {
-        removeCustomer(customer, notInsertedCustomer);
+        removeCustomer(customer, secondCustomer);
     }
 
     @Test
@@ -69,7 +71,11 @@ public class CustomerDaoImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void update_valid() {
+        customer.setSurname("Smith");
         Assertions.assertDoesNotThrow(() -> customerDao.update(customer));
+
+        Customer found = customerDao.findById(customer.getId());
+        Assert.assertEquals(found.getSurname(), "Smith");
     }
 
     @Test
@@ -113,15 +119,16 @@ public class CustomerDaoImplTest extends AbstractTestNGSpringContextTests {
         List<Customer> customers = customerDao.findAll();
         int size = customers.size();
 
-        insertCustomer(notInsertedCustomer);
+        insertCustomer(secondCustomer);
 
         customers = customerDao.findAll();
         Assert.assertEquals(customers.size(), size + 1);
-        Assert.assertTrue(customers.stream().anyMatch(c -> c.equals(notInsertedCustomer)));
+        Assert.assertTrue(customers.stream().anyMatch(c -> c.equals(secondCustomer)));
     }
 
     @Test
     public void findAll_oneDeleted() {
+        setupSecondCustomer();
         List<Customer> customers = customerDao.findAll();
         int size = customers.size();
 
@@ -142,6 +149,16 @@ public class CustomerDaoImplTest extends AbstractTestNGSpringContextTests {
         customer.setBirthday(LocalDate.of(1990, 3, 25));
 
         insertCustomer(customer);
+    }
+
+    private void setupSecondCustomer() {
+        secondCustomer = new Customer();
+        secondCustomer.setName("Tomáš");
+        secondCustomer.setSurname("Hampl");
+        secondCustomer.setAddress("Šumavská 120, Brno 602 00");
+        secondCustomer.setEmail("hampl@ics.muni.cz");
+        secondCustomer.setPhoneNumber(123456789L);
+        secondCustomer.setBirthday(LocalDate.of(1990, 3, 25));
     }
 
     private void setupNotInsertedCustomer() {
