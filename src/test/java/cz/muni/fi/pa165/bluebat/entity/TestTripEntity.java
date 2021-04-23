@@ -23,7 +23,7 @@ import java.util.HashSet;
 
 @ContextConfiguration(classes = PersistenceTravelAgencyApplicationContext.class)
 public class TestTripEntity extends AbstractTestNGSpringContextTests  {
-
+    /*
     @PersistenceUnit
     private EntityManagerFactory emf;
 
@@ -71,7 +71,7 @@ public class TestTripEntity extends AbstractTestNGSpringContextTests  {
         test.setDateTo(null);
         Assert.assertThrows(PersistenceException.class, () -> persistTrip(test));
     }
-
+    */
 
 
 }
