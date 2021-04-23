@@ -99,7 +99,7 @@ public class TripTest extends AbstractTestNGSpringContextTests  {
         } finally {
             if (em != null) em.close();
         }
-    }   
+    }
     public List<Trip> findAll(){
         EntityManager em = null;
         try {
