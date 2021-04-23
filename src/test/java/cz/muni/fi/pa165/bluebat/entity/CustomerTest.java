@@ -33,6 +33,18 @@ public class CustomerTest extends AbstractTestNGSpringContextTests {
         }
     }
 
+    private void deleteCustomer(Customer customer) {
+        EntityManager em = null;
+        try {
+            em = emf.createEntityManager();
+            em.getTransaction().begin();
+            em.remove(em.contains(customer) ? customer : em.merge(customer));
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) em.close();
+        }
+    }
+
     private Customer getFullyInitializedCustomer() {
         Customer result = new Customer();
 
@@ -62,6 +74,7 @@ public class CustomerTest extends AbstractTestNGSpringContextTests {
     public void customer_fullyInitialized() {
         Customer customer = getFullyInitializedCustomer();
         Assertions.assertDoesNotThrow(() -> persistCustomer(customer));
+        deleteCustomer(customer);
     }
 
     @Test(dataProvider = "valuesNotBlank")
