@@ -13,6 +13,7 @@ import org.testng.annotations.Test;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
+import javax.persistence.PersistenceException;
 import javax.persistence.PersistenceUnit;
 import javax.validation.ConstraintViolationException;
 import java.time.LocalDate;
@@ -73,23 +74,15 @@ public class TripTest extends AbstractTestNGSpringContextTests  {
     Trip prepareTrip() {
         Trip testTrip3 = new Trip();
         testTrip3.setAvailableTrips(5);
-        testTrip3.setDateFrom(LocalDate.of(2020,5,1));
-        testTrip3.setExcursions(new HashSet<Excursion>() {});
+        testTrip3.setDateFrom(LocalDate.of(2022,5,1));
         testTrip3.setDestination("Madrid");
-        testTrip3.setDateTo(LocalDate.of(2020,5,15));
+        testTrip3.setDateTo(LocalDate.of(2022,5,15));
+        testTrip3.setName("Name");
         return  testTrip3;
     }
 
 
     void persistTrip(Trip trip) {
-
-        Trip testTrip3 = new Trip();
-        testTrip3.setAvailableTrips(5);
-        testTrip3.setDateFrom(LocalDate.of(2020,5,1));
-        testTrip3.setExcursions(new HashSet<Excursion>() {});
-        testTrip3.setDestination("Madrid");
-        testTrip3.setDateTo(LocalDate.of(2020,5,15));
-
         EntityManager em = null;
         try {
             em = emf.createEntityManager();
@@ -115,35 +108,35 @@ public class TripTest extends AbstractTestNGSpringContextTests  {
     }
 
     @Test(dataProvider = "valuesInvalidAvailability")
-    public void tripNullDestination(Integer data) {
+    public void tripInvalidAvailability(Integer data) {
         Trip test = prepareTrip();
         test.setAvailableTrips(data);
         Assert.assertThrows(ConstraintViolationException.class, () -> persistTrip(test));
     }
 
     @Test(dataProvider = "valuesInvalidStrings")
-    public void tripNullName(String data) {
+    public void tripInvalidName(String data) {
         Trip test = prepareTrip();
         test.setName(data);
         Assert.assertThrows(ConstraintViolationException.class, () -> persistTrip(test));
     }
 
     @Test(dataProvider = "valuesInvalidDates")
-    public void tripNullDateFrom(LocalDate data) {
+    public void tripInvalidDateFrom(LocalDate data) {
         Trip test = prepareTrip();
         test.setDateFrom(data);
         Assert.assertThrows(ConstraintViolationException.class, () -> persistTrip(test));
 
     }
     @Test(dataProvider = "valuesInvalidDates")
-    public void tripNullDateTo(LocalDate data) {
+    public void tripInvalidDateTo(LocalDate data) {
         Trip test = prepareTrip();
         test.setDateTo(data);
         Assert.assertThrows(ConstraintViolationException.class, () -> persistTrip(test));
     }
 
     @Test(dataProvider = "valuesInvalidStrings")
-    public void tripNullDestination(String data) {
+    public void tripInvalidDestination(String data) {
         Trip test = prepareTrip();
         test.setDestination(data);
         Assert.assertThrows(ConstraintViolationException.class, () -> persistTrip(test));

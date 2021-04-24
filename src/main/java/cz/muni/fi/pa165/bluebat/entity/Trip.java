@@ -5,9 +5,7 @@ import lombok.Setter;
 import lombok.ToString;
 
 import javax.persistence.*;
-import javax.validation.constraints.Future;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.Positive;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -18,7 +16,6 @@ import java.util.*;
 
 @Entity
 @Setter
-@ToString
 @Getter
 public class Trip {
 
@@ -26,21 +23,28 @@ public class Trip {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-
+    // Blank checks if not null or blank
+    // Column generates database column with notnull
+    @Column(nullable = false)
+    @NotBlank
     private String name;
 
     @Column(nullable = false)
+    @NotNull
     @Future
     private LocalDate dateFrom;
 
     @Column(nullable = false)
+    @NotNull
     @Future
     private LocalDate dateTo;
 
     @Column(nullable = false)
+    @NotBlank
     private String destination;
 
     @Column(nullable = false)
+    @NotNull
     @Min(0)
     private Integer availableTrips;
 
