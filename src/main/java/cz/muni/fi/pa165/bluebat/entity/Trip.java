@@ -27,7 +27,6 @@ import java.util.Set;
 
 @Entity
 @Setter
-@ToString
 public class Trip {
 
     @Id
