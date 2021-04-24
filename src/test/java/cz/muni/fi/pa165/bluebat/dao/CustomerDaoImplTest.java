@@ -89,6 +89,14 @@ public class CustomerDaoImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
+    public void delete_valid() {
+        Assertions.assertDoesNotThrow(() -> customerDao.delete(customer));
+
+        Customer found = customerDao.findById(customer.getId());
+        Assert.assertNull(found);
+    }
+
+    @Test
     public void findById_notInserted() {
         Customer found = customerDao.findById(2021L);
         Assert.assertNull(found);

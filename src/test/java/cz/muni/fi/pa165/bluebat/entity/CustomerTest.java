@@ -3,8 +3,10 @@ package cz.muni.fi.pa165.bluebat.entity;
 import cz.muni.fi.pa165.bluebat.PersistenceTravelAgencyApplicationContext;
 
 import org.junit.jupiter.api.Assertions;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.Assert;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
@@ -16,6 +18,7 @@ import java.time.LocalDate;
 
 
 @ContextConfiguration(classes = PersistenceTravelAgencyApplicationContext.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class CustomerTest extends AbstractTestNGSpringContextTests {
 
     @PersistenceUnit
@@ -74,7 +77,19 @@ public class CustomerTest extends AbstractTestNGSpringContextTests {
     public void customer_fullyInitialized() {
         Customer customer = getFullyInitializedCustomer();
         Assertions.assertDoesNotThrow(() -> persistCustomer(customer));
-        deleteCustomer(customer);
+
+        Customer found;
+        EntityManager em = null;
+        try {
+            em = emf.createEntityManager();
+            em.getTransaction().begin();
+            found = em.find(Customer.class, customer.getId());
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) em.close();
+        }
+
+        Assert.assertEquals(found, customer);
     }
 
     @Test(dataProvider = "valuesNotBlank")
