@@ -8,6 +8,7 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.validation.constraints.Positive;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
@@ -24,6 +25,7 @@ public class Price {
     private Long id;
 
     @Column(nullable = false)
+    @Positive
     private BigDecimal amount;
 
     @Column(nullable = false)
