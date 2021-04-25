@@ -5,6 +5,7 @@ import org.junit.jupiter.api.Assertions;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.Assert;
 import org.testng.annotations.Test;
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
@@ -116,6 +117,24 @@ public class ReservationTest extends AbstractTestNGSpringContextTests {
         persistPrice(price);
 
         return price;
+    }
+
+    @Test
+    public void reservation_fullyInitialized() {
+        getFullyInitializedReservation();
+        Assertions.assertDoesNotThrow(() -> persistReservation(reservation));
+        Reservation found;
+        EntityManager em = null;
+        try {
+            em = emf.createEntityManager();
+            em.getTransaction().begin();
+            found = em.find(Reservation.class, reservation.getId());
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) em.close();
+        }
+
+        Assert.assertEquals(found, reservation);
     }
 
     @Test
