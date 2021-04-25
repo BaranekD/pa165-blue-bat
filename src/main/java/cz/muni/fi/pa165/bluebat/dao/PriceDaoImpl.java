@@ -9,7 +9,6 @@ import javax.persistence.PersistenceContext;
 /**
  * Created by Tomáš Hampl on 3.3.21.
  */
-
 @Repository
 public class PriceDaoImpl implements PriceDao{
 

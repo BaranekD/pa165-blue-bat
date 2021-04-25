@@ -7,7 +7,6 @@ import cz.muni.fi.pa165.bluebat.entity.Excursion;
  *
  * Created by Tomáš Hampl on 3.3.21.
  */
-
 public interface ExcursionDao {
 
     /**

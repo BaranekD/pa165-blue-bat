@@ -10,7 +10,6 @@ import java.util.List;
 /**
  * @author Ondrej Vaca
  */
-
 @Repository
 public class TripDaoImpl implements TripDao{
 

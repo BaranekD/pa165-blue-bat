@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.bluebat.entity;
 
 import cz.muni.fi.pa165.bluebat.PersistenceTravelAgencyApplicationContext;
 import org.junit.jupiter.api.Assertions;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.DataProvider;
@@ -20,6 +21,7 @@ import java.time.LocalDate;
  * @author Dominik Baranek <460705@mail.muni.cz>
  */
 @ContextConfiguration(classes = PersistenceTravelAgencyApplicationContext.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class ExcursionTest extends AbstractTestNGSpringContextTests {
 
     @PersistenceUnit
@@ -70,14 +72,14 @@ public class ExcursionTest extends AbstractTestNGSpringContextTests {
     public void excursionDuration_null() {
         Excursion excursion = getFullyInitializedExcursion();
         excursion.setDuration(null);
-        Assertions.assertThrows(PersistenceException.class, () -> persistExcursion(excursion));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> persistExcursion(excursion));
     }
 
     @Test
     public void excursionDateFrom_null() {
         Excursion excursion = getFullyInitializedExcursion();
         excursion.setDateFrom(null);
-        Assertions.assertThrows(PersistenceException.class, () -> persistExcursion(excursion));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> persistExcursion(excursion));
     }
 
     @Test

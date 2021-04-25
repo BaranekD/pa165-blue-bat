@@ -1,11 +1,8 @@
 package cz.muni.fi.pa165.bluebat.service;
 
-
 import cz.muni.fi.pa165.bluebat.entity.Customer;
 
 import java.util.List;
-import java.util.Set;
-
 
 /**
  * A service layer for Customer entity.
@@ -44,5 +41,4 @@ public interface CustomerService {
      * @return found Customers
      */
     List<Customer> findAllCustomers();
-
 }

@@ -10,7 +10,6 @@ import javax.transaction.Transactional;
 /**
  * Created by Tomáš Hampl on 3.3.21.
  */
-
 @Service
 @Transactional
 public class ExcursionServiceImpl implements ExcursionService {

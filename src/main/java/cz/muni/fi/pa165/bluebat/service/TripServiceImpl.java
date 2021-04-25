@@ -6,14 +6,11 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import javax.inject.Inject;
-import javax.inject.Named;
 import java.util.List;
 
 /**
  * @author Ondrej Vaca
  */
-
 @Service
 @Transactional
 public class TripServiceImpl implements TripService{

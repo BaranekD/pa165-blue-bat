@@ -2,18 +2,30 @@ package cz.muni.fi.pa165.bluebat.entity;
 
 import lombok.Getter;
 import lombok.Setter;
-import lombok.ToString;
 
-import javax.persistence.*;
-import javax.validation.constraints.*;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
+import javax.validation.constraints.Future;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Objects;
+import java.util.Set;
 
 /**
  * @author Ondrej Vaca
  * Class representing a Trip entity
  */
-
 @Entity
 @Setter
 @Getter
@@ -23,27 +35,20 @@ public class Trip {
     @GeneratedValue(strategy= GenerationType.IDENTITY)
     private Long id;
 
-    // Blank checks if not null or blank
-    // Column generates database column with notnull
-    @Column(nullable = false)
     @NotBlank
     private String name;
 
-    @Column(nullable = false)
     @NotNull
     @Future
     private LocalDate dateFrom;
 
-    @Column(nullable = false)
     @NotNull
     @Future
     private LocalDate dateTo;
 
-    @Column(nullable = false)
     @NotBlank
     private String destination;
 
-    @Column(nullable = false)
     @NotNull
     @Min(0)
     private Integer availableTrips;

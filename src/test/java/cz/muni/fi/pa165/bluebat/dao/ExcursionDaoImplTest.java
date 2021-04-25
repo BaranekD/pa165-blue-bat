@@ -5,13 +5,13 @@ import cz.muni.fi.pa165.bluebat.entity.Excursion;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -27,6 +27,7 @@ import java.time.LocalDate;
 @ContextConfiguration(classes = PersistenceTravelAgencyApplicationContext.class)
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class ExcursionDaoImplTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
@@ -42,11 +43,6 @@ public class ExcursionDaoImplTest extends AbstractTestNGSpringContextTests {
     public void setup(){
         setupExcursion();
         setupNotInsertedExcursion();
-    }
-
-    @AfterMethod
-    public void cleanup() {
-        removeExcursion(excursion);
     }
 
     @Test
