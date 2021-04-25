@@ -3,22 +3,11 @@ package cz.muni.fi.pa165.bluebat.entity;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.ToString;
-import javax.persistence.Column;
-import javax.persistence.Entity;
-import javax.persistence.GeneratedValue;
-import javax.persistence.GenerationType;
-import javax.persistence.Id;
-import javax.persistence.JoinColumn;
-import javax.persistence.JoinTable;
-import javax.persistence.OneToMany;
-import javax.persistence.OneToOne;
-import javax.persistence.OrderBy;
+
+import javax.persistence.*;
+import javax.validation.constraints.*;
 import java.time.LocalDate;
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.List;
-import java.util.Objects;
-import java.util.Set;
+import java.util.*;
 
 /**
  * @author Ondrej Vaca
@@ -27,31 +16,37 @@ import java.util.Set;
 
 @Entity
 @Setter
+@Getter
 public class Trip {
 
     @Id
     @GeneratedValue(strategy= GenerationType.IDENTITY)
-    @Getter
     private Long id;
 
-    @Getter
+    // Blank checks if not null or blank
+    // Column generates database column with notnull
+    @Column(nullable = false)
+    @NotBlank
     private String name;
 
     @Column(nullable = false)
-    @Getter
+    @NotNull
+    @Future
     private LocalDate dateFrom;
 
     @Column(nullable = false)
-    @Getter
+    @NotNull
+    @Future
     private LocalDate dateTo;
 
     @Column(nullable = false)
-    @Getter
+    @NotBlank
     private String destination;
 
     @Column(nullable = false)
-    @Getter
-    private int availableTrips;
+    @NotNull
+    @Min(0)
+    private Integer availableTrips;
 
     @OneToMany()
     @OrderBy("validFrom DESC")
@@ -60,7 +55,7 @@ public class Trip {
 
     @OneToMany
     @JoinTable()
-    private Set<Excursion> excursions;
+    private Set<Excursion> excursions = new HashSet<>();
 
     public Set<Excursion> getExcursions() {
         return Collections.unmodifiableSet(excursions);
