@@ -8,7 +8,6 @@ import org.springframework.stereotype.Service;
 import javax.transaction.Transactional;
 import java.util.List;
 
-
 /**
  * @author : Rudolf Madoran
  * @since : 7. 4. 2021, Wed
@@ -16,7 +15,6 @@ import java.util.List;
 @Service
 @Transactional
 public class CustomerServiceImpl implements CustomerService{
-
 
     private final CustomerDao customerDao;
 
@@ -32,19 +30,16 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public void addCustomer(Customer customer) {
-
         customerDao.create(customer);
     }
 
     @Override
     public void updateCustomer(Customer customer) {
-
         customerDao.update(customer);
     }
 
     @Override
     public Customer findCustomerById(Long id) {
-
         return customerDao.findById(id);
     }
 

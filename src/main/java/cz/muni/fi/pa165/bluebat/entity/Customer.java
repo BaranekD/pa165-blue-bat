@@ -1,11 +1,8 @@
 package cz.muni.fi.pa165.bluebat.entity;
 
-
 import lombok.Getter;
 import lombok.Setter;
 
-
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -13,6 +10,7 @@ import javax.persistence.OneToOne;
 import javax.persistence.GenerationType;
 import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Past;
 import javax.validation.constraints.Positive;
 import java.time.LocalDate;
@@ -24,57 +22,37 @@ import java.time.LocalDate;
  * @since : 7. 4. 2021, Wed
  **/
 @Entity
+@Setter
+@Getter
 public class Customer {
 
-    @OneToOne(mappedBy = "customer")
-    @Setter
-    @Getter
-    private Reservation reservation;
-
     @Id
-    @Setter
-    @Getter
     @GeneratedValue(strategy = GenerationType.SEQUENCE)
     private Long id;
 
-    @Getter
-    @Setter
-    @Column(nullable = false)
+    @OneToOne(mappedBy = "customer")
+    private Reservation reservation;
+
+    @NotNull
     @Past
     private LocalDate birthday;
 
-    @Getter
-    @Setter
-    @Column(nullable = false)
     @NotBlank
     private String name;
 
-    @Getter
-    @Setter
-    @Column(nullable = false)
     @NotBlank
     @Email
     private String email;
 
-    @Getter
-    @Setter
-    @Column(nullable = false)
     @NotBlank
     private String address;
 
-    @Getter
-    @Setter
-    @Column(nullable = false)
     @NotBlank
     private String surname;
 
-    @Getter
-    @Setter
-    @Column(nullable = false)
+    @NotNull
     @Positive
     private Long phoneNumber;
-
-
 
     @Override
     public boolean equals(Object o) {
@@ -103,5 +81,4 @@ public class Customer {
         result = 31 * result + (getPhoneNumber() != null ? getPhoneNumber().hashCode() : 0);
         return result;
     }
-
 }

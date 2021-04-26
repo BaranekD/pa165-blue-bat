@@ -8,7 +8,6 @@ import java.util.List;
  * @author Ondrej Vaca
  * An interface for manipulation with the Trip database table.
  */
-
 public interface TripDao {
 
     /**

@@ -2,9 +2,9 @@ package cz.muni.fi.pa165.bluebat.entity;
 
 import cz.muni.fi.pa165.bluebat.PersistenceTravelAgencyApplicationContext;
 import org.junit.jupiter.api.Assertions;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
 import javax.persistence.EntityManager;
@@ -13,15 +13,13 @@ import javax.persistence.PersistenceException;
 import javax.persistence.PersistenceUnit;
 import javax.validation.ConstraintViolationException;
 import java.math.BigDecimal;
-import java.time.Duration;
 import java.time.LocalDate;
-
-import static org.junit.jupiter.api.Assertions.assertThrows;
 
 /**
  * @author Dominik Baranek <460705@mail.muni.cz>
  */
 @ContextConfiguration(classes = PersistenceTravelAgencyApplicationContext.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class PriceTest extends AbstractTestNGSpringContextTests {
 
     @PersistenceUnit
@@ -57,14 +55,14 @@ public class PriceTest extends AbstractTestNGSpringContextTests {
     public void priceAmount_null() {
         Price price = getFullyInitializedPrice();
         price.setAmount(null);
-        Assertions.assertThrows(PersistenceException.class, () -> persistPrice(price));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> persistPrice(price));
     }
 
     @Test
     public void priceValidFrom_null() {
         Price price = getFullyInitializedPrice();
         price.setValidFrom(null);
-        Assertions.assertThrows(PersistenceException.class, () -> persistPrice(price));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> persistPrice(price));
     }
 
     @Test

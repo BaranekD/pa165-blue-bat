@@ -16,7 +16,9 @@ import javax.persistence.PersistenceException;
 import javax.persistence.PersistenceUnit;
 import java.time.LocalDate;
 
-
+/**
+ * Created by Tomáš Hampl on 7.4.21.
+ */
 @ContextConfiguration(classes = PersistenceTravelAgencyApplicationContext.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class CustomerTest extends AbstractTestNGSpringContextTests {
@@ -30,18 +32,6 @@ public class CustomerTest extends AbstractTestNGSpringContextTests {
             em = emf.createEntityManager();
             em.getTransaction().begin();
             em.persist(customer);
-            em.getTransaction().commit();
-        } finally {
-            if (em != null) em.close();
-        }
-    }
-
-    private void deleteCustomer(Customer customer) {
-        EntityManager em = null;
-        try {
-            em = emf.createEntityManager();
-            em.getTransaction().begin();
-            em.remove(em.contains(customer) ? customer : em.merge(customer));
             em.getTransaction().commit();
         } finally {
             if (em != null) em.close();

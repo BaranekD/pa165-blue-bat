@@ -1,27 +1,20 @@
 package cz.muni.fi.pa165.bluebat.dao;
 
-
 import cz.muni.fi.pa165.bluebat.PersistenceTravelAgencyApplicationContext;
-import cz.muni.fi.pa165.bluebat.entity.Excursion;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
-import cz.muni.fi.pa165.bluebat.service.TripService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 import org.testng.Assert;
-import org.testng.annotations.AfterClass;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.Test;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceUnit;
 import java.time.LocalDate;
-import java.util.HashSet;
 
 /**
  * Test for dao of Trip entity.
@@ -32,9 +25,8 @@ import java.util.HashSet;
 @Transactional
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @ContextConfiguration(classes = PersistenceTravelAgencyApplicationContext.class)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class TripDaoTest extends AbstractTestNGSpringContextTests {
-
-
 
     @Autowired
     TripDao service;
@@ -65,14 +57,6 @@ public class TripDaoTest extends AbstractTestNGSpringContextTests {
         testTrip3.setDestination("Portugal");
         testTrip3.setDateTo(LocalDate.of(2022,5,15));
         testTrip3.setName("Name3");
-
-    }
-
-    @AfterClass
-    private void deleteTrip() {
-        for (Trip trip: service.findAll()) {
-            service.delete(trip);
-        }
     }
 
     @Test
@@ -125,5 +109,4 @@ public class TripDaoTest extends AbstractTestNGSpringContextTests {
     void createWithNullTest() {
         Assert.assertThrows( InvalidDataAccessApiUsageException.class,() -> service.create(null));
     }
-
 }

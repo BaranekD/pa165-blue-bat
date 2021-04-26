@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.bluebat.entity;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -12,6 +11,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -21,9 +21,9 @@ import java.util.List;
 /**
  * Created by Tomáš Hampl on 3.3.21.
  */
-
 @Entity
 public class Excursion {
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Setter
@@ -32,23 +32,21 @@ public class Excursion {
 
     @Setter
     @Getter
-    @Column(nullable = false)
     @NotBlank
     private String name;
 
     @Setter
     @Getter
-    @Column(nullable = false)
+    @NotNull
     private LocalDate dateFrom;
 
     @Setter
     @Getter
-    @Column(nullable = false)
+    @NotNull
     private Duration duration;
 
     @Setter
     @Getter
-    @Column(nullable = false)
     @NotBlank
     private String destination;
 

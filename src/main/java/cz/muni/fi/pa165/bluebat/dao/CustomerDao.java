@@ -42,5 +42,4 @@ public interface CustomerDao {
      * @return found Customers
      */
     List<Customer> findAll();
-
 }

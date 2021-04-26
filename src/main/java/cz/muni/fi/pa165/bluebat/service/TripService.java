@@ -7,7 +7,6 @@ import java.util.List;
  * A service layer interface for the Trip entity.
  * @author Ondrej Vaca
  */
-
 public interface TripService {
 
     /**

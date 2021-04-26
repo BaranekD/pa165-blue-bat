@@ -5,13 +5,13 @@ import cz.muni.fi.pa165.bluebat.entity.Customer;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.InvalidDataAccessApiUsageException;
+import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
 import org.testng.Assert;
-import org.testng.annotations.AfterMethod;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -21,9 +21,13 @@ import javax.persistence.PersistenceUnit;
 import java.time.LocalDate;
 import java.util.List;
 
+/**
+ * Created by Tomáš Hampl on 18.4.21.
+ */
 @ContextConfiguration(classes = PersistenceTravelAgencyApplicationContext.class)
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class CustomerDaoImplTest extends AbstractTestNGSpringContextTests {
 
     @Autowired
@@ -41,11 +45,6 @@ public class CustomerDaoImplTest extends AbstractTestNGSpringContextTests {
         setupCustomer();
         setupSecondCustomer();
         setupNotInsertedCustomer();
-    }
-
-    @AfterMethod
-    public void cleanup() {
-        removeCustomer(customer, secondCustomer);
     }
 
     @Test

@@ -11,13 +11,13 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.PersistenceException;
 import javax.persistence.PersistenceUnit;
+import javax.validation.ConstraintViolationException;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 
 /**
  * @author Ondrej Vaca
  */
-
 @ContextConfiguration(classes = PersistenceTravelAgencyApplicationContext.class)
 @DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
 public class ReservationTest extends AbstractTestNGSpringContextTests {
@@ -83,11 +83,11 @@ public class ReservationTest extends AbstractTestNGSpringContextTests {
     }
 
     private Trip getInitializeTrip() {
-        Trip trip=new Trip();
-        trip.setName("Slovensko");
-        trip.setDateTo(LocalDate.now());
-        trip.setDateFrom(LocalDate.now());
-        trip.setDestination("Slovensko");
+        Trip trip = new Trip();
+        trip.setName("Slovakia");
+        trip.setDateTo(LocalDate.now().plusDays(2));
+        trip.setDateFrom(LocalDate.now().plusDays(1));
+        trip.setDestination("Slovakia");
         trip.setAvailableTrips(5);
 
         persistTrip(trip);
@@ -141,20 +141,20 @@ public class ReservationTest extends AbstractTestNGSpringContextTests {
     public void reservationTrip_null() {
         getFullyInitializedReservation();
         reservation.setTrip(null);
-        Assertions.assertThrows(PersistenceException.class, () -> persistReservation(reservation));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> persistReservation(reservation));
     }
 
     @Test
     public void reservationPrice_null() {
         getFullyInitializedReservation();
         reservation.setPrice(null);
-        Assertions.assertThrows(PersistenceException.class, () -> persistReservation(reservation));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> persistReservation(reservation));
     }
 
     @Test
     public void reservationCustomer_null() {
         getFullyInitializedReservation();
         reservation.setCustomer(null);
-        Assertions.assertThrows(PersistenceException.class, () -> persistReservation(reservation));
+        Assertions.assertThrows(ConstraintViolationException.class, () -> persistReservation(reservation));
     }
 }

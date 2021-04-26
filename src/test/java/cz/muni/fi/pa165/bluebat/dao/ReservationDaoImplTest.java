@@ -27,7 +27,6 @@ import java.util.List;
 /**
  * @author Ondrej Vaca
  */
-
 @ContextConfiguration(classes = PersistenceTravelAgencyApplicationContext.class)
 @TestExecutionListeners(TransactionalTestExecutionListener.class)
 @Transactional
@@ -44,18 +43,25 @@ public class ReservationDaoImplTest extends AbstractTestNGSpringContextTests {
 
     private Reservation notInsertedReservation;
 
-    private Trip trip;
-
     private Customer customer;
-
-    private Customer notInsertedCustomer;
-
-    private Price price;
 
     private Customer secondCustomer;
 
+    private Customer notInsertedCustomer;
+
+    private Trip trip;
+
+    private Price price;
+
     @BeforeMethod
     public void setup(){
+        setupCustomer();
+        setupSecondCustomer();
+        setupNotInsertedCustomer();
+
+        setupPrice();
+        setupTrip();
+
         setupReservation();
         setupNotInsertedReservation();
     }
@@ -83,7 +89,7 @@ public class ReservationDaoImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void update_valid() {
-        reservation.setCustomer(setupSecondCustomer());
+        reservation.setCustomer(secondCustomer);
         Assertions.assertDoesNotThrow(() -> reservationDao.update(reservation));
 
         Reservation found = reservationDao.findById(reservation.getId());
@@ -153,19 +159,18 @@ public class ReservationDaoImplTest extends AbstractTestNGSpringContextTests {
         Assert.assertFalse(reservations.stream().anyMatch(r -> r.equals(customer)));
     }
 
-    private Trip setupTrip() {
+    private void setupTrip() {
         trip = new Trip();
-        trip.setDateTo(LocalDate.now());
-        trip.setDateFrom(LocalDate.now());
-        trip.setDestination("Slovensko");
+        trip.setName("Trip to Slovakia");
+        trip.setDateTo(LocalDate.now().plusDays(2));
+        trip.setDateFrom(LocalDate.now().plusDays(1));
+        trip.setDestination("Slovakia");
         trip.setAvailableTrips(5);
 
         insertTrip(trip);
-
-        return trip;
     }
 
-    private Customer setupCustomer() {
+    private void setupCustomer() {
         customer = new Customer();
         customer.setName("Karel");
         customer.setSurname("Novák");
@@ -175,11 +180,9 @@ public class ReservationDaoImplTest extends AbstractTestNGSpringContextTests {
         customer.setBirthday(LocalDate.of(1990, 3, 25));
 
         insertCustomer(customer);
-
-        return customer;
     }
 
-    private Customer setupNotInsertedCustomer() {
+    private void setupNotInsertedCustomer() {
         notInsertedCustomer = new Customer();
         notInsertedCustomer.setName("Tomáš");
         notInsertedCustomer.setSurname("Hampl");
@@ -189,11 +192,9 @@ public class ReservationDaoImplTest extends AbstractTestNGSpringContextTests {
         notInsertedCustomer.setBirthday(LocalDate.of(1990, 3, 25));
 
         insertCustomer(notInsertedCustomer);
-
-        return notInsertedCustomer;
     }
 
-    private Customer setupSecondCustomer() {
+    private void setupSecondCustomer() {
         secondCustomer = new Customer();
         secondCustomer.setName("Tomáš");
         secondCustomer.setSurname("Zeman");
@@ -203,34 +204,30 @@ public class ReservationDaoImplTest extends AbstractTestNGSpringContextTests {
         secondCustomer.setBirthday(LocalDate.of(1990, 3, 25));
 
         insertCustomer(secondCustomer);
-
-        return secondCustomer;
     }
 
-    private Price setupPrice() {
+    private void setupPrice() {
         price = new Price();
         price.setAmount(BigDecimal.ONE.setScale(2));
         price.setValidFrom(LocalDate.now());
 
         insertPrice(price);
-
-        return price;
     }
 
     private void setupReservation() {
-        reservation=new Reservation();
-        reservation.setTrip(setupTrip());
-        reservation.setCustomer(setupCustomer());
-        reservation.setPrice(setupPrice());
+        reservation = new Reservation();
+        reservation.setTrip(trip);
+        reservation.setCustomer(customer);
+        reservation.setPrice(price);
 
         insertReservation(reservation);
     }
 
     private void setupNotInsertedReservation(){
-        notInsertedReservation=new Reservation();
-        notInsertedReservation.setTrip(setupTrip());
-        notInsertedReservation.setCustomer(setupNotInsertedCustomer());
-        notInsertedReservation.setPrice(setupPrice());
+        notInsertedReservation = new Reservation();
+        notInsertedReservation.setTrip(trip);
+        notInsertedReservation.setCustomer(notInsertedCustomer);
+        notInsertedReservation.setPrice(price);
     }
 
     private void insertTrip(Trip trip) {
@@ -292,5 +289,4 @@ public class ReservationDaoImplTest extends AbstractTestNGSpringContextTests {
             if (em != null) em.close();
         }
     }
-
 }

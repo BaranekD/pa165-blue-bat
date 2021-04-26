@@ -7,7 +7,6 @@ import cz.muni.fi.pa165.bluebat.entity.Price;
  *
  * Created by Tomáš Hampl on 3.3.21.
  */
-
 public interface PriceDao {
 
     /**
