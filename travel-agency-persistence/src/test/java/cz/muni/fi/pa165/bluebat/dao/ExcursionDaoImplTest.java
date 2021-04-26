@@ -4,7 +4,6 @@ import cz.muni.fi.pa165.bluebat.PersistenceTravelAgencyApplicationContext;
 import cz.muni.fi.pa165.bluebat.entity.Excursion;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -47,7 +46,7 @@ public class ExcursionDaoImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void create_null_InvalidDataAccessApiUsageException() {
-        Assertions.assertThrows(InvalidDataAccessApiUsageException.class, () -> excursionDao.create(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> excursionDao.create(null));
     }
 
     @Test
@@ -63,7 +62,7 @@ public class ExcursionDaoImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void update_null_InvalidDataAccessApiUsageException() {
-        Assertions.assertThrows(InvalidDataAccessApiUsageException.class, () -> excursionDao.update(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> excursionDao.update(null));
     }
 
     @Test
@@ -75,7 +74,7 @@ public class ExcursionDaoImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void delete_null_InvalidDataAccessApiUsageException() {
-        Assertions.assertThrows(InvalidDataAccessApiUsageException.class, () -> excursionDao.delete(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> excursionDao.delete(null));
     }
 
     @Test

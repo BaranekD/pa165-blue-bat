@@ -7,7 +7,6 @@ import cz.muni.fi.pa165.bluebat.entity.Reservation;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -68,7 +67,7 @@ public class ReservationDaoImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void create_null_InvalidDataAccessApiUsageException() {
-        Assertions.assertThrows(InvalidDataAccessApiUsageException.class, () -> reservationDao.create(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> reservationDao.create(null));
     }
 
     @Test
@@ -84,7 +83,7 @@ public class ReservationDaoImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void update_null_InvalidDataAccessApiUsageException() {
-        Assertions.assertThrows(InvalidDataAccessApiUsageException.class, () -> reservationDao.update(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> reservationDao.update(null));
     }
 
     @Test
@@ -98,7 +97,7 @@ public class ReservationDaoImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void delete_null_InvalidDataAccessApiUsageException() {
-        Assertions.assertThrows(InvalidDataAccessApiUsageException.class, () -> reservationDao.delete(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> reservationDao.delete(null));
     }
 
     @Test
