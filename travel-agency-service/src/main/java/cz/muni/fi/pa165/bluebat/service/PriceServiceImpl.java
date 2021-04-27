@@ -25,16 +25,32 @@ public class PriceServiceImpl implements PriceService{
 
     @Override
     public void create(Price price) {
+        if (price == null) {
+            throw new IllegalArgumentException("Price can not be null");
+        }
         priceDao.create(price);
     }
 
     @Override
     public void update(Price price) {
+        if (price == null) {
+            throw new IllegalArgumentException("Price can not be null");
+        }
+        Price previous = priceDao.findById(price.getId());
+        if (previous == null) {
+            throw new IllegalArgumentException("Price has not been found in database");
+        }
         priceDao.update(price);
     }
 
     @Override
     public void updatePrices(List<Price> oldPrices, List<Price> newPrices) {
+        if (oldPrices == null) {
+            throw new IllegalArgumentException("List of old prices can not be null");
+        }
+        if (newPrices == null) {
+            throw new IllegalArgumentException("List of new prices can not be null");
+        }
         List<Long> newPricesIds = newPrices.stream().map(Price::getId).filter(x -> x != null && x > 0).collect(Collectors.toList());
         List<Price> toDelete = oldPrices
                 .stream().filter(x -> !newPricesIds.contains(x.getId())).collect(Collectors.toList());

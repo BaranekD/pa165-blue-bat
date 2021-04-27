@@ -14,19 +14,23 @@ public interface PriceService {
     /**
      * Create a new Price
      * @param price Price to be created
+     *              If it is null then throws IllegalArgumentException.
      */
     void create(Price price);
 
     /**
      * Update a price
-     * @param price Price to be updated
+     * @param price Price to be updated.
+     *              If it is null or is not in the database then throws IllegalArgumentException.
      */
     void update(Price price);
 
     /**
      * Update a list of prices
-     * @param oldPrices an old List of prices that is not up to date
-     * @param newPrices a new list od prices that contains current values
+     * @param oldPrices an old List of prices that is not up to date.
+     *                  If it is null then throws IllegalArgumentException.
+     * @param newPrices a new list od prices that contains current values.
+     *                  If it is null then throws IllegalArgumentException.
      */
     void updatePrices(List<Price> oldPrices,List<Price> newPrices);
 

@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.bluebat.ServiceConfiguration;
 import cz.muni.fi.pa165.bluebat.dao.PriceDao;
 import cz.muni.fi.pa165.bluebat.entity.Price;
 import org.hibernate.service.spi.ServiceException;
+import org.junit.jupiter.api.Assertions;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.test.context.ContextConfiguration;
@@ -24,6 +25,7 @@ import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = ServiceConfiguration.class)
 public class PriceServiceImplTest extends AbstractTestNGSpringContextTests {
@@ -99,16 +101,46 @@ public class PriceServiceImplTest extends AbstractTestNGSpringContextTests {
         doNothing().when(priceDao).delete(any());
     }
 
-    @Test(dataProvider = "priceValues")
-    public void create_called(Price price) {
+    @Test
+    public void create_called() {
+        Price price = getPrice(new BigDecimal(15), LocalDate.of(2022, 1, 1));
         priceService.create(price);
         verify(priceDao, times(1)).create(price);
     }
 
-    @Test(dataProvider = "priceValues")
-    public void update_called(Price price) {
+    @Test
+    public void create_null_IllegalArgumentException() {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> priceService.create(null));
+    }
+
+    @Test
+    public void update_called() {
+        Long id = 1L;
+        Price price = getPrice(new BigDecimal(15), LocalDate.of(2022, 1, 1));
+        price.setId(id);
+        when(priceDao.findById(id)).thenReturn(price);
+
         priceService.update(price);
+
         verify(priceDao, times(1)).update(price);
+    }
+
+    @Test
+    public void update_null_IllegalArgumentException() {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> priceService.update(null));
+    }
+
+    @Test
+    public void update_notInserted_IllegalArgumentException() {
+        Long id = 1L;
+        Price price = getPrice(new BigDecimal(1L), LocalDate.of(2020, 1, 3));
+        price.setId(id);
+        when(priceDao.findById(id)).thenReturn(null);
+
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> priceService.update(price));
     }
 
     @Test
@@ -136,6 +168,18 @@ public class PriceServiceImplTest extends AbstractTestNGSpringContextTests {
         verify(priceDao, never()).create(any());
         verify(priceDao, never()).update(any());
         for (Price price: prices) verify(priceDao, times(1)).delete(price);
+    }
+
+    @Test
+    public void updatePrices_firstNull_IllegalArgumentException() {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () ->priceService.updatePrices(null, new LinkedList<>()));
+    }
+
+    @Test
+    public void updatePrices_secondNull_IllegalArgumentException() {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> priceService.updatePrices(new LinkedList<>(), null));
     }
 
     @Test(dataProvider = "updatePriceLists")
