@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.bluebat.dao;
 import cz.muni.fi.pa165.bluebat.PersistenceTravelAgencyApplicationContext;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -87,17 +86,17 @@ public class TripDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test
     void findNullTest() {
-        Assert.assertThrows( InvalidDataAccessApiUsageException.class,() -> service.findById(null));
+        Assert.assertThrows( IllegalArgumentException.class,() -> service.findById(null));
     }
 
     @Test
     void deleteNullTest() {
-        Assert.assertThrows( InvalidDataAccessApiUsageException.class,() -> service.delete(null));
+        Assert.assertThrows( IllegalArgumentException.class,() -> service.delete(null));
     }
 
     @Test
     void createNullTest() {
-        Assert.assertThrows( InvalidDataAccessApiUsageException.class,() -> service.create(null));
+        Assert.assertThrows( IllegalArgumentException.class,() -> service.create(null));
     }
 
     @Test
@@ -107,6 +106,6 @@ public class TripDaoTest extends AbstractTestNGSpringContextTests {
 
     @Test
     void createWithNullTest() {
-        Assert.assertThrows( InvalidDataAccessApiUsageException.class,() -> service.create(null));
+        Assert.assertThrows( IllegalArgumentException.class,() -> service.create(null));
     }
 }

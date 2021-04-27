@@ -4,7 +4,6 @@ import cz.muni.fi.pa165.bluebat.PersistenceTravelAgencyApplicationContext;
 import cz.muni.fi.pa165.bluebat.entity.Price;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.InvalidDataAccessApiUsageException;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.TestExecutionListeners;
@@ -47,7 +46,7 @@ public class PriceDaoImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void create_null_InvalidDataAccessApiUsageException() {
-        Assertions.assertThrows(InvalidDataAccessApiUsageException.class, () -> priceDao.create(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> priceDao.create(null));
     }
 
     @Test
@@ -63,7 +62,7 @@ public class PriceDaoImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void update_null_InvalidDataAccessApiUsageException() {
-        Assertions.assertThrows(InvalidDataAccessApiUsageException.class, () -> priceDao.update(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> priceDao.update(null));
     }
 
     @Test
@@ -75,7 +74,7 @@ public class PriceDaoImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void delete_null_InvalidDataAccessApiUsageException() {
-        Assertions.assertThrows(InvalidDataAccessApiUsageException.class, () -> priceDao.delete(null));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> priceDao.delete(null));
     }
 
     @Test
