@@ -2,6 +2,8 @@ package cz.muni.fi.pa165.bluebat.service;
 
 import cz.muni.fi.pa165.bluebat.entity.Price;
 
+import java.util.List;
+
 /**
  *  A service layer interface for the Price entity.
  *
@@ -22,15 +24,15 @@ public interface PriceService {
     void update(Price price);
 
     /**
+     * Update a list of prices
+     * @param oldPrices an old List of prices that is not up to date
+     * @param newPrices a new list od prices that contains current values
+     */
+    void updatePrices(List<Price> oldPrices,List<Price> newPrices);
+
+    /**
      * Delete a price
      * @param price Price to be removed
      */
     void delete(Price price);
-
-    /**
-     * Find a price by id
-     * @param id Long id of a price to be found
-     * @return Price if exists, null otherwise
-     */
-    Price findById(Long id);
 }
