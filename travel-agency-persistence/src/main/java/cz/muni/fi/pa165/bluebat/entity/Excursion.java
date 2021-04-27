@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.bluebat.entity;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
 
@@ -22,6 +23,8 @@ import java.util.List;
  * Created by Tomáš Hampl on 3.3.21.
  */
 @Entity
+@Setter
+@Getter
 public class Excursion {
 
     @Id
@@ -57,14 +60,11 @@ public class Excursion {
     @OneToMany
     @OrderBy("validFrom DESC")
     @JoinTable
-    private final List<Price> prices = new ArrayList<>();
+    @Getter(AccessLevel.NONE)
+    private List<Price> prices = new ArrayList<>();
 
     public List<Price> getPrices() {
         return Collections.unmodifiableList(prices);
-    }
-
-    public void addPrice(Price price) {
-        prices.add(price);
     }
 
     @Override

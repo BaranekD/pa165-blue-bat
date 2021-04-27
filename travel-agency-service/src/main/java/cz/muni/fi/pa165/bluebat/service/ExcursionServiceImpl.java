@@ -16,18 +16,32 @@ public class ExcursionServiceImpl implements ExcursionService {
 
     private final ExcursionDao excursionDao;
 
+    private final PriceService priceService;
+
     @Autowired
-    public ExcursionServiceImpl(ExcursionDao excursionDao) {
+    public ExcursionServiceImpl(ExcursionDao excursionDao, PriceService priceService) {
         this.excursionDao = excursionDao;
+        this.priceService = priceService;
     }
 
     @Override
     public void create(Excursion excursion) {
+        if (excursion == null) {
+            throw new IllegalArgumentException("Excursion can not be null");
+        }
         excursionDao.create(excursion);
     }
 
     @Override
     public void update(Excursion excursion) {
+        if (excursion == null) {
+            throw new IllegalArgumentException("Excursion can not be null");
+        }
+        Excursion previous = excursionDao.findById(excursion.getId());
+        if (previous == null) {
+            throw new IllegalArgumentException("Excursion has not been found in database");
+        }
+        priceService.updatePrices(previous.getPrices(), excursion.getPrices());
         excursionDao.update(excursion);
     }
 
