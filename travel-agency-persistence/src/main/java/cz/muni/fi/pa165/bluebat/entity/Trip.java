@@ -70,6 +70,20 @@ public class Trip {
         return Collections.unmodifiableList(prices);
     }
 
+    public void addExcursion(Excursion ex){
+      excursions.add(ex);
+    }
+    public void removeExcursion(Excursion ex){
+        excursions.remove(ex);
+    }
+
+    public void addPrice(Price price) {
+        prices.add(price);
+    }
+    public void removePrice(Price price) {
+        prices.remove(price);
+    }
+
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
