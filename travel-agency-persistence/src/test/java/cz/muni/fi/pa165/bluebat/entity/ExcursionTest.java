@@ -10,7 +10,6 @@ import org.testng.annotations.Test;
 
 import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
-import javax.persistence.PersistenceException;
 import javax.persistence.PersistenceUnit;
 import javax.validation.ConstraintViolationException;
 
@@ -21,7 +20,7 @@ import java.time.LocalDate;
  * @author Dominik Baranek <460705@mail.muni.cz>
  */
 @ContextConfiguration(classes = PersistenceTravelAgencyApplicationContext.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_CLASS)
 public class ExcursionTest extends AbstractTestNGSpringContextTests {
 
     @PersistenceUnit
@@ -40,12 +39,30 @@ public class ExcursionTest extends AbstractTestNGSpringContextTests {
     }
 
     private Excursion getFullyInitializedExcursion() {
+        Trip trip = new Trip();
+        trip.setAvailableTrips(5);
+        trip.setDateFrom(LocalDate.of(2022,6,5));
+        trip.setDestination("Brno");
+        trip.setDateTo(LocalDate.of(2022,3,15));
+        trip.setName("Test trip");
+
+        EntityManager em = null;
+        try {
+            em = emf.createEntityManager();
+            em.getTransaction().begin();
+            em.persist(trip);
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) em.close();
+        }
+
         Excursion result = new Excursion();
         result.setName("testName");
         result.setDuration(Duration.ofDays(1));
         result.setDateFrom(LocalDate.now());
         result.setDestination("testDestination");
         result.setDescription("testDescription");
+        result.setTrip(trip);
 
         return result;
     }

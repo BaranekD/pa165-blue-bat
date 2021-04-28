@@ -9,6 +9,8 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
 import javax.validation.constraints.NotBlank;
@@ -65,6 +67,17 @@ public class Excursion {
 
     public List<Price> getPrices() {
         return Collections.unmodifiableList(prices);
+    }
+
+    @ManyToOne
+    @NotNull
+    @Setter(AccessLevel.NONE)
+    private Trip trip;
+
+    public void setTrip(Trip newTrip) {
+        if (trip != null) trip.removeExcursion(this);
+        trip = newTrip;
+        trip.addExcursion(this);
     }
 
     @Override
