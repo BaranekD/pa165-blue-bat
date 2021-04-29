@@ -19,7 +19,6 @@ import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
 import org.springframework.transaction.annotation.Transactional;
-import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -84,14 +83,6 @@ public class TripFacadeImplTest extends AbstractTestNGSpringContextTests {
 
         return  testTrip3;
     }
-
-    /*
-    public void createTrip(TripCreateDTO dto);
-    public void updateTrip(Long tripId, TripCreateDTO dto);
-    public void addPrice(Long tripId, Long priceId);
-    public void removePrice(Long tripId, Long priceId);
-    public void deleteTrip(Long tripId);
-    */
 
     @Test
     public void testCreateTrip() {
