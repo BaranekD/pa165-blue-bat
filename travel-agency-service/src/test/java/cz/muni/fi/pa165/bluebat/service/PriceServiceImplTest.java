@@ -7,6 +7,7 @@ import org.hibernate.service.spi.ServiceException;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.annotations.BeforeMethod;
@@ -15,6 +16,7 @@ import org.testng.annotations.Test;
 
 import java.math.BigDecimal;
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.Collections;
 import java.util.LinkedList;
@@ -22,6 +24,7 @@ import java.util.List;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.never;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
@@ -91,6 +94,22 @@ public class PriceServiceImplTest extends AbstractTestNGSpringContextTests {
         };
     }
 
+    @DataProvider(name = "daoThrowsPriceLists")
+    private static Object[][] getDaoThrowsUpdatePriceLists() {
+        Price newCreated = getPrice(new BigDecimal(16), LocalDate.of(2021, 2, 1));
+        Price oldDeleted = getPrice(new BigDecimal(8), LocalDate.of(2021, 3, 5));
+        oldDeleted.setId(2L);
+        Price oldUpdated = getPrice(new BigDecimal(15), LocalDate.of(2022, 1, 1));
+        oldUpdated.setId(15L);
+        Price newUpdated = getPrice(new BigDecimal(150), LocalDate.of(2021, 1, 1));
+        newUpdated.setId(15L);
+        return new Object[][] {
+                { new ArrayList<Price>(), Collections.singletonList(newCreated) },
+                { Collections.singletonList(oldDeleted), new ArrayList<Price>() },
+                { Collections.singletonList(oldUpdated), Collections.singletonList(newUpdated)},
+        };
+    }
+
     @BeforeMethod
     public void setup() throws ServiceException {
         MockitoAnnotations.openMocks(this);
@@ -109,8 +128,16 @@ public class PriceServiceImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void create_null_IllegalArgumentException() {
-        Assertions.assertThrows(IllegalArgumentException.class,
+    public void create_daoThrows_DataAccessException() {
+        Price price = getPrice(new BigDecimal(15), LocalDate.of(2022, 1, 1));
+        doThrow(new IllegalArgumentException()).when(priceDao).create(any());
+        Assertions.assertThrows(DataAccessException.class, () -> priceService.create(price));
+    }
+
+    @Test
+    public void create_null_DataAccessException() {
+        doThrow(new IllegalArgumentException()).when(priceDao).create(null);
+        Assertions.assertThrows(DataAccessException.class,
                 () -> priceService.create(null));
     }
 
@@ -128,6 +155,7 @@ public class PriceServiceImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void update_null_IllegalArgumentException() {
+        doThrow(new IllegalArgumentException()).when(priceDao).update(null);
         Assertions.assertThrows(IllegalArgumentException.class,
                 () -> priceService.update(null));
     }
@@ -184,11 +212,25 @@ public class PriceServiceImplTest extends AbstractTestNGSpringContextTests {
 
     @Test(dataProvider = "updatePriceLists")
     public void updatePrices_onlyUpdating(List<Price> oldPrices, List<Price> newPrices) {
+        for (Price price: oldPrices) {
+            when(priceDao.findById(price.getId())).thenReturn(price);
+        }
+
         priceService.updatePrices(oldPrices, newPrices);
 
         verify(priceDao, never()).create(any());
         for (Price price: newPrices) verify(priceDao, times(1)).update(price);
         verify(priceDao, never()).delete(any());
+    }
+
+    @Test(dataProvider = "daoThrowsPriceLists")
+    public void updatePrices_daoThrows_DataAccessException(List<Price> oldPrices, List<Price> newPrices) {
+        doThrow(new IllegalArgumentException()).when(priceDao).create(any());
+        doThrow(new IllegalArgumentException()).when(priceDao).update(any());
+        doThrow(new IllegalArgumentException()).when(priceDao).delete(any());
+        doThrow(new IllegalArgumentException()).when(priceDao).findById(any());
+
+        Assertions.assertThrows(DataAccessException.class, () -> priceService.updatePrices(oldPrices, newPrices));
     }
 
     @Test
@@ -200,6 +242,8 @@ public class PriceServiceImplTest extends AbstractTestNGSpringContextTests {
         Price newUpdated = getPrice(new BigDecimal(12), LocalDate.of(2020, 2, 1));
         oldUpdated.setId(15L);
         newUpdated.setId(15L);
+        when(priceDao.findById(oldUpdated.getId())).thenReturn(oldUpdated);
+
 
         priceService.updatePrices(Arrays.asList(oldDeleted, oldUpdated), Arrays.asList(newUpdated, newCreated));
 
@@ -212,6 +256,13 @@ public class PriceServiceImplTest extends AbstractTestNGSpringContextTests {
     public void delete_called(Price price) {
         priceService.delete(price);
         verify(priceDao, times(1)).delete(price);
+    }
+
+    @Test
+    public void delete_null_DataAccessException() {
+        doThrow(new IllegalArgumentException()).when(priceDao).delete(null);
+        Assertions.assertThrows(DataAccessException.class,
+                () -> priceService.delete(null));
     }
 
     private static Price getPrice(BigDecimal amount, LocalDate date) {

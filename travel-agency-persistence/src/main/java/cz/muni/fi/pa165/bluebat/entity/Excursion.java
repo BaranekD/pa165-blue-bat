@@ -93,6 +93,8 @@ public class Excursion {
             return false;
         if (getDuration() != null ? !getDuration().equals(excursion.getDuration()) : excursion.getDuration() != null)
             return false;
+        if (getTrip() != null ? !getTrip().equals(excursion.getTrip()) : excursion.getTrip() != null)
+            return false;
         return getDestination() != null ? getDestination().equals(excursion.getDestination()) : excursion.getDestination() == null;
     }
 

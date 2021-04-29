@@ -41,7 +41,13 @@ public class ExcursionFacadeImpl implements ExcursionFacade {
 
     @Override
     public void updateExcursion(ExcursionDTO excursionDTO){
+        Trip trip = tripService.findById(excursionDTO.getParentId());
+        if (trip == null) {
+            throw new IllegalArgumentException("Trip has not been found");
+        }
+
         Excursion excursion = getExcursion(excursionDTO);
+        excursion.setTrip(trip);
 
         excursionService.update(excursion);
     }
@@ -66,6 +72,7 @@ public class ExcursionFacadeImpl implements ExcursionFacade {
         result.setDestination(excursion.getDestination());
         result.setDescription(excursion.getDescription());
         result.setPrices(excursion.getPrices().stream().map(this::getPriceDTO).collect(Collectors.toList()));
+        result.setParentId(excursion.getTrip().getId());
         return result;
     }
 

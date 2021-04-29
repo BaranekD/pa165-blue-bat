@@ -8,8 +8,10 @@ import org.hibernate.service.spi.ServiceException;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
@@ -21,6 +23,7 @@ import java.util.Arrays;
 
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -62,8 +65,9 @@ public class ExcursionServiceImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void create_null_IllegalArgumentException() {
-        Assertions.assertThrows(IllegalArgumentException.class,
+    public void create_null_DataAccessException() {
+        doThrow(IllegalArgumentException.class).when(excursionDao).create(any());
+        Assertions.assertThrows(DataAccessException.class,
                 () -> excursionService.create(null));
     }
 
@@ -100,7 +104,8 @@ public class ExcursionServiceImplTest extends AbstractTestNGSpringContextTests {
 
         excursionService.update(newExcursion);
 
-        verify(priceService, times(1)).updatePrices(oldExcursion.getPrices(), newExcursion.getPrices());
+        verify(priceService, times(1))
+                .updatePrices(oldExcursion.getPrices(), newExcursion.getPrices());
         verify(excursionDao, times(1)).update(newExcursion);
     }
 
@@ -120,10 +125,65 @@ public class ExcursionServiceImplTest extends AbstractTestNGSpringContextTests {
                 () -> excursionService.update(excursion));
     }
 
+    @Test
+    public void update_daoThrowsWhenFindPrevious_DataAccessException() {
+        Excursion excursion = getDefaultInsertedExcursion();
+        Long id = excursion.getId();
+        when(excursionService.findById(id)).thenThrow(IllegalArgumentException.class);
+
+        Assertions.assertThrows(DataAccessException.class,
+                () -> excursionService.update(excursion));
+    }
+
+    @Test
+    public void update_daoThrowsWhenUpdating_DataAccessException() {
+        Excursion excursion = getDefaultInsertedExcursion();
+        Long id = excursion.getId();
+        when(excursionService.findById(id)).thenReturn(excursion);
+        doThrow(IllegalArgumentException.class).when(excursionDao).update(any());
+
+        Assertions.assertThrows(DataAccessException.class,
+                () -> excursionService.update(excursion));
+    }
+
     @Test(dataProvider = "excursions")
     public void delete_called(Excursion excursion) {
         Assertions.assertDoesNotThrow(() -> excursionService.delete(excursion));
         verify(excursionDao, times(1)).delete(excursion);
+    }
+
+    @Test
+    public void delete_null_DataAccessException() {
+        doThrow(IllegalArgumentException.class).when(excursionDao).delete(null);
+        Assertions.assertThrows(DataAccessException.class, () -> excursionService.delete(null));
+    }
+
+    @Test
+    public void findById_notInserted_valid() {
+        Excursion first = getDefaultInsertedExcursion();
+        Excursion second = getDefaultInsertedExcursion();
+        Long id = first.getId();
+        when(excursionService.findById(id)).thenReturn(first);
+
+        Excursion found = excursionService.findById(1L);
+
+        Assert.assertEquals(found, second);
+    }
+
+    @Test
+    public void findById_notInserted_null() {
+        when(excursionService.findById(1L)).thenReturn(null);
+
+        Excursion found = excursionService.findById(1L);
+
+        Assert.assertNull(found);
+    }
+
+    @Test
+    public void findById_daoThrows_() {
+        when(excursionService.findById(any())).thenThrow(IllegalArgumentException.class);
+
+        Assertions.assertThrows(DataAccessException.class, ()-> excursionService.findById(1L));
     }
 
     private static Excursion getDefaultExcursion() {
