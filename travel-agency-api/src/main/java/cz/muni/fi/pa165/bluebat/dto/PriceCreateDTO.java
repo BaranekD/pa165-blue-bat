@@ -13,10 +13,7 @@ import java.time.LocalDate;
  */
 @Getter
 @Setter
-public class PriceDTO {
-    @Positive
-    private Long id;
-
+public class PriceCreateDTO {
     @Positive
     private BigDecimal amount;
 

@@ -1,16 +1,19 @@
 package cz.muni.fi.pa165.bluebat.service.facade;
 
 import cz.muni.fi.pa165.bluebat.ServiceConfiguration;
+import cz.muni.fi.pa165.bluebat.dto.ExcursionCreateDTO;
 import cz.muni.fi.pa165.bluebat.dto.ExcursionDTO;
 import cz.muni.fi.pa165.bluebat.entity.Excursion;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
 import cz.muni.fi.pa165.bluebat.facade.ExcursionFacade;
+import cz.muni.fi.pa165.bluebat.service.BeanMappingService;
 import cz.muni.fi.pa165.bluebat.service.ExcursionService;
 import cz.muni.fi.pa165.bluebat.service.TripService;
 import org.hibernate.service.spi.ServiceException;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
@@ -27,6 +30,11 @@ import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = ServiceConfiguration.class)
 public class ExcursionFacadeImplTest extends AbstractTestNGSpringContextTests {
+    private static final Long TRIP_ID = 15L;
+
+    @Autowired
+    private BeanMappingService beanMappingService;
+
     @Mock
     private ExcursionService excursionService;
 
@@ -38,26 +46,26 @@ public class ExcursionFacadeImplTest extends AbstractTestNGSpringContextTests {
     @BeforeMethod
     public void setup() throws ServiceException {
         MockitoAnnotations.openMocks(this);
-        excursionFacade = new ExcursionFacadeImpl(excursionService, tripService);
+        excursionFacade = new ExcursionFacadeImpl(excursionService, tripService, beanMappingService);
     }
 
     @Test
     public void createExcursion_valid() {
         Excursion excursion = getDefaultExcursion();
-        ExcursionDTO excursionDTO = getDefaultExcursionDTO();
-        when(tripService.findById(excursion.getTrip().getId())).thenReturn(excursion.getTrip());
+        ExcursionCreateDTO excursionCreateDTO = getDefaultExcursionCreateDTO();
+        when(tripService.findById(TRIP_ID)).thenReturn(excursion.getTrip());
 
-        excursionFacade.createExcursion(excursionDTO);
+        excursionFacade.createExcursion(excursionCreateDTO);
 
         verify(excursionService, times(1)).create(excursion);
     }
 
     @Test
     public void createExcursion_invalidParentId() {
-        ExcursionDTO excursionDTO = getDefaultExcursionDTO();
+        ExcursionCreateDTO excursionCreateDTO = getDefaultExcursionCreateDTO();
         when(tripService.findById(any())).thenReturn(null);
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> excursionFacade.createExcursion(excursionDTO));
+        Assertions.assertThrows(IllegalArgumentException.class, () -> excursionFacade.createExcursion(excursionCreateDTO));
     }
 
     @Test
@@ -67,13 +75,12 @@ public class ExcursionFacadeImplTest extends AbstractTestNGSpringContextTests {
         excursion.setId(id);
         ExcursionDTO excursionDTO = getDefaultExcursionDTO();
         excursionDTO.setId(id);
-        when(tripService.findById(excursion.getTrip().getId())).thenReturn(excursion.getTrip());
+        when(tripService.findById(TRIP_ID)).thenReturn(excursion.getTrip());
 
         excursionFacade.updateExcursion(excursionDTO);
 
         verify(excursionService, times(1)).update(excursion);
     }
-
 
     @Test
     public void updateExcursion_invalidParentId() {
@@ -133,7 +140,7 @@ public class ExcursionFacadeImplTest extends AbstractTestNGSpringContextTests {
         trip.setDateTo(LocalDate.of(2022, 5, 5));
         trip.setAvailableTrips(5);
         trip.setDestination("Madrid");
-        trip.setId(15L);
+        trip.setId(TRIP_ID);
 
         Excursion result = new Excursion();
         result.setName("Test excursion");
@@ -153,7 +160,19 @@ public class ExcursionFacadeImplTest extends AbstractTestNGSpringContextTests {
         result.setDuration(Duration.ofHours(4));
         result.setDestination("Madrid");
         result.setDescription("climbing");
-        result.setParentId(15L);
+        result.setParentId(TRIP_ID);
+
+        return result;
+    }
+
+    private static ExcursionCreateDTO getDefaultExcursionCreateDTO() {
+        ExcursionCreateDTO result = new ExcursionCreateDTO();
+        result.setName("Test excursion");
+        result.setDateFrom(LocalDate.of(2022, 4, 25));
+        result.setDuration(Duration.ofHours(4));
+        result.setDestination("Madrid");
+        result.setDescription("climbing");
+        result.setParentId(TRIP_ID);
 
         return result;
     }

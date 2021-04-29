@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.bluebat.facade;
 
+import cz.muni.fi.pa165.bluebat.dto.ExcursionCreateDTO;
 import cz.muni.fi.pa165.bluebat.dto.ExcursionDTO;
 
 /**
@@ -9,7 +10,7 @@ import cz.muni.fi.pa165.bluebat.dto.ExcursionDTO;
  */
 public interface ExcursionFacade {
 
-    void createExcursion(ExcursionDTO excursionDTO);
+    void createExcursion(ExcursionCreateDTO excursionCreateDTO);
 
     void updateExcursion(ExcursionDTO excursionDTO);
 

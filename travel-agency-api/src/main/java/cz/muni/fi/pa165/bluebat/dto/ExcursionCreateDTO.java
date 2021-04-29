@@ -11,17 +11,11 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by Tomáš Hampl on 27.4.21.
- */
 @Getter
 @Setter
-public class ExcursionDTO {
+public class ExcursionCreateDTO {
     @Positive
     private Long parentId;
-
-    @Positive
-    private Long id;
 
     @NotBlank
     private String name;
@@ -37,5 +31,5 @@ public class ExcursionDTO {
 
     private String description;
 
-    private List<PriceDTO> prices = new ArrayList<>();
+    private List<PriceCreateDTO> prices = new ArrayList<>();
 }
