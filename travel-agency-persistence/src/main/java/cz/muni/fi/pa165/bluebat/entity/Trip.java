@@ -14,6 +14,7 @@ import javax.validation.constraints.Future;
 import javax.validation.constraints.Min;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.Collections;
@@ -55,11 +56,10 @@ public class Trip {
 
     @OneToMany()
     @OrderBy("validFrom DESC")
-    @JoinTable(name = "TRIP_PRICE")
     private List<Price> prices = new ArrayList<>();
 
-    @OneToMany
-    @JoinTable()
+
+    @OneToMany (mappedBy = "trip")
     private Set<Excursion> excursions = new HashSet<>();
 
     public Set<Excursion> getExcursions() {
@@ -82,6 +82,19 @@ public class Trip {
     }
     public void removePrice(Price price) {
         prices.remove(price);
+    }
+
+    public BigDecimal getPrice(){
+        BigDecimal realPrice = new BigDecimal(0);
+        for(Price price:prices)
+        {
+            if (LocalDate.now().compareTo(price.getValidFrom()) >= 0) {
+                realPrice = price.getAmount();
+            } else {
+                break;
+            }
+        }
+        return realPrice;
     }
 
     @Override

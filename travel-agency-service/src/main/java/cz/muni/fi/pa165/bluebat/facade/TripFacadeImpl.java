@@ -1,10 +1,13 @@
 package cz.muni.fi.pa165.bluebat.facade;
 
+import cz.muni.fi.pa165.bluebat.dao.TripDao;
 import cz.muni.fi.pa165.bluebat.dto.TripCreateDTO;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
 import cz.muni.fi.pa165.bluebat.service.ExcursionService;
 import cz.muni.fi.pa165.bluebat.service.PriceService;
 import cz.muni.fi.pa165.bluebat.service.TripService;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
@@ -21,15 +24,19 @@ import java.util.Set;
 public class TripFacadeImpl implements TripFacade{
 
 
-    @Inject
+
     private TripService tripService;
 
-    @Inject
-    private ExcursionService excursionService;
 
-    @Inject
+
     private PriceService priceService;
 
+    @Autowired
+    public TripFacadeImpl(TripService tripService,PriceService priceService) {
+        this.tripService = tripService;
+        this.priceService = priceService;
+
+    }
 
     @Override
     public void createTrip(TripCreateDTO dto) {
@@ -47,6 +54,9 @@ public class TripFacadeImpl implements TripFacade{
     @Override
     public void updateTrip(Long tripId, TripCreateDTO dto) {
         Trip update = tripService.findById(tripId);
+        if(update == null){
+            throw new IllegalArgumentException() {};
+        }
         update.setName(dto.getName());
         update.setDestination(dto.getDestination());
         update.setDateFrom(dto.getDateFrom());
@@ -56,25 +66,15 @@ public class TripFacadeImpl implements TripFacade{
 
     }
 
-    @Override
-    public void addExcursion(Long tripId, Long excursionId) {
-        tripService.findById(tripId).addExcursion(excursionService.findById(excursionId));
-
-    }
-
-    @Override
-    public void removeExcursion(Long tripId, Long excursionId) {
-        tripService.findById(tripId).removeExcursion(excursionService.findById(excursionId));
-    }
 
     @Override
     public void addPrice(Long tripId, Long priceId) {
-        tripService.findById(tripId).addPrice(priceService.findById(priceId));
+        tripService.addPrice(tripService.findById(tripId),priceService.findById(priceId));
     }
 
     @Override
     public void removePrice(Long tripId, Long priceId) {
-        tripService.findById(tripId).removePrice(priceService.findById(priceId));
+        tripService.removePrice(tripService.findById(tripId),priceService.findById(priceId));
     }
 
 

@@ -1,5 +1,7 @@
 package cz.muni.fi.pa165.bluebat.service;
 
+import cz.muni.fi.pa165.bluebat.entity.Excursion;
+import cz.muni.fi.pa165.bluebat.entity.Price;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
 import java.util.List;
 
@@ -44,4 +46,20 @@ public interface TripService {
      * @return List<Trip> list of all trips
      */
     List<Trip> findAll();
+
+    /**
+     * Add a price from trip
+     *
+     * @param trip Trip trip to be added to
+     * @param price Price price to be added to trip
+     */
+    public void addPrice(Trip trip, Price price);
+
+    /**
+     * Remove a price from trip
+     *
+     * @param trip Trip trip to be removed from
+     * @param price Price price to be removed from trip
+     */
+    public void removePrice(Trip trip, Price price);
 }
