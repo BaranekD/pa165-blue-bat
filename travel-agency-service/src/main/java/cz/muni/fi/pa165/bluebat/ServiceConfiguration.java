@@ -10,7 +10,9 @@ import org.springframework.context.annotation.Import;
 @Import(PersistenceTravelAgencyApplicationContext.class)
 public class ServiceConfiguration {
     @Bean
-    public Mapper dozer(){
-        return DozerBeanMapperBuilder.buildDefault();
+    public Mapper dozer() {
+        return DozerBeanMapperBuilder.create()
+                .withMappingFiles("dozerBeanMapping.xml")
+                .build();
     }
 }
