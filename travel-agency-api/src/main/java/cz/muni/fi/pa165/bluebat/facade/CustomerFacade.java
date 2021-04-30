@@ -2,8 +2,11 @@ package cz.muni.fi.pa165.bluebat.facade;
 
 import cz.muni.fi.pa165.bluebat.dto.CustomerCreateDTO;
 import cz.muni.fi.pa165.bluebat.dto.CustomerDTO;
-
 import java.util.List;
+
+/**
+ * @author Ondrej Vaca
+ */
 
 public interface CustomerFacade {
     void createCustomer(CustomerCreateDTO customerCreateDTO);

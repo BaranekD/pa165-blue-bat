@@ -16,7 +16,6 @@ import org.testng.annotations.Test;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
@@ -24,7 +23,9 @@ import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
-
+/**
+ * @author Ondrej Vaca
+ */
 @ContextConfiguration(classes = ServiceConfiguration.class)
 public class CustomerServiceImplTest extends AbstractTestNGSpringContextTests {
 
@@ -65,7 +66,6 @@ public class CustomerServiceImplTest extends AbstractTestNGSpringContextTests {
         Assertions.assertThrows(WrongDataAccessException.class, () -> customerService.addCustomer(customer));
     }
 
-
     @Test
     public void update_called() {
         Customer customer = getDefaultInsertedCustomer();
@@ -95,6 +95,7 @@ public class CustomerServiceImplTest extends AbstractTestNGSpringContextTests {
     @Test
     public void update_daoThrowsException_WrongDataAccessException() {
         Customer customer = getDefaultCustomer();
+        when(customerDao.findById(customer.getId())).thenReturn(customer);
 
         doThrow(new IllegalArgumentException()).when(customerDao).update(customer);
         Assertions.assertThrows(WrongDataAccessException.class, () -> customerService.updateCustomer(customer));
@@ -103,6 +104,7 @@ public class CustomerServiceImplTest extends AbstractTestNGSpringContextTests {
     @Test
     public void delete_called() {
         Customer customer = getDefaultInsertedCustomer();
+        when(customerDao.findById(customer.getId())).thenReturn(customer);
 
         customerService.deleteCustomer(customer);
         verify(customerDao, times(1)).delete(customer);
@@ -111,6 +113,7 @@ public class CustomerServiceImplTest extends AbstractTestNGSpringContextTests {
     @Test
     public void delete_daoThrowsException_WrongDataAccessException() {
         Customer customer = getDefaultCustomer();
+        when(customerDao.findById(customer.getId())).thenReturn(customer);
 
         doThrow(new IllegalArgumentException()).when(customerDao).delete(customer);
         Assertions.assertThrows(WrongDataAccessException.class, () -> customerService.deleteCustomer(customer));
