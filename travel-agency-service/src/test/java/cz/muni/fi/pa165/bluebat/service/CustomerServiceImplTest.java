@@ -6,15 +6,17 @@ import cz.muni.fi.pa165.bluebat.entity.Customer;
 import cz.muni.fi.pa165.bluebat.exceptions.WrongDataAccessException;
 import org.hibernate.service.spi.ServiceException;
 import org.junit.jupiter.api.Assertions;
-import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.doThrow;
@@ -112,6 +114,64 @@ public class CustomerServiceImplTest extends AbstractTestNGSpringContextTests {
 
         doThrow(new IllegalArgumentException()).when(customerDao).delete(customer);
         Assertions.assertThrows(WrongDataAccessException.class, () -> customerService.deleteCustomer(customer));
+    }
+
+    @Test
+    public void findCustomerById_notInserted_valid() {
+        Customer first = getDefaultInsertedCustomer();
+        Customer second = getDefaultInsertedCustomer();
+        Long id = first.getId();
+        when(customerService.findCustomerById(id)).thenReturn(first);
+
+        Customer found = customerService.findCustomerById(1L);
+
+        Assert.assertEquals(found, second);
+    }
+
+    @Test
+    public void findCustomerById_notInserted_null() {
+        when(customerService.findCustomerById(1L)).thenReturn(null);
+
+        Customer found = customerService.findCustomerById(1L);
+
+        Assert.assertNull(found);
+    }
+
+    @Test
+    public void findCustomerById_daoThrows() {
+        when(customerService.findCustomerById(any())).thenThrow(IllegalArgumentException.class);
+
+        Assertions.assertThrows(WrongDataAccessException.class, ()-> customerService.findCustomerById(1L));
+    }
+
+    @Test
+    public void findAllCustomers_valid() {
+        Customer first = getDefaultInsertedCustomer();
+        Customer second = getDefaultInsertedCustomer();
+        List<Customer> customers=new ArrayList<>();
+        customers.add(first);
+        customers.add(second);
+        when(customerService.findAllCustomers()).thenReturn(customers);
+
+        List<Customer> found = customerService.findAllCustomers();
+
+        Assert.assertEquals(found, customers);
+    }
+
+    @Test
+    public void findAllCustomers_null() {
+        when(customerService.findAllCustomers()).thenReturn(null);
+
+        List<Customer> found = customerService.findAllCustomers();
+
+        Assert.assertNull(found);
+    }
+
+    @Test
+    public void findAllCustomers_daoThrows() {
+        when(customerService.findAllCustomers()).thenThrow(IllegalArgumentException.class);
+
+        Assertions.assertThrows(WrongDataAccessException.class, ()-> customerService.findAllCustomers());
     }
 
     private static Customer getDefaultCustomer() {
