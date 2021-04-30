@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.bluebat.facade;
 import cz.muni.fi.pa165.bluebat.dto.TripCreateDTO;
+import cz.muni.fi.pa165.bluebat.dto.TripDTO;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -13,9 +14,7 @@ import javax.transaction.Transactional;
 @Transactional
 public interface TripFacade {
     public void createTrip(TripCreateDTO dto);
-    public void updateTrip(Long tripId, TripCreateDTO dto);
-    public void addPrice(Long tripId, Long priceId);
-    public void removePrice(Long tripId, Long priceId);
+    public void updateTrip(TripDTO dto);
     public void deleteTrip(Long tripId);
-
+    TripDTO getTripDTO(Long id);
 }
