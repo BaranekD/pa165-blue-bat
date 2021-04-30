@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.bluebat.dao;
 
 import cz.muni.fi.pa165.bluebat.PersistenceTravelAgencyApplicationContext;
 import cz.muni.fi.pa165.bluebat.entity.Excursion;
+import cz.muni.fi.pa165.bluebat.entity.Trip;
 import org.junit.jupiter.api.Assertions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.annotation.DirtiesContext;
@@ -35,11 +36,13 @@ public class ExcursionDaoImplTest extends AbstractTestNGSpringContextTests {
     @PersistenceUnit
     private EntityManagerFactory emf;
 
+    private Trip trip;
     private Excursion excursion;
     private Excursion notInsertedExcursion;
 
     @BeforeMethod
     public void setup(){
+        setupTrip();
         setupExcursion();
         setupNotInsertedExcursion();
     }
@@ -111,6 +114,25 @@ public class ExcursionDaoImplTest extends AbstractTestNGSpringContextTests {
         Assert.assertNull(found);
     }
 
+    private void setupTrip() {
+        trip = new Trip();
+        trip.setAvailableTrips(5);
+        trip.setDateFrom(LocalDate.now().plusDays(7L));
+        trip.setDestination("Brno");
+        trip.setDateTo(LocalDate.now().plusDays(14L));
+        trip.setName("Test trip");
+
+        EntityManager em = null;
+        try {
+            em = emf.createEntityManager();
+            em.getTransaction().begin();
+            em.persist(trip);
+            em.getTransaction().commit();
+        } finally {
+            if (em != null) em.close();
+        }
+    }
+
     private void setupExcursion() {
         excursion = new Excursion();
         excursion.setName("testName");
@@ -118,6 +140,7 @@ public class ExcursionDaoImplTest extends AbstractTestNGSpringContextTests {
         excursion.setDateFrom(LocalDate.now());
         excursion.setDestination("testDestination");
         excursion.setDescription("testDescription");
+        excursion.setTrip(trip);
 
         insertExcursion(excursion);
     }
@@ -129,6 +152,7 @@ public class ExcursionDaoImplTest extends AbstractTestNGSpringContextTests {
         notInsertedExcursion.setDateFrom(LocalDate.now());
         notInsertedExcursion.setDestination("notInsertedDestination");
         notInsertedExcursion.setDescription("notInsertedDescription");
+        notInsertedExcursion.setTrip(trip);
     }
 
     private void insertExcursion(Excursion excursion) {

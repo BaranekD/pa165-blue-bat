@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.bluebat.service;
 
 import cz.muni.fi.pa165.bluebat.dao.ExcursionDao;
 import cz.muni.fi.pa165.bluebat.entity.Excursion;
+import cz.muni.fi.pa165.bluebat.exceptions.WrongDataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -16,28 +17,63 @@ public class ExcursionServiceImpl implements ExcursionService {
 
     private final ExcursionDao excursionDao;
 
+    private final PriceService priceService;
+
     @Autowired
-    public ExcursionServiceImpl(ExcursionDao excursionDao) {
+    public ExcursionServiceImpl(ExcursionDao excursionDao, PriceService priceService) {
         this.excursionDao = excursionDao;
+        this.priceService = priceService;
     }
 
     @Override
     public void create(Excursion excursion) {
-        excursionDao.create(excursion);
+        try {
+            excursionDao.create(excursion);
+        } catch (Exception e) {
+            throw new WrongDataAccessException("Excursion dao layer exception", e);
+        }
     }
 
     @Override
     public void update(Excursion excursion) {
-        excursionDao.update(excursion);
+        if (excursion == null) {
+            throw new IllegalArgumentException("Excursion can not be null");
+        }
+
+        Excursion previous;
+        try {
+            previous = excursionDao.findById(excursion.getId());
+        } catch (Exception e) {
+            throw new WrongDataAccessException("Excursion dao layer exception", e);
+        }
+        if (previous == null) {
+            throw new IllegalArgumentException("Excursion has not been found in database");
+        }
+
+        priceService.updatePrices(previous.getPrices(), excursion.getPrices());
+
+        try {
+            excursionDao.update(excursion);
+        } catch (Exception e) {
+            throw new WrongDataAccessException("Excursion dao layer exception", e);
+        }
     }
 
     @Override
     public void delete(Excursion excursion) {
-        excursionDao.delete(excursion);
+        try {
+            excursionDao.delete(excursion);
+        } catch (Exception e) {
+            throw new WrongDataAccessException("Excursion dao layer exception", e);
+        }
     }
 
     @Override
     public Excursion findById(Long id) {
-        return excursionDao.findById(id);
+        try {
+            return excursionDao.findById(id);
+        } catch (Exception e) {
+            throw new WrongDataAccessException("Excursion dao layer exception", e);
+        }
     }
 }
