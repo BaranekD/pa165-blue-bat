@@ -1,0 +1,742 @@
+<html>
+<head>
+<title>TestNG:  Surefire test</title>
+<link href="../testng.css" rel="stylesheet" type="text/css" />
+<link href="../my-testng.css" rel="stylesheet" type="text/css" />
+
+<style type="text/css">
+.log { display: none;} 
+.stack-trace { display: none;} 
+</style>
+<script type="text/javascript">
+<!--
+function flip(e) {
+  current = e.style.display;
+  if (current == 'block') {
+    e.style.display = 'none';
+    return 0;
+  }
+  else {
+    e.style.display = 'block';
+    return 1;
+  }
+}
+
+function toggleBox(szDivId, elem, msg1, msg2)
+{
+  var res = -1;  if (document.getElementById) {
+    res = flip(document.getElementById(szDivId));
+  }
+  else if (document.all) {
+    // this is the way old msie versions work
+    res = flip(document.all[szDivId]);
+  }
+  if(elem) {
+    if(res == 0) elem.innerHTML = msg1; else elem.innerHTML = msg2;
+  }
+
+}
+
+function toggleAllBoxes() {
+  if (document.getElementsByTagName) {
+    d = document.getElementsByTagName('div');
+    for (i = 0; i < d.length; i++) {
+      if (d[i].className == 'log') {
+        flip(d[i]);
+      }
+    }
+  }
+}
+
+// -->
+</script>
+
+</head>
+<body>
+<h2 align='center'>Surefire test</h2><table border='1' align="center">
+<tr>
+<td>Tests passed/Failed/Skipped:</td><td>131/0/0</td>
+</tr><tr>
+<td>Started on:</td><td>Mon Apr 26 23:18:44 CEST 2021</td>
+</tr>
+<tr><td>Total time:</td><td>91 seconds (91283 ms)</td>
+</tr><tr>
+<td>Included groups:</td><td></td>
+</tr><tr>
+<td>Excluded groups:</td><td></td>
+</tr>
+</table><p/>
+<small><i>(Hover the method name to see the test class name)</i></small><p/>
+<table width='100%' border='1' class='invocation-passed'>
+<tr><td colspan='4' align='center'><b>PASSED TESTS</b></td></tr>
+<tr><td><b>Test method</b></td>
+<td width="30%"><b>Exception</b></td>
+<td width="10%"><b>Time (seconds)</b></td>
+<td><b>Instance</b></td>
+</tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.TripTest.tripInvalidDateFrom()'><b>tripInvalidDateFrom</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.TripTest<br>Parameters: 2020-05-01</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.TripTest@59402b8f</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest.findById_removedPrice()'><b>findById_removedPrice</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest@1c5920df</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest.create_valid()'><b>create_valid</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest@6bbe85a8</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerEmail_invalid_notEmail()'><b>customerEmail_invalid_notEmail</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: a@b@test.com</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.ExcursionTest.excursionName_invalid()'><b>excursionName_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.ExcursionTest<br>Parameters: null</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.ExcursionTest@5524cca1</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest.findById_notInserted()'><b>findById_notInserted</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest@1c5920df</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerPhoneNumber_negativeValue()'><b>customerPhoneNumber_negativeValue</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest.update_null_InvalidDataAccessApiUsageException()'><b>update_null_InvalidDataAccessApiUsageException</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest@6bbe85a8</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest.findAll_oneInserted()'><b>findAll_oneInserted</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest@8519cb4</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.TripTest.tripInvalidDestination()'><b>tripInvalidDestination</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.TripTest<br>Parameters: </td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.TripTest@59402b8f</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.TripDaoTest.findNonExistingTripTest()'><b>findNonExistingTripTest</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.TripDaoTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.TripDaoTest@18271936</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerEmail_invalid_notEmail()'><b>customerEmail_invalid_notEmail</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: abc.@test.com</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.ExcursionTest.excursionDestination_null()'><b>excursionDestination_null</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.ExcursionTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.ExcursionTest@5524cca1</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerName_invalid()'><b>customerName_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters:  </td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest.findById_removedReservation()'><b>findById_removedReservation</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest@8519cb4</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.TripTest.tripInvalidDateFrom()'><b>tripInvalidDateFrom</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.TripTest<br>Parameters: null</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.TripTest@59402b8f</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.TripTest.tripInvalidDateTo()'><b>tripInvalidDateTo</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.TripTest<br>Parameters: null</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.TripTest@59402b8f</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.TripTest.tripInvalidDateTo()'><b>tripInvalidDateTo</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.TripTest<br>Parameters: 1878-05-01</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.TripTest@59402b8f</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerBirthday_inFuture()'><b>customerBirthday_inFuture</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerEmail_invalid_notEmail()'><b>customerEmail_invalid_notEmail</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: abc..def@test.com</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest.create_valid()'><b>create_valid</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest@1c5920df</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest.update_null_InvalidDataAccessApiUsageException()'><b>update_null_InvalidDataAccessApiUsageException</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest@8519cb4</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest.update_valid()'><b>update_valid</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest@8519cb4</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.PriceTest.priceAmount_null()'><b>priceAmount_null</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.PriceTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.PriceTest@1750fbeb</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest.delete_valid()'><b>delete_valid</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest@6bbe85a8</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest.create_valid()'><b>create_valid</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest@8519cb4</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerAddress_invalid()'><b>customerAddress_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters:  </td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerEmail_invalid_blank()'><b>customerEmail_invalid_blank</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: 
+</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.ExcursionTest.excursionDuration_null()'><b>excursionDuration_null</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.ExcursionTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.ExcursionTest@5524cca1</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.TripTest.tripInvalidDateFrom()'><b>tripInvalidDateFrom</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.TripTest<br>Parameters: 0001-01-01</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.TripTest@59402b8f</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.ExcursionTest.excursionDestination_invalid()'><b>excursionDestination_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.ExcursionTest<br>Parameters: </td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.ExcursionTest@5524cca1</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.TripTest.tripInvalidDateTo()'><b>tripInvalidDateTo</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.TripTest<br>Parameters: 2020-05-01</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.TripTest@59402b8f</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.PriceTest.price_fullyInitialized()'><b>price_fullyInitialized</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.PriceTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.PriceTest@1750fbeb</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerName_invalid()'><b>customerName_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: 
+</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.ReservationTest.reservationTrip_null()'><b>reservationTrip_null</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.ReservationTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.ReservationTest@31ea9581</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest.update_valid()'><b>update_valid</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest@8f2ef19</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest.findById_valid()'><b>findById_valid</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest@8519cb4</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.TripTest.tripInvalidDateFrom()'><b>tripInvalidDateFrom</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.TripTest<br>Parameters: 1878-05-01</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.TripTest@59402b8f</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.TripTest.tripInvalidDestination()'><b>tripInvalidDestination</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.TripTest<br>Parameters: null</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.TripTest@59402b8f</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerEmail_invalid_blank()'><b>customerEmail_invalid_blank</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: </td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerEmail_invalid_notEmail()'><b>customerEmail_invalid_notEmail</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: abc@-test.com</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.TripTest.tripInvalidName()'><b>tripInvalidName</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.TripTest<br>Parameters: 
+</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.TripTest@59402b8f</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest.findById_removedCustomer()'><b>findById_removedCustomer</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest@8f2ef19</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.TripDaoTest.createNullTest()'><b>createNullTest</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.TripDaoTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.TripDaoTest@18271936</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest.delete_valid()'><b>delete_valid</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest@8519cb4</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerAddress_invalid()'><b>customerAddress_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: </td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.TripTest.tripInvalidName()'><b>tripInvalidName</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.TripTest<br>Parameters: </td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.TripTest@59402b8f</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerEmail_invalid_notEmail()'><b>customerEmail_invalid_notEmail</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: .abc@test.com</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.ExcursionTest.excursionDestination_invalid()'><b>excursionDestination_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.ExcursionTest<br>Parameters:  </td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.ExcursionTest@5524cca1</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest.create_null_InvalidDataAccessApiUsageException()'><b>create_null_InvalidDataAccessApiUsageException</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest@1c5920df</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerAddress_invalid()'><b>customerAddress_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: 	</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest.create_null_InvalidDataAccessApiUsageException()'><b>create_null_InvalidDataAccessApiUsageException</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest@8519cb4</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerSurname_invalid()'><b>customerSurname_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: 	</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.ReservationTest.reservation_fullyInitialized()'><b>reservation_fullyInitialized</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.ReservationTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.ReservationTest@31ea9581</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest.update_valid()'><b>update_valid</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest@6bbe85a8</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest.findById_valid()'><b>findById_valid</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest@6bbe85a8</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerAddress_invalid()'><b>customerAddress_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: 
+</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.TripTest.tripInvalidName()'><b>tripInvalidName</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.TripTest<br>Parameters: null</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.TripTest@59402b8f</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerSurname_invalid()'><b>customerSurname_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: null</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest.update_valid()'><b>update_valid</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest@1c5920df</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.ExcursionTest.excursionDateFrom_null()'><b>excursionDateFrom_null</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.ExcursionTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.ExcursionTest@5524cca1</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.TripTest.tripInvalidAvailability()'><b>tripInvalidAvailability</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.TripTest<br>Parameters: null</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.TripTest@59402b8f</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest.findAll_oneDeleted()'><b>findAll_oneDeleted</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest@8519cb4</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest.create_null_InvalidDataAccessApiUsageException()'><b>create_null_InvalidDataAccessApiUsageException</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest@8f2ef19</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest.delete_notInserted()'><b>delete_notInserted</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest@6bbe85a8</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.ExcursionTest.excursionDestination_invalid()'><b>excursionDestination_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.ExcursionTest<br>Parameters: null</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.ExcursionTest@5524cca1</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.TripTest.tripInvalidAvailability()'><b>tripInvalidAvailability</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.TripTest<br>Parameters: -5</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.TripTest@59402b8f</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.TripTest.tripInvalidDestination()'><b>tripInvalidDestination</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.TripTest<br>Parameters: 
+</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.TripTest@59402b8f</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.ExcursionTest.excursionName_null()'><b>excursionName_null</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.ExcursionTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.ExcursionTest@5524cca1</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest.update_null_InvalidDataAccessApiUsageException()'><b>update_null_InvalidDataAccessApiUsageException</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest@8f2ef19</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerEmail_invalid_blank()'><b>customerEmail_invalid_blank</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters:  </td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.TripTest.tripInvalidDateTo()'><b>tripInvalidDateTo</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.TripTest<br>Parameters: 0001-01-01</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.TripTest@59402b8f</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest.findAll_oneDeleted()'><b>findAll_oneDeleted</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest@8f2ef19</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest.findById_valid()'><b>findById_valid</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest@8f2ef19</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.ExcursionTest.excursionName_invalid()'><b>excursionName_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.ExcursionTest<br>Parameters: 	</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.ExcursionTest@5524cca1</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerEmail_invalid_notEmail()'><b>customerEmail_invalid_notEmail</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: a"b"c@test.com</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerName_invalid()'><b>customerName_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: 	</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest.delete_null_InvalidDataAccessApiUsageException()'><b>delete_null_InvalidDataAccessApiUsageException</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest@6bbe85a8</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.PriceTest.priceValidFrom_null()'><b>priceValidFrom_null</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.PriceTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.PriceTest@1750fbeb</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest.findAll_doesNotThrow()'><b>findAll_doesNotThrow</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest@8f2ef19</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.TripDaoTest.createWithNullTest()'><b>createWithNullTest</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.TripDaoTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.TripDaoTest@18271936</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerName_invalid()'><b>customerName_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: null</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerPhoneNumber_null()'><b>customerPhoneNumber_null</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.ExcursionTest.excursionName_invalid()'><b>excursionName_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.ExcursionTest<br>Parameters: </td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.ExcursionTest@5524cca1</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest.delete_null_InvalidDataAccessApiUsageException()'><b>delete_null_InvalidDataAccessApiUsageException</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest@1c5920df</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest.delete_valid()'><b>delete_valid</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest@8f2ef19</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.ExcursionTest.excursionName_invalid()'><b>excursionName_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.ExcursionTest<br>Parameters: 
+</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.ExcursionTest@5524cca1</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest.findAll_oneInserted()'><b>findAll_oneInserted</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest@8f2ef19</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerBirthday_null()'><b>customerBirthday_null</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.ExcursionTest.excursionDestination_invalid()'><b>excursionDestination_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.ExcursionTest<br>Parameters: 	</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.ExcursionTest@5524cca1</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerEmail_invalid_notEmail()'><b>customerEmail_invalid_notEmail</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: test</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerSurname_invalid()'><b>customerSurname_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: </td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerSurname_invalid()'><b>customerSurname_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: 
+</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest.create_null_InvalidDataAccessApiUsageException()'><b>create_null_InvalidDataAccessApiUsageException</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest@6bbe85a8</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest.findById_notInserted()'><b>findById_notInserted</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest@8519cb4</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerEmail_invalid_notEmail()'><b>customerEmail_invalid_notEmail</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: abc@test..com</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.ReservationTest.reservationPrice_null()'><b>reservationPrice_null</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.ReservationTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.ReservationTest@31ea9581</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest.delete_null_InvalidDataAccessApiUsageException()'><b>delete_null_InvalidDataAccessApiUsageException</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest@8f2ef19</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest.findById_notInserted()'><b>findById_notInserted</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest@8f2ef19</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.TripDaoTest.deleteTest()'><b>deleteTest</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.TripDaoTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.TripDaoTest@18271936</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest.delete_null_InvalidDataAccessApiUsageException()'><b>delete_null_InvalidDataAccessApiUsageException</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest@8519cb4</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest.findAll_doesNotThrow()'><b>findAll_doesNotThrow</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.ReservationDaoImplTest@8519cb4</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.TripDaoTest.createTest()'><b>createTest</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.TripDaoTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.TripDaoTest@18271936</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.ExcursionTest.excursionDestination_invalid()'><b>excursionDestination_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.ExcursionTest<br>Parameters: 
+</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.ExcursionTest@5524cca1</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerEmail_invalid_blank()'><b>customerEmail_invalid_blank</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: 	</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.ExcursionTest.excursion_fullyInitialized()'><b>excursion_fullyInitialized</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.ExcursionTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.ExcursionTest@5524cca1</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest.update_null_InvalidDataAccessApiUsageException()'><b>update_null_InvalidDataAccessApiUsageException</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest@1c5920df</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.TripDaoTest.updateTest()'><b>updateTest</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.TripDaoTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.TripDaoTest@18271936</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest.delete_notInserted()'><b>delete_notInserted</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest@1c5920df</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.TripDaoTest.deleteNullTest()'><b>deleteNullTest</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.TripDaoTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.TripDaoTest@18271936</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.TripDaoTest.findNullTest()'><b>findNullTest</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.TripDaoTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.TripDaoTest@18271936</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerEmail_invalid_notEmail()'><b>customerEmail_invalid_notEmail</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: @test.com</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest.delete_notInserted()'><b>delete_notInserted</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest@8f2ef19</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerEmail_invalid_blank()'><b>customerEmail_invalid_blank</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: null</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.TripTest.tripInvalidName()'><b>tripInvalidName</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.TripTest<br>Parameters: 	</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.TripTest@59402b8f</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.ReservationTest.reservationCustomer_null()'><b>reservationCustomer_null</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.ReservationTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.ReservationTest@31ea9581</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.TripTest.tripInvalidDestination()'><b>tripInvalidDestination</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.TripTest<br>Parameters:  </td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.TripTest@59402b8f</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.TripTest.tripInvalidDestination()'><b>tripInvalidDestination</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.TripTest<br>Parameters: 	</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.TripTest@59402b8f</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerName_invalid()'><b>customerName_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: </td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.ExcursionTest.excursionName_invalid()'><b>excursionName_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.ExcursionTest<br>Parameters:  </td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.ExcursionTest@5524cca1</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest.create_valid()'><b>create_valid</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.CustomerDaoImplTest@8f2ef19</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.TripTest.tripInvalidAvailability()'><b>tripInvalidAvailability</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.TripTest<br>Parameters: -10</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.TripTest@59402b8f</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest.findById_notInserted()'><b>findById_notInserted</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest@6bbe85a8</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customer_fullyInitialized()'><b>customer_fullyInitialized</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerAddress_invalid()'><b>customerAddress_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: null</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.TripTest.tripInvalidName()'><b>tripInvalidName</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.TripTest<br>Parameters:  </td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.TripTest@59402b8f</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest.findById_valid()'><b>findById_valid</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.PriceDaoImplTest@1c5920df</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest.findById_removedExcursion()'><b>findById_removedExcursion</b><br>Test class: cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.dao.ExcursionDaoImplTest@6bbe85a8</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerEmail_invalid_notEmail()'><b>customerEmail_invalid_notEmail</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters: test@</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.CustomerTest.customerSurname_invalid()'><b>customerSurname_invalid</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.CustomerTest<br>Parameters:  </td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.CustomerTest@5b218417</td></tr>
+<tr>
+<td title='cz.muni.fi.pa165.bluebat.entity.PriceTest.priceAmount_negativeValue()'><b>priceAmount_negativeValue</b><br>Test class: cz.muni.fi.pa165.bluebat.entity.PriceTest</td>
+<td></td>
+<td>0</td>
+<td>cz.muni.fi.pa165.bluebat.entity.PriceTest@1750fbeb</td></tr>
+</table><p>
+</body>
+</html>

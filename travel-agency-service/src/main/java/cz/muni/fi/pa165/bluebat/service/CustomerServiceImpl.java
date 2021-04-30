@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.bluebat.service;
 
 import cz.muni.fi.pa165.bluebat.dao.CustomerDao;
 import cz.muni.fi.pa165.bluebat.entity.Customer;
+import cz.muni.fi.pa165.bluebat.exceptions.WrongDataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -25,26 +26,70 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public void deleteCustomer(Customer customer) {
-        customerDao.delete(customer);
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer can not be null");
+        }
+
+        Customer previous = customerDao.findById(customer.getId());
+
+        if (previous == null) {
+            throw new IllegalArgumentException("Customer has not been found in database");
+        }
+
+        try {
+            customerDao.delete(customer);
+        } catch (Exception ex) {
+            throw new WrongDataAccessException("Error while deleting a customer", ex);
+        }
     }
 
     @Override
     public void addCustomer(Customer customer) {
-        customerDao.create(customer);
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer can not be null");
+        }
+
+        try {
+            customerDao.create(customer);
+        } catch (Exception ex) {
+            throw new WrongDataAccessException("Error while creating a customer", ex);
+        }
     }
 
     @Override
     public void updateCustomer(Customer customer) {
-        customerDao.update(customer);
+        if (customer == null) {
+            throw new IllegalArgumentException("Customer can not be null");
+        }
+
+        Customer previous = customerDao.findById(customer.getId());
+
+        if (previous == null) {
+            throw new IllegalArgumentException("Customer has not been found in database");
+        }
+
+        try {
+            customerDao.update(customer);
+        } catch (Exception ex) {
+            throw new WrongDataAccessException("Error while updating a customer", ex);
+        }
     }
 
     @Override
     public Customer findCustomerById(Long id) {
-        return customerDao.findById(id);
+        try {
+            return customerDao.findById(id);
+        } catch (Exception ex) {
+            throw new WrongDataAccessException("Error while finding a customer", ex);
+        }
     }
 
     @Override
     public List<Customer> findAllCustomers() {
-        return customerDao.findAll();
+        try {
+            return customerDao.findAll();
+        } catch (Exception ex) {
+            throw new WrongDataAccessException("Error while finding customers", ex);
+        }
     }
 }
