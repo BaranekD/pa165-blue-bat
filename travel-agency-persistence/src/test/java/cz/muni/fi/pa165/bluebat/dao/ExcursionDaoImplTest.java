@@ -48,7 +48,7 @@ public class ExcursionDaoImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void create_null_InvalidDataAccessApiUsageException() {
+    public void create_null_IllegalArgumentException() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> excursionDao.create(null));
     }
 
@@ -64,7 +64,7 @@ public class ExcursionDaoImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void update_null_InvalidDataAccessApiUsageException() {
+    public void update_null_IllegalArgumentException() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> excursionDao.update(null));
     }
 
@@ -76,7 +76,7 @@ public class ExcursionDaoImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void delete_null_InvalidDataAccessApiUsageException() {
+    public void delete_null_IllegalArgumentException() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> excursionDao.delete(null));
     }
 

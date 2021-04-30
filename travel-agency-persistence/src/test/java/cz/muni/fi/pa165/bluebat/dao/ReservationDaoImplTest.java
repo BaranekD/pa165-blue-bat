@@ -66,7 +66,7 @@ public class ReservationDaoImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void create_null_InvalidDataAccessApiUsageException() {
+    public void create_null_IllegalArgumentException() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> reservationDao.create(null));
     }
 
@@ -82,7 +82,7 @@ public class ReservationDaoImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void update_null_InvalidDataAccessApiUsageException() {
+    public void update_null_IllegalArgumentException() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> reservationDao.update(null));
     }
 
@@ -96,7 +96,7 @@ public class ReservationDaoImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void delete_null_InvalidDataAccessApiUsageException() {
+    public void delete_null_IllegalArgumentException() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> reservationDao.delete(null));
     }
 
