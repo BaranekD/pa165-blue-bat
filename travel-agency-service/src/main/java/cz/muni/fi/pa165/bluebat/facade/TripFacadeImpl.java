@@ -1,8 +1,13 @@
 package cz.muni.fi.pa165.bluebat.facade;
 
 import cz.muni.fi.pa165.bluebat.dao.TripDao;
+import cz.muni.fi.pa165.bluebat.dto.ExcursionDTO;
+import cz.muni.fi.pa165.bluebat.dto.PriceCreateDTO;
 import cz.muni.fi.pa165.bluebat.dto.TripCreateDTO;
+import cz.muni.fi.pa165.bluebat.dto.TripDTO;
+import cz.muni.fi.pa165.bluebat.entity.Price;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
+import cz.muni.fi.pa165.bluebat.service.BeanMappingService;
 import cz.muni.fi.pa165.bluebat.service.ExcursionService;
 import cz.muni.fi.pa165.bluebat.service.PriceService;
 import cz.muni.fi.pa165.bluebat.service.TripService;
@@ -12,7 +17,9 @@ import org.springframework.stereotype.Service;
 
 import javax.inject.Inject;
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -26,15 +33,13 @@ public class TripFacadeImpl implements TripFacade{
 
 
     private TripService tripService;
+    private final BeanMappingService beanMappingService;
 
-
-
-    private PriceService priceService;
 
     @Autowired
-    public TripFacadeImpl(TripService tripService,PriceService priceService) {
+    public TripFacadeImpl(TripService tripService,BeanMappingService beanMappingService) {
         this.tripService = tripService;
-        this.priceService = priceService;
+        this.beanMappingService = beanMappingService;
 
     }
 
@@ -52,8 +57,8 @@ public class TripFacadeImpl implements TripFacade{
 
 
     @Override
-    public void updateTrip(Long tripId, TripCreateDTO dto) {
-        Trip update = tripService.findById(tripId);
+    public void updateTrip(TripDTO dto) {
+        Trip update = tripService.findById(dto.getId());
         if(update == null){
             throw new IllegalArgumentException() {};
         }
@@ -66,21 +71,20 @@ public class TripFacadeImpl implements TripFacade{
 
     }
 
-
-    @Override
-    public void addPrice(Long tripId, Long priceId) {
-        tripService.addPrice(tripService.findById(tripId),priceService.findById(priceId));
-    }
-
-    @Override
-    public void removePrice(Long tripId, Long priceId) {
-        tripService.removePrice(tripService.findById(tripId),priceService.findById(priceId));
-    }
-
-
     @Override
     public void deleteTrip(Long tripId) {
         tripService.delete(tripService.findById(tripId));
+    }
+
+    @Override
+    public TripDTO getTripDTO(Long id) {
+
+        Trip found = tripService.findById(id);
+        if (found == null) {
+            return null;
+        }
+        TripDTO result = beanMappingService.mapTo(found, TripDTO.class);
+        return result;
     }
 
 

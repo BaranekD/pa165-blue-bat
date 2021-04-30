@@ -59,8 +59,6 @@ public class Excursion {
     @Getter
     private String description;
 
-    @ManyToOne
-    private Trip trip;
 
     @OneToMany
     @OrderBy("validFrom DESC")

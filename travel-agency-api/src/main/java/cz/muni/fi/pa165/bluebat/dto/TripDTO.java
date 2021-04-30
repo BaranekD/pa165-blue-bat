@@ -12,7 +12,9 @@ import java.util.*;
  **/
 @Getter
 @Setter
-public class TripCreateDTO {
+public class TripDTO {
+
+    private Long id;
 
 
     private String name;
@@ -33,14 +35,13 @@ public class TripCreateDTO {
 
 
 
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null) return false;
-        if (!(obj instanceof TripCreateDTO)) return false;
+        if (!(obj instanceof TripDTO)) return false;
 
-        TripCreateDTO trip = (TripCreateDTO) obj;
+        TripDTO trip = (TripDTO) obj;
 
         if (getDateFrom() != null ? !getDateFrom().equals(trip.getDateFrom()) : trip.getDateFrom() != null)
             return false;
