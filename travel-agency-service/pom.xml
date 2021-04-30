@@ -24,6 +24,11 @@
             <version>${project.version}</version>
         </dependency>
         <dependency>
+            <groupId>com.github.dozermapper</groupId>
+            <artifactId>dozer-core</artifactId>
+            <version>6.5.2</version>
+        </dependency>
+        <dependency>
             <groupId>cz.muni.fi.pa165</groupId>
             <artifactId>travel-agency-api</artifactId>
             <version>1.0-SNAPSHOT</version>
