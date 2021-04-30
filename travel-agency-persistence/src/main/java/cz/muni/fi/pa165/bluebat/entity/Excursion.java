@@ -1,9 +1,18 @@
 package cz.muni.fi.pa165.bluebat.entity;
 
+import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.JoinTable;
+import javax.persistence.ManyToMany;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
+import javax.persistence.OrderBy;
 
-import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.Duration;
@@ -16,6 +25,8 @@ import java.util.List;
  * Created by Tomáš Hampl on 3.3.21.
  */
 @Entity
+@Setter
+@Getter
 public class Excursion {
 
     @Id
@@ -54,7 +65,8 @@ public class Excursion {
     @OneToMany
     @OrderBy("validFrom DESC")
     @JoinTable
-    private final List<Price> prices = new ArrayList<>();
+    @Getter(AccessLevel.NONE)
+    private List<Price> prices = new ArrayList<>();
 
     public List<Price> getPrices() {
         return Collections.unmodifiableList(prices);
@@ -62,6 +74,21 @@ public class Excursion {
 
     public void addPrice(Price price) {
         prices.add(price);
+    }
+
+    public void removePrice(Price price) {
+        prices.remove(price);
+    }
+
+    @ManyToOne
+    @NotNull
+    @Setter(AccessLevel.NONE)
+    private Trip trip;
+
+    public void setTrip(Trip newTrip) {
+        if (trip != null) trip.removeExcursion(this);
+        trip = newTrip;
+        trip.addExcursion(this);
     }
 
     @Override
@@ -76,6 +103,8 @@ public class Excursion {
         if (getDateFrom() != null ? !getDateFrom().equals(excursion.getDateFrom()) : excursion.getDateFrom() != null)
             return false;
         if (getDuration() != null ? !getDuration().equals(excursion.getDuration()) : excursion.getDuration() != null)
+            return false;
+        if (getTrip() != null ? !getTrip().equals(excursion.getTrip()) : excursion.getTrip() != null)
             return false;
         return getDestination() != null ? getDestination().equals(excursion.getDestination()) : excursion.getDestination() == null;
     }

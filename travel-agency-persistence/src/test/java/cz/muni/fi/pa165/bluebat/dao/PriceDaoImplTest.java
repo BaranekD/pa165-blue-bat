@@ -45,7 +45,7 @@ public class PriceDaoImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void create_null_InvalidDataAccessApiUsageException() {
+    public void create_null_IllegalArgumentException() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> priceDao.create(null));
     }
 
@@ -61,7 +61,7 @@ public class PriceDaoImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void update_null_InvalidDataAccessApiUsageException() {
+    public void update_null_IllegalArgumentException() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> priceDao.update(null));
     }
 
@@ -73,7 +73,7 @@ public class PriceDaoImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void delete_null_InvalidDataAccessApiUsageException() {
+    public void delete_null_IllegalArgumentException() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> priceDao.delete(null));
     }
 

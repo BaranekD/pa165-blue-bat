@@ -47,7 +47,7 @@ public class CustomerDaoImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void create_null_InvalidDataAccessApiUsageException() {
+    public void create_null_IllegalArgumentException() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> customerDao.create(null));
     }
 
@@ -63,7 +63,7 @@ public class CustomerDaoImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void update_null_InvalidDataAccessApiUsageException() {
+    public void update_null_IllegalArgumentException() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> customerDao.update(null));
     }
 
@@ -77,7 +77,7 @@ public class CustomerDaoImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void delete_null_InvalidDataAccessApiUsageException() {
+    public void delete_null_IllegalArgumentException() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> customerDao.delete(null));
     }
 
