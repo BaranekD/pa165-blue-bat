@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.bluebat.entity;
 import lombok.AccessLevel;
 import lombok.Getter;
 import lombok.Setter;
-
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
@@ -13,6 +12,7 @@ import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
+
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import java.time.Duration;
@@ -58,6 +58,9 @@ public class Excursion {
     @Setter
     @Getter
     private String description;
+
+    @ManyToOne
+    private Trip trip;
 
     @OneToMany
     @OrderBy("validFrom DESC")
