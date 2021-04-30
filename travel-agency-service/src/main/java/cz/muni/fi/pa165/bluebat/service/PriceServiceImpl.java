@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.bluebat.service;
 
 import cz.muni.fi.pa165.bluebat.dao.PriceDao;
 import cz.muni.fi.pa165.bluebat.entity.Price;
+import cz.muni.fi.pa165.bluebat.exceptions.WrongDataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -29,7 +30,7 @@ public class PriceServiceImpl implements PriceService{
         try {
             priceDao.create(price);
         } catch (Exception e) {
-            throw new DataAccessException("Price dao layer exception", e) {  };
+            throw new WrongDataAccessException("Price dao layer exception", e);
         }
     }
 
@@ -43,7 +44,7 @@ public class PriceServiceImpl implements PriceService{
         try {
             previous = priceDao.findById(price.getId());
         } catch (Exception e) {
-            throw new DataAccessException("Price dao layer exception", e) {  };
+            throw new WrongDataAccessException("Price dao layer exception", e);
         }
         if (previous == null) {
             throw new IllegalArgumentException("Price has not been found in database");
@@ -52,7 +53,7 @@ public class PriceServiceImpl implements PriceService{
         try {
             priceDao.update(price);
         } catch (Exception e) {
-            throw new DataAccessException("Price dao layer exception", e) {  };
+            throw new WrongDataAccessException("Price dao layer exception", e);
         }
     }
 
@@ -82,7 +83,7 @@ public class PriceServiceImpl implements PriceService{
         try {
             priceDao.delete(price);
         } catch (Exception e) {
-            throw new DataAccessException("Price dao layer exception", e) {  };
+            throw new WrongDataAccessException("Price dao layer exception", e);
         }
     }
 }

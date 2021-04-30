@@ -69,6 +69,14 @@ public class Excursion {
         return Collections.unmodifiableList(prices);
     }
 
+    public void addPrice(Price price) {
+        prices.add(price);
+    }
+
+    public void removePrice(Price price) {
+        prices.remove(price);
+    }
+
     @ManyToOne
     @NotNull
     @Setter(AccessLevel.NONE)

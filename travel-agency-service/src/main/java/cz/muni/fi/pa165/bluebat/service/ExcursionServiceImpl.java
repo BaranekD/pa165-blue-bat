@@ -2,8 +2,8 @@ package cz.muni.fi.pa165.bluebat.service;
 
 import cz.muni.fi.pa165.bluebat.dao.ExcursionDao;
 import cz.muni.fi.pa165.bluebat.entity.Excursion;
+import cz.muni.fi.pa165.bluebat.exceptions.WrongDataAccessException;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -30,7 +30,7 @@ public class ExcursionServiceImpl implements ExcursionService {
         try {
             excursionDao.create(excursion);
         } catch (Exception e) {
-            throw new DataAccessException("Excursion dao layer exception", e) {  };
+            throw new WrongDataAccessException("Excursion dao layer exception", e);
         }
     }
 
@@ -44,7 +44,7 @@ public class ExcursionServiceImpl implements ExcursionService {
         try {
             previous = excursionDao.findById(excursion.getId());
         } catch (Exception e) {
-            throw new DataAccessException("Excursion dao layer exception", e) {  };
+            throw new WrongDataAccessException("Excursion dao layer exception", e);
         }
         if (previous == null) {
             throw new IllegalArgumentException("Excursion has not been found in database");
@@ -55,7 +55,7 @@ public class ExcursionServiceImpl implements ExcursionService {
         try {
             excursionDao.update(excursion);
         } catch (Exception e) {
-            throw new DataAccessException("Excursion dao layer exception", e) {  };
+            throw new WrongDataAccessException("Excursion dao layer exception", e);
         }
     }
 
@@ -64,7 +64,7 @@ public class ExcursionServiceImpl implements ExcursionService {
         try {
             excursionDao.delete(excursion);
         } catch (Exception e) {
-            throw new DataAccessException("Excursion dao layer exception", e) {  };
+            throw new WrongDataAccessException("Excursion dao layer exception", e);
         }
     }
 
@@ -73,7 +73,7 @@ public class ExcursionServiceImpl implements ExcursionService {
         try {
             return excursionDao.findById(id);
         } catch (Exception e) {
-            throw new DataAccessException("Excursion dao layer exception", e) {  };
+            throw new WrongDataAccessException("Excursion dao layer exception", e);
         }
     }
 }
