@@ -1,25 +1,17 @@
-package cz.muni.fi.pa165.bluebat.facade;
+package cz.muni.fi.pa165.bluebat.service.facade;
 
 import cz.muni.fi.pa165.bluebat.ServiceConfiguration;
-import cz.muni.fi.pa165.bluebat.dao.PriceDao;
-import cz.muni.fi.pa165.bluebat.dao.TripDao;
-import cz.muni.fi.pa165.bluebat.dto.ExcursionDTO;
 import cz.muni.fi.pa165.bluebat.dto.TripCreateDTO;
 import cz.muni.fi.pa165.bluebat.dto.TripDTO;
-import cz.muni.fi.pa165.bluebat.entity.Excursion;
-import cz.muni.fi.pa165.bluebat.entity.Price;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
+import cz.muni.fi.pa165.bluebat.facade.TripFacade;
 import cz.muni.fi.pa165.bluebat.service.*;
 import org.hibernate.service.spi.ServiceException;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
-import org.springframework.transaction.annotation.Transactional;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;

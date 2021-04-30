@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.bluebat.facade;
+package cz.muni.fi.pa165.bluebat.service.facade;
 
 import cz.muni.fi.pa165.bluebat.dao.TripDao;
 import cz.muni.fi.pa165.bluebat.dto.ExcursionDTO;
@@ -7,6 +7,7 @@ import cz.muni.fi.pa165.bluebat.dto.TripCreateDTO;
 import cz.muni.fi.pa165.bluebat.dto.TripDTO;
 import cz.muni.fi.pa165.bluebat.entity.Price;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
+import cz.muni.fi.pa165.bluebat.facade.TripFacade;
 import cz.muni.fi.pa165.bluebat.service.BeanMappingService;
 import cz.muni.fi.pa165.bluebat.service.ExcursionService;
 import cz.muni.fi.pa165.bluebat.service.PriceService;
@@ -28,7 +29,7 @@ import java.util.Set;
  **/
 @Service
 @Transactional
-public class TripFacadeImpl implements TripFacade{
+public class TripFacadeImpl implements TripFacade {
 
 
 
