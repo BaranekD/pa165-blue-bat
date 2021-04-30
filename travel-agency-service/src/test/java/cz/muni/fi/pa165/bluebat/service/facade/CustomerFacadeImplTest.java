@@ -117,14 +117,31 @@ public class CustomerFacadeImplTest extends AbstractTestNGSpringContextTests {
         first.setId(idFirst);
         second.setId(idSecond);
         List<Customer>customers = new ArrayList<>();
-        customers.add(first);
-        customers.add(second);
+        customers.add(0,first);
+        customers.add(1,second);
+
+        CustomerDTO customerDTOFirst=getDefaultCustomerDTO();
+        CustomerDTO customerDTOSecond=getDefaultCustomerDTO();
+        customerDTOFirst.setId(idFirst);
+        customerDTOSecond.setId(idSecond);
+        List<CustomerDTO>customersDTO = new ArrayList<>();
+        customersDTO.add(0,customerDTOFirst);
+        customersDTO.add(1,customerDTOSecond);
 
         when(customerService.findAllCustomers()).thenReturn(customers);
 
         List<CustomerDTO> result = customerFacade.getAllCustomers();
 
         verify(customerService, times(1)).findAllCustomers();
+        for(int i=0;i<2;i++) {
+            Assert.assertEquals(result.get(i).getId(), customersDTO.get(i).getId());
+            Assert.assertEquals(result.get(i).getAddress(), customersDTO.get(i).getAddress());
+            Assert.assertEquals(result.get(i).getName(), customersDTO.get(i).getName());
+            Assert.assertEquals(result.get(i).getBirthday(), customersDTO.get(i).getBirthday());
+            Assert.assertEquals(result.get(i).getEmail(), customersDTO.get(i).getEmail());
+            Assert.assertEquals(result.get(i).getSurname(), customersDTO.get(i).getSurname());
+            Assert.assertEquals(result.get(i).getPhoneNumber(), customersDTO.get(i).getPhoneNumber());
+        }
     }
 
     private static Customer getDefaultCustomer() {
