@@ -34,9 +34,7 @@ import static org.mockito.Mockito.*;
  * @since : 29. 4. 2021, Thu
  **/
 
-@Transactional
-@TestExecutionListeners(TransactionalTestExecutionListener.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+
 @ContextConfiguration(classes = ServiceConfiguration.class)
 public class TripFacadeImplTest extends AbstractTestNGSpringContextTests {
 

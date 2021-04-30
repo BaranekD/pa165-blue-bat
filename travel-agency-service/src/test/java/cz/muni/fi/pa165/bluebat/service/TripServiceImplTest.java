@@ -33,9 +33,7 @@ import java.time.LocalDate;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.*;
 
-@Transactional
-@TestExecutionListeners(TransactionalTestExecutionListener.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+
 @ContextConfiguration(classes = ServiceConfiguration.class)
 public class TripServiceImplTest extends AbstractTestNGSpringContextTests {
 
