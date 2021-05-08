@@ -1,10 +1,11 @@
-package cz.muni.fi.pa165.bluebat.service.facade;
+package cz.muni.fi.pa165.bluebat.facade;
 
 import cz.muni.fi.pa165.bluebat.ServiceConfiguration;
 import cz.muni.fi.pa165.bluebat.dto.CustomerCreateDTO;
 import cz.muni.fi.pa165.bluebat.dto.CustomerDTO;
 import cz.muni.fi.pa165.bluebat.entity.Customer;
 import cz.muni.fi.pa165.bluebat.facade.CustomerFacade;
+import cz.muni.fi.pa165.bluebat.facade.CustomerFacadeImpl;
 import cz.muni.fi.pa165.bluebat.service.BeanMappingService;
 import cz.muni.fi.pa165.bluebat.service.CustomerService;
 import org.mockito.Mock;

@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.bluebat.service.facade;
+package cz.muni.fi.pa165.bluebat.facade;
 
 import cz.muni.fi.pa165.bluebat.ServiceConfiguration;
 import cz.muni.fi.pa165.bluebat.dto.CustomerDTO;
@@ -11,6 +11,7 @@ import cz.muni.fi.pa165.bluebat.entity.Price;
 import cz.muni.fi.pa165.bluebat.entity.Reservation;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
 import cz.muni.fi.pa165.bluebat.facade.ReservationFacade;
+import cz.muni.fi.pa165.bluebat.facade.ReservationFacadeImpl;
 import cz.muni.fi.pa165.bluebat.service.BeanMappingService;
 import cz.muni.fi.pa165.bluebat.service.ReservationService;
 import org.hibernate.service.spi.ServiceException;

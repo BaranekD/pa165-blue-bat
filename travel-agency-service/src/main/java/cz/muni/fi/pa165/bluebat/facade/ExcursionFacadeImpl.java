@@ -1,13 +1,13 @@
-package cz.muni.fi.pa165.bluebat.service.facade;
+package cz.muni.fi.pa165.bluebat.facade;
 
 import cz.muni.fi.pa165.bluebat.dto.ExcursionCreateDTO;
 import cz.muni.fi.pa165.bluebat.dto.ExcursionDTO;
 import cz.muni.fi.pa165.bluebat.entity.Excursion;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
-import cz.muni.fi.pa165.bluebat.facade.ExcursionFacade;
 import cz.muni.fi.pa165.bluebat.service.BeanMappingService;
 import cz.muni.fi.pa165.bluebat.service.ExcursionService;
 import cz.muni.fi.pa165.bluebat.service.TripService;
+import cz.muni.fi.pa165.bluebat.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -30,10 +30,9 @@ public class ExcursionFacadeImpl implements ExcursionFacade {
 
     @Override
     public void createExcursion(ExcursionCreateDTO excursionCreateDTO){
+        Validator.NotNull(excursionCreateDTO, "ExcursionCreateDTO");
         Trip trip = tripService.findById(excursionCreateDTO.getParentId());
-        if (trip == null) {
-            throw new IllegalArgumentException("Trip has not been found");
-        }
+        Validator.Found(trip, "Trip");
 
         Excursion excursion = beanMappingService.mapTo(excursionCreateDTO, Excursion.class);
         excursion.setTrip(trip);
@@ -43,10 +42,9 @@ public class ExcursionFacadeImpl implements ExcursionFacade {
 
     @Override
     public void updateExcursion(ExcursionDTO excursionDTO){
+        Validator.NotNull(excursionDTO, "ExcursionDTO");
         Trip trip = tripService.findById(excursionDTO.getParentId());
-        if (trip == null) {
-            throw new IllegalArgumentException("Trip has not been found");
-        }
+        Validator.Found(trip, "Trip");
 
         Excursion excursion = beanMappingService.mapTo(excursionDTO, Excursion.class);
         excursion.setTrip(trip);
@@ -56,12 +54,14 @@ public class ExcursionFacadeImpl implements ExcursionFacade {
 
     @Override
     public void deleteExcursion(Long id){
+        Validator.Positive(id, "Excursion id");
         Excursion excursion = excursionService.findById(id);
         excursionService.delete(excursion);
     }
 
     @Override
     public ExcursionDTO getExcursionById(Long id) {
+        Validator.Positive(id, "Excursion id");
         Excursion excursion = excursionService.findById(id);
         if (excursion == null) {
             return null;
