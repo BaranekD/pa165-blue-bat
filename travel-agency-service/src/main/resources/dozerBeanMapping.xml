@@ -6,7 +6,7 @@
         <custom-converters>
             <!-- You are responsible for mapping everything between
            ClassA and ClassB -->
-            <converter type="cz.muni.fi.pa165.bluebat.service.convertor.DurationCustomConvertor">
+            <converter type="cz.muni.fi.pa165.bluebat.convertor.DurationCustomConvertor">
                 <class-a>
                     java.time.Duration
                 </class-a>

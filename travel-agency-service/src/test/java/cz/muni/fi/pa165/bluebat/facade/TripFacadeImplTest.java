@@ -1,10 +1,11 @@
-package cz.muni.fi.pa165.bluebat.service.facade;
+package cz.muni.fi.pa165.bluebat.facade;
 
 import cz.muni.fi.pa165.bluebat.ServiceConfiguration;
 import cz.muni.fi.pa165.bluebat.dto.TripCreateDTO;
 import cz.muni.fi.pa165.bluebat.dto.TripDTO;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
 import cz.muni.fi.pa165.bluebat.facade.TripFacade;
+import cz.muni.fi.pa165.bluebat.facade.TripFacadeImpl;
 import cz.muni.fi.pa165.bluebat.service.*;
 import org.hibernate.service.spi.ServiceException;
 import org.mockito.Mock;

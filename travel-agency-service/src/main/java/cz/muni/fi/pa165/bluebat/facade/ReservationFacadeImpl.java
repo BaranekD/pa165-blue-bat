@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.bluebat.service.facade;
+package cz.muni.fi.pa165.bluebat.facade;
 
 import cz.muni.fi.pa165.bluebat.dto.CustomerDTO;
 import cz.muni.fi.pa165.bluebat.dto.ExcursionDTO;

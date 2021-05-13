@@ -1,4 +1,4 @@
-package cz.muni.fi.pa165.bluebat.service.convertor;
+package cz.muni.fi.pa165.bluebat.convertor;
 
 import com.github.dozermapper.core.CustomConverter;
 import com.github.dozermapper.core.MappingException;
