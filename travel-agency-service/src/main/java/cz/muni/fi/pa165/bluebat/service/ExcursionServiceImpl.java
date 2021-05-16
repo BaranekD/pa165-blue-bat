@@ -29,6 +29,7 @@ public class ExcursionServiceImpl implements ExcursionService {
 
     @Override
     public void create(Excursion excursion, Trip trip) {
+        Validator.NotNull(excursion, "Excursion");
         try {
             excursion.setTrip(trip);
             excursionDao.create(excursion);
@@ -47,7 +48,7 @@ public class ExcursionServiceImpl implements ExcursionService {
         } catch (Exception e) {
             throw new WrongDataAccessException("Excursion dao layer exception", e);
         }
-        Validator.Found(excursion, "Excursion");
+        Validator.Found(previous, "Excursion");
 
         priceService.updatePrices(previous.getPrices(), excursion.getPrices());
 

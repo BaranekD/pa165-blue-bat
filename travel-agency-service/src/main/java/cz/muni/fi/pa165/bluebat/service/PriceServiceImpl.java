@@ -3,8 +3,8 @@ package cz.muni.fi.pa165.bluebat.service;
 import cz.muni.fi.pa165.bluebat.dao.PriceDao;
 import cz.muni.fi.pa165.bluebat.entity.Price;
 import cz.muni.fi.pa165.bluebat.exceptions.WrongDataAccessException;
+import cz.muni.fi.pa165.bluebat.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -36,9 +36,7 @@ public class PriceServiceImpl implements PriceService{
 
     @Override
     public void update(Price price) {
-        if (price == null) {
-            throw new IllegalArgumentException("Price can not be null");
-        }
+        Validator.NotNull(price, "Price");
 
         Price previous;
         try {
@@ -46,9 +44,7 @@ public class PriceServiceImpl implements PriceService{
         } catch (Exception e) {
             throw new WrongDataAccessException("Price dao layer exception", e);
         }
-        if (previous == null) {
-            throw new IllegalArgumentException("Price has not been found in database");
-        }
+        Validator.Found(previous, "Price");
 
         try {
             priceDao.update(price);
@@ -59,12 +55,9 @@ public class PriceServiceImpl implements PriceService{
 
     @Override
     public void updatePrices(List<Price> oldPrices, List<Price> newPrices) {
-        if (oldPrices == null) {
-            throw new IllegalArgumentException("List of old prices can not be null");
-        }
-        if (newPrices == null) {
-            throw new IllegalArgumentException("List of new prices can not be null");
-        }
+        Validator.NotNull(oldPrices,"List of old prices");
+        Validator.NotNull(newPrices,"List of new prices");
+
         List<Long> newPricesIds = newPrices.stream().map(Price::getId).filter(x -> x != null && x > 0).collect(Collectors.toList());
         List<Price> toDelete = oldPrices
                 .stream().filter(x -> !newPricesIds.contains(x.getId())).collect(Collectors.toList());
