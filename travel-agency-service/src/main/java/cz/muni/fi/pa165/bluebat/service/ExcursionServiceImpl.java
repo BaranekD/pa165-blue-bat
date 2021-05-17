@@ -2,7 +2,9 @@ package cz.muni.fi.pa165.bluebat.service;
 
 import cz.muni.fi.pa165.bluebat.dao.ExcursionDao;
 import cz.muni.fi.pa165.bluebat.entity.Excursion;
+import cz.muni.fi.pa165.bluebat.entity.Trip;
 import cz.muni.fi.pa165.bluebat.exceptions.WrongDataAccessException;
+import cz.muni.fi.pa165.bluebat.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,8 +28,10 @@ public class ExcursionServiceImpl implements ExcursionService {
     }
 
     @Override
-    public void create(Excursion excursion) {
+    public void create(Excursion excursion, Trip trip) {
+        Validator.NotNull(excursion, "Excursion");
         try {
+            excursion.setTrip(trip);
             excursionDao.create(excursion);
         } catch (Exception e) {
             throw new WrongDataAccessException("Excursion dao layer exception", e);
@@ -36,9 +40,7 @@ public class ExcursionServiceImpl implements ExcursionService {
 
     @Override
     public void update(Excursion excursion) {
-        if (excursion == null) {
-            throw new IllegalArgumentException("Excursion can not be null");
-        }
+        Validator.NotNull(excursion, "Excursion");
 
         Excursion previous;
         try {
@@ -46,13 +48,12 @@ public class ExcursionServiceImpl implements ExcursionService {
         } catch (Exception e) {
             throw new WrongDataAccessException("Excursion dao layer exception", e);
         }
-        if (previous == null) {
-            throw new IllegalArgumentException("Excursion has not been found in database");
-        }
+        Validator.Found(previous, "Excursion");
 
         priceService.updatePrices(previous.getPrices(), excursion.getPrices());
 
         try {
+            excursion.setTrip(previous.getTrip());
             excursionDao.update(excursion);
         } catch (Exception e) {
             throw new WrongDataAccessException("Excursion dao layer exception", e);

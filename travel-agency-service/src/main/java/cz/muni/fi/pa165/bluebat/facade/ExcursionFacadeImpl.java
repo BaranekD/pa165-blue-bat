@@ -29,27 +29,24 @@ public class ExcursionFacadeImpl implements ExcursionFacade {
     }
 
     @Override
-    public void createExcursion(ExcursionCreateDTO excursionCreateDTO){
+    public ExcursionDTO createExcursion(ExcursionCreateDTO excursionCreateDTO){
         Validator.NotNull(excursionCreateDTO, "ExcursionCreateDTO");
         Trip trip = tripService.findById(excursionCreateDTO.getParentId());
         Validator.Found(trip, "Trip");
 
         Excursion excursion = beanMappingService.mapTo(excursionCreateDTO, Excursion.class);
-        excursion.setTrip(trip);
 
-        excursionService.create(excursion);
+        excursionService.create(excursion, trip);
+        return beanMappingService.mapTo(excursion, ExcursionDTO.class);
     }
 
     @Override
-    public void updateExcursion(ExcursionDTO excursionDTO){
+    public ExcursionDTO updateExcursion(ExcursionDTO excursionDTO){
         Validator.NotNull(excursionDTO, "ExcursionDTO");
-        Trip trip = tripService.findById(excursionDTO.getParentId());
-        Validator.Found(trip, "Trip");
-
         Excursion excursion = beanMappingService.mapTo(excursionDTO, Excursion.class);
-        excursion.setTrip(trip);
 
         excursionService.update(excursion);
+        return beanMappingService.mapTo(excursion, ExcursionDTO.class);
     }
 
     @Override
@@ -66,8 +63,6 @@ public class ExcursionFacadeImpl implements ExcursionFacade {
         if (excursion == null) {
             return null;
         }
-        ExcursionDTO result = beanMappingService.mapTo(excursion, ExcursionDTO.class);
-        result.setParentId(excursion.getTrip().getId());
-        return result;
+        return beanMappingService.mapTo(excursion, ExcursionDTO.class);
     }
 }
