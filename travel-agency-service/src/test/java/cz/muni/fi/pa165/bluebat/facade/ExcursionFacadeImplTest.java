@@ -23,7 +23,10 @@ import java.time.Duration;
 import java.time.LocalDate;
 
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.*;
+import static org.mockito.Mockito.doAnswer;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 
 @ContextConfiguration(classes = ServiceConfiguration.class)
 public class ExcursionFacadeImplTest extends AbstractTestNGSpringContextTests {
