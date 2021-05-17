@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.bluebat.service;
 import cz.muni.fi.pa165.bluebat.dao.CustomerDao;
 import cz.muni.fi.pa165.bluebat.entity.Customer;
 import cz.muni.fi.pa165.bluebat.exceptions.WrongDataAccessException;
+import cz.muni.fi.pa165.bluebat.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -26,15 +27,16 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public void deleteCustomer(Customer customer) {
-        if (customer == null) {
-            throw new IllegalArgumentException("Customer can not be null");
+        Validator.NotNull(customer,"Customer");
+        Customer previous;
+
+        try {
+            previous = customerDao.findById(customer.getId());
+        } catch (Exception e) {
+            throw new WrongDataAccessException("Customer dao layer exception", e);
         }
 
-        Customer previous = customerDao.findById(customer.getId());
-
-        if (previous == null) {
-            throw new IllegalArgumentException("Customer has not been found in database");
-        }
+        Validator.Found(previous, "Customer");
 
         try {
             customerDao.delete(customer);
@@ -45,10 +47,7 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public void addCustomer(Customer customer) {
-        if (customer == null) {
-            throw new IllegalArgumentException("Customer can not be null");
-        }
-
+        Validator.NotNull(customer,"Customer");
         try {
             customerDao.create(customer);
         } catch (Exception ex) {
@@ -58,15 +57,17 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public void updateCustomer(Customer customer) {
-        if (customer == null) {
-            throw new IllegalArgumentException("Customer can not be null");
+        Validator.NotNull(customer,"Customer");
+
+        Customer previous;
+
+        try {
+            previous = customerDao.findById(customer.getId());
+        } catch (Exception e) {
+            throw new WrongDataAccessException("Customer dao layer exception", e);
         }
 
-        Customer previous = customerDao.findById(customer.getId());
-
-        if (previous == null) {
-            throw new IllegalArgumentException("Customer has not been found in database");
-        }
+        Validator.Found(previous, "Customer");
 
         try {
             customerDao.update(customer);
@@ -77,6 +78,8 @@ public class CustomerServiceImpl implements CustomerService{
 
     @Override
     public Customer findCustomerById(Long id) {
+        Validator.Positive(id, "Customer id");
+
         try {
             return customerDao.findById(id);
         } catch (Exception ex) {
