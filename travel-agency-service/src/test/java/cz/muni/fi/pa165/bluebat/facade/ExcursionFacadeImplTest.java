@@ -1,11 +1,11 @@
-package cz.muni.fi.pa165.bluebat.service.facade;
+package cz.muni.fi.pa165.bluebat.facade;
 
 import cz.muni.fi.pa165.bluebat.ServiceConfiguration;
 import cz.muni.fi.pa165.bluebat.dto.ExcursionCreateDTO;
 import cz.muni.fi.pa165.bluebat.dto.ExcursionDTO;
 import cz.muni.fi.pa165.bluebat.entity.Excursion;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
-import cz.muni.fi.pa165.bluebat.facade.ExcursionFacade;
+import cz.muni.fi.pa165.bluebat.exceptions.NotFoundException;
 import cz.muni.fi.pa165.bluebat.service.BeanMappingService;
 import cz.muni.fi.pa165.bluebat.service.ExcursionService;
 import cz.muni.fi.pa165.bluebat.service.TripService;
@@ -65,7 +65,12 @@ public class ExcursionFacadeImplTest extends AbstractTestNGSpringContextTests {
         ExcursionCreateDTO excursionCreateDTO = getDefaultExcursionCreateDTO();
         when(tripService.findById(any())).thenReturn(null);
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> excursionFacade.createExcursion(excursionCreateDTO));
+        Assertions.assertThrows(NotFoundException.class, () -> excursionFacade.createExcursion(excursionCreateDTO));
+    }
+
+    @Test
+    public void createExcursion_null_IllegalArgumentException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> excursionFacade.createExcursion(null));
     }
 
     @Test
@@ -87,7 +92,12 @@ public class ExcursionFacadeImplTest extends AbstractTestNGSpringContextTests {
         ExcursionDTO excursionDTO = getDefaultExcursionDTO();
         when(tripService.findById(any())).thenReturn(null);
 
-        Assertions.assertThrows(IllegalArgumentException.class, () -> excursionFacade.updateExcursion(excursionDTO));
+        Assertions.assertThrows(NotFoundException.class, () -> excursionFacade.updateExcursion(excursionDTO));
+    }
+
+    @Test
+    public void updateExcursion_null_IllegalArgumentException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> excursionFacade.updateExcursion(null));
     }
 
     @Test
@@ -100,6 +110,16 @@ public class ExcursionFacadeImplTest extends AbstractTestNGSpringContextTests {
         excursionFacade.deleteExcursion(id);
 
         verify(excursionService, times(1)).delete(excursion);
+    }
+
+    @Test
+    public void deleteExcursion_nullId_IllegalArgumentException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> excursionFacade.deleteExcursion(null));
+    }
+
+    @Test
+    public void deleteExcursion_negative_IllegalArgumentException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> excursionFacade.deleteExcursion(-1L));
     }
 
     @Test
@@ -131,6 +151,16 @@ public class ExcursionFacadeImplTest extends AbstractTestNGSpringContextTests {
         excursionFacade.getExcursionById(1L);
 
         verify(excursionService, times(1)).findById(id);
+    }
+
+    @Test
+    public void getExcursionById_nullId_IllegalArgumentException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> excursionFacade.getExcursionById(null));
+    }
+
+    @Test
+    public void getExcursionById_negative_IllegalArgumentException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> excursionFacade.getExcursionById(-1L));
     }
 
     private static Excursion getDefaultExcursion() {
