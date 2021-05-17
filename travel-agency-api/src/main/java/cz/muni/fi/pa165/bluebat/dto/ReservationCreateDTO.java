@@ -3,7 +3,9 @@ package cz.muni.fi.pa165.bluebat.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Positive;
+import java.util.HashSet;
+import java.util.Objects;
 import java.util.Set;
 
 /**
@@ -13,15 +15,29 @@ import java.util.Set;
 @Setter
 public class ReservationCreateDTO {
 
-    @NotNull
-    private CustomerDTO customerDTO;
+    @Positive
+    private Long customerId;
 
-    @NotNull
-    private TripDTO tripDTO;
+    @Positive
+    private Long tripId;
 
-    @NotNull
-    private PriceDTO priceDTO;
+    private Set<Long> excursionIds = new HashSet<>();
 
-    @NotNull
-    private Set<ExcursionDTO> excursionsDTO;
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (!(o instanceof ReservationCreateDTO)) return false;
+        ReservationCreateDTO reservation = (ReservationCreateDTO) o;
+
+        if (getCustomerId() != null ? !getCustomerId().equals(reservation.getCustomerId()) : reservation.getCustomerId() != null)
+            return false;
+        if (getTripId() != null ? !getTripId().equals(reservation.getTripId()) : reservation.getTripId() != null)
+            return false;
+        return Objects.equals(excursionIds, reservation.getExcursionIds());
+    }
+
+    @Override
+    public int hashCode() {
+        return Objects.hash(customerId, tripId, excursionIds);
+    }
 }

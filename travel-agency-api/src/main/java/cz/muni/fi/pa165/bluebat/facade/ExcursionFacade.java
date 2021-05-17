@@ -10,11 +10,28 @@ import cz.muni.fi.pa165.bluebat.dto.ExcursionDTO;
  */
 public interface ExcursionFacade {
 
-    void createExcursion(ExcursionCreateDTO excursionCreateDTO);
+    /**
+     * Create a new Excursion in system
+     * @param excursionCreateDTO Excursion DTO to be created
+     */
+    ExcursionDTO createExcursion(ExcursionCreateDTO excursionCreateDTO);
 
-    void updateExcursion(ExcursionDTO excursionDTO);
+    /**
+     * Update an excursion in system
+     * @param excursionDTO Excursion DTO to be updated
+     */
+    ExcursionDTO updateExcursion(ExcursionDTO excursionDTO);
 
+    /**
+     * Delete an excursion in system
+     * @param id Long id of an excursion to be deleted
+     */
     void deleteExcursion(Long id);
 
+    /**
+     *
+     * @param id Long id of an excursion to be found
+     * @return Excursion DTO if exists, null otherwise
+     */
     ExcursionDTO getExcursionById(Long id);
 }
