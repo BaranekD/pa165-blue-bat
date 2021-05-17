@@ -47,12 +47,14 @@ public interface TripService {
      */
     List<Trip> findAll();
 
+    /*
     /**
      * Add a price from trip
      *
      * @param trip Trip trip to be added to
      * @param price Price price to be added to trip
-     */
+
+
     public void addPrice(Trip trip, Price price);
 
     /**
@@ -60,6 +62,7 @@ public interface TripService {
      *
      * @param trip Trip trip to be removed from
      * @param price Price price to be removed from trip
-     */
+
     public void removePrice(Trip trip, Price price);
+    */
 }

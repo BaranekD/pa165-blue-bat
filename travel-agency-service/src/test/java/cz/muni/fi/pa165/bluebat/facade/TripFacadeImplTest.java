@@ -1,24 +1,19 @@
 package cz.muni.fi.pa165.bluebat.facade;
 
 import cz.muni.fi.pa165.bluebat.ServiceConfiguration;
-import cz.muni.fi.pa165.bluebat.dao.PriceDao;
-import cz.muni.fi.pa165.bluebat.dao.TripDao;
 import cz.muni.fi.pa165.bluebat.dto.TripCreateDTO;
-import cz.muni.fi.pa165.bluebat.entity.Price;
+import cz.muni.fi.pa165.bluebat.dto.TripDTO;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
-import cz.muni.fi.pa165.bluebat.service.PriceService;
-import cz.muni.fi.pa165.bluebat.service.PriceServiceImpl;
-import cz.muni.fi.pa165.bluebat.service.TripService;
-import cz.muni.fi.pa165.bluebat.service.TripServiceImpl;
+import cz.muni.fi.pa165.bluebat.facade.TripFacade;
+import cz.muni.fi.pa165.bluebat.facade.TripFacadeImpl;
+import cz.muni.fi.pa165.bluebat.service.*;
 import org.hibernate.service.spi.ServiceException;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.test.annotation.DirtiesContext;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
-import org.springframework.test.context.TestExecutionListeners;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
-import org.springframework.test.context.transaction.TransactionalTestExecutionListener;
-import org.springframework.transaction.annotation.Transactional;
+import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.Test;
 
@@ -32,21 +27,17 @@ import static org.mockito.Mockito.*;
  * @since : 29. 4. 2021, Thu
  **/
 
-@Transactional
-@TestExecutionListeners(TransactionalTestExecutionListener.class)
-@DirtiesContext(classMode = DirtiesContext.ClassMode.AFTER_EACH_TEST_METHOD)
+
 @ContextConfiguration(classes = ServiceConfiguration.class)
 public class TripFacadeImplTest extends AbstractTestNGSpringContextTests {
 
-    @Mock
-    private TripDao tripDao;
 
+    @Autowired
+    private BeanMappingService beanMappingService;
+
+
+    @Mock
     private TripService tripService;
-
-    @Mock
-    private PriceDao priceDao;
-
-    private PriceService priceService;
 
     private TripFacade tripFacade;
 
@@ -54,25 +45,13 @@ public class TripFacadeImplTest extends AbstractTestNGSpringContextTests {
     @BeforeMethod
     public void setup() throws ServiceException {
         MockitoAnnotations.openMocks(this);
-        tripService = new TripServiceImpl(tripDao);
 
-        doNothing().when(tripDao).create(any());
-        doNothing().when(tripDao).update(any());
-        doNothing().when(tripDao).delete(any());
         when(tripService.findById(any())).thenReturn(new Trip());
 
-
-        priceService = new PriceServiceImpl(priceDao);
-
-        doNothing().when(priceDao).create(any());
-        doNothing().when(priceDao).update(any());
-        doNothing().when(priceDao).delete(any());
-        when(priceDao.findById(any())).thenReturn(new Price());
-
-        tripFacade = new TripFacadeImpl(tripService,priceService);
+        tripFacade = new TripFacadeImpl(tripService,beanMappingService);
     }
 
-    private TripCreateDTO prepareTrip() {
+    private TripCreateDTO prepareTripCreateDTO() {
 
         TripCreateDTO testTrip3 = new TripCreateDTO();
         testTrip3.setAvailableTrips(5);
@@ -84,33 +63,63 @@ public class TripFacadeImplTest extends AbstractTestNGSpringContextTests {
         return  testTrip3;
     }
 
+    private TripDTO prepareTripDTO() {
+
+        TripDTO testTrip3 = new TripDTO();
+        testTrip3.setId(1L);
+        testTrip3.setAvailableTrips(5);
+        testTrip3.setDateFrom(LocalDate.of(2022,5,1));
+        testTrip3.setDestination("Madrid");
+        testTrip3.setDateTo(LocalDate.of(2022,5,15));
+        testTrip3.setName("Name");
+
+        return  testTrip3;
+    }
+
+    private Trip prepareTrip() {
+
+        Trip testTrip3 = new Trip();
+        testTrip3.setId(1L);
+        testTrip3.setAvailableTrips(5);
+        testTrip3.setDateFrom(LocalDate.of(2022,5,1));
+        testTrip3.setDestination("Madrid");
+        testTrip3.setDateTo(LocalDate.of(2022,5,15));
+        testTrip3.setName("Name");
+
+        return  testTrip3;
+    }
+
+    @Test
+    public void getTripById_valid() {
+
+        Trip trip = prepareTrip();
+        TripDTO dto = prepareTripDTO();
+
+        when(tripService.findById(trip.getId())).thenReturn(trip);
+
+        TripDTO result = tripFacade.getTripDTO(trip.getId());
+
+        verify(tripService, times(1)).findById(trip.getId());
+        Assert.assertEquals(result, dto);
+
+    }
+
     @Test
     public void testCreateTrip() {
-        tripFacade.createTrip(prepareTrip());
-        verify(tripDao, times(1)).create(any());
+        tripFacade.createTrip(prepareTripCreateDTO());
+        verify(tripService, times(1)).create(any());
     }
     @Test
     public void testUpdateTrip() {
 
-        tripFacade.updateTrip(1L,prepareTrip());
-        verify(tripDao, times(1)).update(any());
+        tripFacade.updateTrip(prepareTripDTO());
+        verify(tripService, times(1)).update(any());
     }
-    @Test
-    public void testAddPrice() {
-        tripFacade.addPrice(1L,1L);
-        verify(tripDao, times(1)).findById(any());
-        verify(priceDao, times(1)).findById(any());
-    }
-    @Test
-    public void testRemovePrice() {
-        tripFacade.removePrice(1L,1L);
-        verify(tripDao, times(1)).findById(any());
-        verify(priceDao, times(1)).findById(any());
-    }
+
     @Test
     public void testDeleteTrip() {
         tripFacade.deleteTrip(1L);
-        verify(tripDao, times(1)).delete(any());
+        verify(tripService, times(1)).delete(any());
     }
 }
 
