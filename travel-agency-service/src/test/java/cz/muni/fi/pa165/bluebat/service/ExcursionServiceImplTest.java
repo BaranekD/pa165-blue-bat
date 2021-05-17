@@ -4,6 +4,7 @@ import cz.muni.fi.pa165.bluebat.ServiceConfiguration;
 import cz.muni.fi.pa165.bluebat.dao.ExcursionDao;
 import cz.muni.fi.pa165.bluebat.entity.Excursion;
 import cz.muni.fi.pa165.bluebat.entity.Price;
+import cz.muni.fi.pa165.bluebat.entity.Trip;
 import org.hibernate.service.spi.ServiceException;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mock;
@@ -39,6 +40,8 @@ public class ExcursionServiceImplTest extends AbstractTestNGSpringContextTests {
 
     private ExcursionService excursionService;
 
+    private Trip trip;
+
     @DataProvider(name = "excursions")
     private static Object[][] getPriceValues() {
         return new Excursion[][] {
@@ -52,6 +55,8 @@ public class ExcursionServiceImplTest extends AbstractTestNGSpringContextTests {
         MockitoAnnotations.openMocks(this);
         excursionService = new ExcursionServiceImpl(excursionDao, priceService);
 
+        trip = getTrip();
+
         doNothing().when(excursionDao).create(any());
         doNothing().when(excursionDao).update(any());
         doNothing().when(excursionDao).delete(any());
@@ -60,15 +65,26 @@ public class ExcursionServiceImplTest extends AbstractTestNGSpringContextTests {
     @Test
     public void create_valid() {
         Excursion excursion = getDefaultExcursion();
-        excursionService.create(excursion);
+
+        excursionService.create(excursion, trip);
+
         verify(excursionDao, times(1)).create(excursion);
+        Assert.assertEquals(excursion.getTrip(), trip);
+        Assertions.assertTrue(trip.getExcursions().stream().anyMatch(x -> x.equals(excursion)));
+
     }
 
     @Test
-    public void create_null_DataAccessException() {
+    public void create_null_IllegalArgumentException() {
+        Assertions.assertThrows(IllegalArgumentException.class,
+                () -> excursionService.create(null, trip));
+    }
+
+    @Test
+    public void create_DataAccessException() {
         doThrow(IllegalArgumentException.class).when(excursionDao).create(any());
         Assertions.assertThrows(DataAccessException.class,
-                () -> excursionService.create(null));
+                () -> excursionService.create(getDefaultExcursion(), trip));
     }
 
     @Test
@@ -186,6 +202,17 @@ public class ExcursionServiceImplTest extends AbstractTestNGSpringContextTests {
         Assertions.assertThrows(DataAccessException.class, ()-> excursionService.findById(1L));
     }
 
+    private static Trip getTrip() {
+        Trip result = new Trip();
+        result.setName("Test trip");
+        result.setDateFrom(LocalDate.of(2022, 4, 25));
+        result.setDateTo(LocalDate.of(2022, 5, 5));
+        result.setAvailableTrips(5);
+        result.setDestination("Madrid");
+        result.setId(15L);
+        return result;
+    }
+
     private static Excursion getDefaultExcursion() {
         Excursion result = new Excursion();
         result.setName("Test excursion");
@@ -200,10 +227,11 @@ public class ExcursionServiceImplTest extends AbstractTestNGSpringContextTests {
     private static Excursion getDefaultInsertedExcursion() {
         Excursion result = getDefaultExcursion();
         result.setId(1L);
+        result.setTrip(getTrip());
         return result;
     }
 
-    private static Price getPrice(Long id, BigDecimal amount, LocalDate date) {
+    private Price getPrice(Long id, BigDecimal amount, LocalDate date) {
         Price result = new Price();
         result.setId(id);
         result.setAmount(amount);
