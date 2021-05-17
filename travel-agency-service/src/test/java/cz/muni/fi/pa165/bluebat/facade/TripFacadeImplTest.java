@@ -27,7 +27,6 @@ import static org.mockito.Mockito.*;
  * @since : 29. 4. 2021, Thu
  **/
 
-
 @ContextConfiguration(classes = ServiceConfiguration.class)
 public class TripFacadeImplTest extends AbstractTestNGSpringContextTests {
 

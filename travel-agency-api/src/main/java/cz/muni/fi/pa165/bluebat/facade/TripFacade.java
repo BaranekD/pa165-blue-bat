@@ -8,8 +8,28 @@ import cz.muni.fi.pa165.bluebat.dto.TripDTO;
  **/
 
 public interface TripFacade {
-    public void createTrip(TripCreateDTO dto);
-    public void updateTrip(TripDTO dto);
-    public void deleteTrip(Long tripId);
+
+    /**
+     * Create a new Trip
+     * @param dto is DTO TripCreateDTO used for creating Trip
+     */
+    void createTrip(TripCreateDTO dto);
+
+    /**
+     * Update a Trip
+     * @param dto is DTO TripDTO used for updating Trip
+     */
+    void updateTrip(TripDTO dto);
+
+    /**
+     * Delete a Trip in system
+     * @param tripId is id of Trip for delete
+     */
+    void deleteTrip(Long tripId);
+
+    /**
+     * Used for showing Trip from database
+     * @param id is id of Trip for showing
+     */
     TripDTO getTripDTO(Long id);
 }

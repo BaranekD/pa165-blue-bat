@@ -3,6 +3,9 @@ package cz.muni.fi.pa165.bluebat.dto;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.validation.constraints.Future;
+import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.Positive;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -14,19 +17,19 @@ import java.util.*;
 @Setter
 public class TripCreateDTO {
 
-
+    @NotBlank
     private String name;
 
-
+    @Future
     private LocalDate dateFrom;
 
-
+    @Future
     private LocalDate dateTo;
 
 
     private String destination;
 
-
+    @Positive
     private Integer availableTrips;
 
     private List<PriceCreateDTO> prices = new ArrayList<>();

@@ -16,7 +16,6 @@ import java.util.List;
  * @author Ondrej Vaca
  */
 @Service
-@Transactional
 public class TripServiceImpl implements TripService{
 
     private final TripDao tripDao;
@@ -37,11 +36,7 @@ public class TripServiceImpl implements TripService{
             throw new IllegalArgumentException("Trip can not be null");
         }
         try{tripDao.create(trip);} catch (Exception ex){ throw new WrongDataAccessException("Wrong data access",ex);}
-
-
-
     }
-
 
     @Override
     public void update(Trip trip) {
