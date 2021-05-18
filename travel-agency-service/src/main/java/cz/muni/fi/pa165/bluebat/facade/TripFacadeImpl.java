@@ -63,9 +63,7 @@ public class TripFacadeImpl implements TripFacade {
     public void updateTrip(TripDTO dto) {
         Validator.NotNull(dto,"TripDTO");
         Trip update = tripService.findById(dto.getId());
-        if(update == null){
-            throw new IllegalArgumentException() {};
-        }
+        Validator.Found(update,"TripDTO");
         update.setName(dto.getName());
         update.setDestination(dto.getDestination());
         update.setDateFrom(dto.getDateFrom());
@@ -85,9 +83,7 @@ public class TripFacadeImpl implements TripFacade {
     public TripDTO getTripDTO(Long id) {
         Validator.Positive(id, "Trip id");
         Trip found = tripService.findById(id);
-        if (found == null) {
-            return null;
-        }
+        Validator.Found(found,"TripDTO");
         TripDTO result = beanMappingService.mapTo(found, TripDTO.class);
         return result;
     }
