@@ -46,7 +46,7 @@ public class TripFacadeImpl implements TripFacade {
     }
 
     @Override
-    public void createTrip(TripCreateDTO dto) {
+    public TripDTO createTrip(TripCreateDTO dto) {
         Validator.NotNull(dto,"TripCreateDTO");
         Trip newTrip = new Trip();
         newTrip.setName(dto.getName());
@@ -55,12 +55,13 @@ public class TripFacadeImpl implements TripFacade {
         newTrip.setDateTo(dto.getDateTo());
         newTrip.setAvailableTrips(dto.getAvailableTrips());
         tripService.create(newTrip);
+        return beanMappingService.mapTo(newTrip,TripDTO.class);
 
     }
 
 
     @Override
-    public void updateTrip(TripDTO dto) {
+    public TripDTO updateTrip(TripDTO dto) {
         Validator.NotNull(dto,"TripDTO");
         Trip update = tripService.findById(dto.getId());
         Validator.Found(update,"TripDTO");
@@ -70,6 +71,7 @@ public class TripFacadeImpl implements TripFacade {
         update.setDateTo(dto.getDateTo());
         update.setAvailableTrips(dto.getAvailableTrips());
         tripService.update(update);
+        return dto;
 
     }
 

@@ -13,13 +13,13 @@ public interface TripFacade {
      * Create a new Trip
      * @param dto is DTO TripCreateDTO used for creating Trip
      */
-    void createTrip(TripCreateDTO dto);
+    TripDTO createTrip(TripCreateDTO dto);
 
     /**
      * Update a Trip
      * @param dto is DTO TripDTO used for updating Trip
      */
-    void updateTrip(TripDTO dto);
+    TripDTO updateTrip(TripDTO dto);
 
     /**
      * Delete a Trip in system
