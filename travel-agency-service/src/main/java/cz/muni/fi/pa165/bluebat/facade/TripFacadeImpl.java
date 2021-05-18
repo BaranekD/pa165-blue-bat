@@ -12,6 +12,7 @@ import cz.muni.fi.pa165.bluebat.service.BeanMappingService;
 import cz.muni.fi.pa165.bluebat.service.ExcursionService;
 import cz.muni.fi.pa165.bluebat.service.PriceService;
 import cz.muni.fi.pa165.bluebat.service.TripService;
+import cz.muni.fi.pa165.bluebat.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -46,6 +47,7 @@ public class TripFacadeImpl implements TripFacade {
 
     @Override
     public void createTrip(TripCreateDTO dto) {
+        Validator.NotNull(dto,"TripCreateDTO");
         Trip newTrip = new Trip();
         newTrip.setName(dto.getName());
         newTrip.setDestination(dto.getDestination());
@@ -59,6 +61,7 @@ public class TripFacadeImpl implements TripFacade {
 
     @Override
     public void updateTrip(TripDTO dto) {
+        Validator.NotNull(dto,"TripDTO");
         Trip update = tripService.findById(dto.getId());
         if(update == null){
             throw new IllegalArgumentException() {};
@@ -74,12 +77,13 @@ public class TripFacadeImpl implements TripFacade {
 
     @Override
     public void deleteTrip(Long tripId) {
+        Validator.Positive(tripId, "Trip Id");
         tripService.delete(tripService.findById(tripId));
     }
 
     @Override
     public TripDTO getTripDTO(Long id) {
-
+        Validator.Positive(id, "Trip id");
         Trip found = tripService.findById(id);
         if (found == null) {
             return null;
