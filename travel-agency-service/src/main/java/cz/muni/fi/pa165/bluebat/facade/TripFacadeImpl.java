@@ -1,10 +1,7 @@
 package cz.muni.fi.pa165.bluebat.facade;
 
 import cz.muni.fi.pa165.bluebat.dao.TripDao;
-import cz.muni.fi.pa165.bluebat.dto.ExcursionDTO;
-import cz.muni.fi.pa165.bluebat.dto.PriceCreateDTO;
-import cz.muni.fi.pa165.bluebat.dto.TripCreateDTO;
-import cz.muni.fi.pa165.bluebat.dto.TripDTO;
+import cz.muni.fi.pa165.bluebat.dto.*;
 import cz.muni.fi.pa165.bluebat.entity.Price;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
 import cz.muni.fi.pa165.bluebat.facade.TripFacade;
@@ -48,12 +45,7 @@ public class TripFacadeImpl implements TripFacade {
     @Override
     public TripDTO createTrip(TripCreateDTO dto) {
         Validator.NotNull(dto,"TripCreateDTO");
-        Trip newTrip = new Trip();
-        newTrip.setName(dto.getName());
-        newTrip.setDestination(dto.getDestination());
-        newTrip.setDateFrom(dto.getDateFrom());
-        newTrip.setDateTo(dto.getDateTo());
-        newTrip.setAvailableTrips(dto.getAvailableTrips());
+        Trip newTrip = beanMappingService.mapTo(dto,Trip.class);
         tripService.create(newTrip);
         return beanMappingService.mapTo(newTrip,TripDTO.class);
 
@@ -63,15 +55,10 @@ public class TripFacadeImpl implements TripFacade {
     @Override
     public TripDTO updateTrip(TripDTO dto) {
         Validator.NotNull(dto,"TripDTO");
-        Trip update = tripService.findById(dto.getId());
+        Trip update = beanMappingService.mapTo(dto,Trip.class);
         Validator.Found(update,"TripDTO");
-        update.setName(dto.getName());
-        update.setDestination(dto.getDestination());
-        update.setDateFrom(dto.getDateFrom());
-        update.setDateTo(dto.getDateTo());
-        update.setAvailableTrips(dto.getAvailableTrips());
         tripService.update(update);
-        return dto;
+        return beanMappingService.mapTo(update,TripDTO.class);
 
     }
 
@@ -86,8 +73,17 @@ public class TripFacadeImpl implements TripFacade {
         Validator.Positive(id, "Trip id");
         Trip found = tripService.findById(id);
         Validator.Found(found,"TripDTO");
-        TripDTO result = beanMappingService.mapTo(found, TripDTO.class);
+        return beanMappingService.mapTo(found, TripDTO.class);
+    }
+
+    @Override
+    public List<TripShowDTO> getAllTrips() {
+        List<TripShowDTO> result= null;
+        for (Trip trip: tripService.findAll()) {
+            result.add(beanMappingService.mapTo(trip,TripShowDTO.class));
+        }
         return result;
+
     }
 
 

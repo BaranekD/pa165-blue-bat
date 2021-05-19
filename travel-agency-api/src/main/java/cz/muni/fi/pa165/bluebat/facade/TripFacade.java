@@ -1,6 +1,9 @@
 package cz.muni.fi.pa165.bluebat.facade;
 import cz.muni.fi.pa165.bluebat.dto.TripCreateDTO;
 import cz.muni.fi.pa165.bluebat.dto.TripDTO;
+import cz.muni.fi.pa165.bluebat.dto.TripShowDTO;
+
+import java.util.List;
 
 /**
  * @author : Rudolf Madoran
@@ -32,4 +35,9 @@ public interface TripFacade {
      * @param id is id of Trip for showing
      */
     TripDTO getTripDTO(Long id);
+
+    /**
+     * Used for showing striped Trips from database
+     */
+    List<TripShowDTO> getAllTrips();
 }

@@ -23,6 +23,8 @@ public class TripServiceImpl implements TripService{
 
     private PriceService priceService;
 
+    private ExcursionService excursionService;
+
 
     @Autowired
     public TripServiceImpl(TripDao tripDao,PriceService priceService) {
