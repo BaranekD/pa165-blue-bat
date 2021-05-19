@@ -28,15 +28,6 @@ public class CustomerServiceImpl implements CustomerService{
     @Override
     public void deleteCustomer(Customer customer) {
         Validator.NotNull(customer,"Customer");
-        Customer previous;
-
-        try {
-            previous = customerDao.findById(customer.getId());
-        } catch (Exception e) {
-            throw new WrongDataAccessException("Customer dao layer exception", e);
-        }
-
-        Validator.Found(previous, "Customer");
 
         try {
             customerDao.delete(customer);

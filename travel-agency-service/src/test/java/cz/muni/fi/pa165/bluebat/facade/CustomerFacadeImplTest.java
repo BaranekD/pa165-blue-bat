@@ -127,12 +127,12 @@ public class CustomerFacadeImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void getExcursionById_nullId_IllegalArgumentException() {
+    public void getCustomerById_nullId_IllegalArgumentException() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> customerFacade.getCustomerById(null));
     }
 
     @Test
-    public void getExcursionById_negative_IllegalArgumentException() {
+    public void getCustomerById_negative_IllegalArgumentException() {
         Assertions.assertThrows(IllegalArgumentException.class, () -> customerFacade.getCustomerById(-1L));
     }
 
