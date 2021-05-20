@@ -12,7 +12,6 @@ import java.util.Objects;
  * @author : Rudolf Madoran
  * @since : 18. 5. 2021, Tue
  **/
-
 @Getter
 @Setter
 public class TripShowDTO {
@@ -27,7 +26,6 @@ public class TripShowDTO {
 
     @Future
     private LocalDate dateTo;
-
 
     private String destination;
 

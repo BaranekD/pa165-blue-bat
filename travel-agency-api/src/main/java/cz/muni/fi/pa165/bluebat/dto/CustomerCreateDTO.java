@@ -14,7 +14,6 @@ import java.util.Objects;
 /**
  * @author Ondrej Vaca
  */
-
 @Getter
 @Setter
 public class CustomerCreateDTO {

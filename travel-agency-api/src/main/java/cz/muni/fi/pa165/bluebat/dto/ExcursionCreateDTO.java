@@ -12,6 +12,9 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Objects;
 
+/**
+ * Created by Tomáš Hampl on 27.4.21.
+ */
 @Getter
 @Setter
 public class ExcursionCreateDTO {
