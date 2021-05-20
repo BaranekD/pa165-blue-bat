@@ -3,7 +3,6 @@ package cz.muni.fi.pa165.bluebat.dto;
 import lombok.Getter;
 import lombok.Setter;
 
-import javax.persistence.OneToMany;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
@@ -18,7 +17,6 @@ import java.util.*;
 @Setter
 public class TripDTO {
 
-
     private Long id;
 
     @NotBlank
@@ -30,7 +28,6 @@ public class TripDTO {
     @Future
     private LocalDate dateTo;
 
-
     private String destination;
 
     @Positive
@@ -39,8 +36,6 @@ public class TripDTO {
     private List<PriceDTO> prices = new ArrayList<>();
 
     private List<ExcursionDTO> excursions = new ArrayList<>();
-
-
 
     @Override
     public boolean equals(Object obj) {
@@ -64,6 +59,4 @@ public class TripDTO {
     public int hashCode() {
         return Objects.hash(dateFrom,dateTo,destination);
     }
-
-
 }

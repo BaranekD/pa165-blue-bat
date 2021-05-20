@@ -1,25 +1,15 @@
 package cz.muni.fi.pa165.bluebat.facade;
 
-import cz.muni.fi.pa165.bluebat.dao.TripDao;
 import cz.muni.fi.pa165.bluebat.dto.*;
-import cz.muni.fi.pa165.bluebat.entity.Price;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
-import cz.muni.fi.pa165.bluebat.facade.TripFacade;
 import cz.muni.fi.pa165.bluebat.service.BeanMappingService;
-import cz.muni.fi.pa165.bluebat.service.ExcursionService;
-import cz.muni.fi.pa165.bluebat.service.PriceService;
 import cz.muni.fi.pa165.bluebat.service.TripService;
 import cz.muni.fi.pa165.bluebat.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
 
-import javax.inject.Inject;
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * @author : Rudolf Madoran
@@ -29,9 +19,7 @@ import java.util.Set;
 @Transactional
 public class TripFacadeImpl implements TripFacade {
 
-
-
-    private TripService tripService;
+    private final TripService tripService;
     private final BeanMappingService beanMappingService;
 
 
@@ -50,7 +38,6 @@ public class TripFacadeImpl implements TripFacade {
         return beanMappingService.mapTo(newTrip,TripDTO.class);
 
     }
-
 
     @Override
     public TripDTO updateTrip(TripDTO dto) {
@@ -78,13 +65,6 @@ public class TripFacadeImpl implements TripFacade {
 
     @Override
     public List<TripShowDTO> getAllTrips() {
-        List<TripShowDTO> result= null;
-        for (Trip trip: tripService.findAll()) {
-            result.add(beanMappingService.mapTo(trip,TripShowDTO.class));
-        }
-        return result;
-
+        return beanMappingService.mapTo(tripService.findAll(), TripShowDTO.class);
     }
-
-
 }

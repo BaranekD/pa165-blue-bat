@@ -16,7 +16,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -76,9 +75,7 @@ public class ReservationFacadeImpl implements ReservationFacade {
 
         reservationService.update(reservation);
 
-        ReservationDTO reservationDTO1 = beanMappingService.mapTo(reservation, ReservationDTO.class);
-
-        return reservationDTO1;
+        return beanMappingService.mapTo(reservation, ReservationDTO.class);
     }
 
     @Override

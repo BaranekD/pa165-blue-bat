@@ -1,7 +1,5 @@
 package cz.muni.fi.pa165.bluebat.service;
 
-import cz.muni.fi.pa165.bluebat.entity.Excursion;
-import cz.muni.fi.pa165.bluebat.entity.Price;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
 import java.util.List;
 
