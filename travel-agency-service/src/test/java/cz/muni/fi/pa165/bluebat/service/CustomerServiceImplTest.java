@@ -8,6 +8,7 @@ import org.hibernate.service.spi.ServiceException;
 import org.junit.jupiter.api.Assertions;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
+import org.springframework.dao.DataAccessException;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
@@ -59,9 +60,9 @@ public class CustomerServiceImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void create_daoThrowsException_WrongDataAccessException() {
+    public void create_DataAccessException() {
         Customer customer = getDefaultCustomer();
-        doThrow(new IllegalArgumentException()).when(customerDao).create(customer);
+        doThrow(new IllegalArgumentException()).when(customerDao).create(any());
 
         Assertions.assertThrows(WrongDataAccessException.class, () -> customerService.addCustomer(customer));
     }
@@ -142,7 +143,7 @@ public class CustomerServiceImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void findCustomerById_daoThrows() {
-        when(customerService.findCustomerById(any())).thenThrow(IllegalArgumentException.class);
+        when(customerDao.findById(any())).thenThrow(IllegalArgumentException.class);
 
         Assertions.assertThrows(WrongDataAccessException.class, ()-> customerService.findCustomerById(1L));
     }
