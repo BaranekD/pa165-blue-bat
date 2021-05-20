@@ -17,14 +17,14 @@ public interface ReservationFacade {
      *
      * @param reservationDTO ReservationCreateDTO reservation to be created
      */
-    void createReservation(ReservationCreateDTO reservationDTO);
+    ReservationDTO createReservation(ReservationCreateDTO reservationDTO);
 
     /**
      * Updates a reservation
      *
      * @param reservationDTO ReservationDTO reservation to be updated
      */
-    void updateReservation(ReservationDTO reservationDTO);
+    ReservationDTO updateReservation(ReservationDTO reservationDTO);
 
     /**
      * Deletes a reservation
