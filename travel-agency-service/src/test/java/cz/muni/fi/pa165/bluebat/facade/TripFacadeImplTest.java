@@ -27,7 +27,6 @@ import static org.mockito.Mockito.*;
  * @since : 29. 4. 2021, Thu
  **/
 
-
 @ContextConfiguration(classes = ServiceConfiguration.class)
 public class TripFacadeImplTest extends AbstractTestNGSpringContextTests {
 
@@ -121,5 +120,13 @@ public class TripFacadeImplTest extends AbstractTestNGSpringContextTests {
         tripFacade.deleteTrip(1L);
         verify(tripService, times(1)).delete(any());
     }
+
+    @Test
+    public void testAllTrip() {
+        tripFacade.getAllTrips();
+        verify(tripService, times(1)).findAll();
+    }
+
+
 }
 

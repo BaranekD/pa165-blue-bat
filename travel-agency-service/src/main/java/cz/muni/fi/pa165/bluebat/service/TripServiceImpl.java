@@ -5,6 +5,7 @@ import cz.muni.fi.pa165.bluebat.entity.Excursion;
 import cz.muni.fi.pa165.bluebat.entity.Price;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
 import cz.muni.fi.pa165.bluebat.exceptions.WrongDataAccessException;
+import cz.muni.fi.pa165.bluebat.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
 import org.springframework.stereotype.Service;
@@ -16,12 +17,13 @@ import java.util.List;
  * @author Ondrej Vaca
  */
 @Service
-@Transactional
 public class TripServiceImpl implements TripService{
 
     private final TripDao tripDao;
 
     private PriceService priceService;
+
+    private ExcursionService excursionService;
 
 
     @Autowired
@@ -33,27 +35,17 @@ public class TripServiceImpl implements TripService{
 
     @Override
     public void create(Trip trip) {
-        if (trip == null) {
-            throw new IllegalArgumentException("Trip can not be null");
-        }
+        Validator.NotNull(trip,"Trip");
         try{tripDao.create(trip);} catch (Exception ex){ throw new WrongDataAccessException("Wrong data access",ex);}
-
-
-
     }
-
 
     @Override
     public void update(Trip trip) {
-        if (trip == null) {
-            throw new IllegalArgumentException("Trip can not be null");
-        }
+        Validator.NotNull(trip,"Trip");
         Trip previous = null;
         try{previous = tripDao.findById(trip.getId());} catch (Exception ex){ throw new WrongDataAccessException("Wrong data access",ex); }
 
-        if (previous == null) {
-            throw new IllegalArgumentException("Trip has not been found in database");
-        }
+        Validator.Found(trip,"Trip");
         priceService.updatePrices(previous.getPrices(), trip.getPrices());
         try{tripDao.update(trip);} catch (Exception ex){ throw new WrongDataAccessException("Wrong data access",ex); }
 
@@ -61,19 +53,14 @@ public class TripServiceImpl implements TripService{
 
     @Override
     public void delete(Trip trip) {
-        if (trip == null) {
-            throw new IllegalArgumentException("Trip can not be null");
-        }
-
+        Validator.NotNull(trip,"Trip");
         try{tripDao.delete(trip);} catch (Exception ex){ throw new WrongDataAccessException("Wrong data access",ex);}
 
     }
 
     @Override
     public Trip findById(Long id) {
-        if (id == null) {
-            throw new IllegalArgumentException("Id can not be null");
-        }
+        Validator.NotNull(id,"Trip id");
         try{return tripDao.findById(id);} catch (Exception ex){ throw new WrongDataAccessException("Wrong data access",ex); }
 
     }

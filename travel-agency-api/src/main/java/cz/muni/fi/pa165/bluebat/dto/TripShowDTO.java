@@ -5,17 +5,19 @@ import lombok.Setter;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
-import javax.validation.constraints.Positive;
 import java.time.LocalDate;
-import java.util.*;
+import java.util.Objects;
 
 /**
  * @author : Rudolf Madoran
- * @since : 27. 4. 2021, Tue
+ * @since : 18. 5. 2021, Tue
  **/
+
 @Getter
 @Setter
-public class TripCreateDTO {
+public class TripShowDTO {
+
+    private Long id;
 
     @NotBlank
     private String name;
@@ -29,21 +31,13 @@ public class TripCreateDTO {
 
     private String destination;
 
-    @Positive
-    private Integer availableTrips;
-
-    private List<PriceCreateDTO> prices = new ArrayList<>();
-
-
-
-
     @Override
     public boolean equals(Object obj) {
         if (this == obj) return true;
         if (obj == null) return false;
-        if (!(obj instanceof TripCreateDTO)) return false;
+        if (!(obj instanceof TripDTO)) return false;
 
-        TripCreateDTO trip = (TripCreateDTO) obj;
+        TripDTO trip = (TripDTO) obj;
 
         if (getDateFrom() != null ? !getDateFrom().equals(trip.getDateFrom()) : trip.getDateFrom() != null)
             return false;
@@ -59,6 +53,4 @@ public class TripCreateDTO {
     public int hashCode() {
         return Objects.hash(dateFrom,dateTo,destination);
     }
-
-
 }
