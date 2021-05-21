@@ -8,6 +8,7 @@
         <module>travel-agency-persistence</module>
         <module>travel-agency-service</module>
         <module>travel-agency-api</module>
+        <module>travel-agency-rest</module>
     </modules>
 
     <parent>
