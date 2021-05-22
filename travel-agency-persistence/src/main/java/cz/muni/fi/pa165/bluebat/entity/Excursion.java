@@ -63,12 +63,10 @@ public class Excursion {
     @OneToMany
     @OrderBy("validFrom DESC")
     @JoinTable
-    @Getter(AccessLevel.NONE)
+    @Getter
+    @Setter
     private List<Price> prices = new ArrayList<>();
 
-    public List<Price> getPrices() {
-        return Collections.unmodifiableList(prices);
-    }
 
     public void addPrice(Price price) {
         prices.add(price);

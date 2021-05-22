@@ -1,12 +1,14 @@
 package cz.muni.fi.pa165.bluebat.service;
 
 import cz.muni.fi.pa165.bluebat.dao.TripDao;
+import cz.muni.fi.pa165.bluebat.entity.Price;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
 import cz.muni.fi.pa165.bluebat.exceptions.WrongDataAccessException;
 import cz.muni.fi.pa165.bluebat.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -30,7 +32,14 @@ public class TripServiceImpl implements TripService{
         Validator.NotNull(trip,"Trip");
 
         try {
+            List<Price> prices = trip.getPrices();
+            trip.setPrices(new ArrayList<>());
             tripDao.create(trip);
+            for (Price price: prices) {
+                priceService.create(price);
+                trip.addPrice(price);
+            }
+
         } catch (Exception ex) {
             throw new WrongDataAccessException("Wrong data access", ex);
         }

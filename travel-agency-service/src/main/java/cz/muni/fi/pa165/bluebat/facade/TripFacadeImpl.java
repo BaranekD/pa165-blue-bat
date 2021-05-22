@@ -1,14 +1,18 @@
 package cz.muni.fi.pa165.bluebat.facade;
 
 import cz.muni.fi.pa165.bluebat.dto.*;
+import cz.muni.fi.pa165.bluebat.entity.Price;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
 import cz.muni.fi.pa165.bluebat.service.BeanMappingService;
 import cz.muni.fi.pa165.bluebat.service.TripService;
+import cz.muni.fi.pa165.bluebat.utils.PriceUtils;
 import cz.muni.fi.pa165.bluebat.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.math.BigDecimal;
+import java.util.ArrayList;
 import java.util.List;
 
 /**
@@ -65,6 +69,20 @@ public class TripFacadeImpl implements TripFacade {
 
     @Override
     public List<TripShowDTO> getAllTrips() {
-        return beanMappingService.mapTo(tripService.findAll(), TripShowDTO.class);
+        List<TripShowDTO> result = new ArrayList<>();
+        for (Trip trip:tripService.findAll()) {
+            BigDecimal currentPrice;
+            List<Price> prices = trip.getPrices();
+            if(prices== null || prices.isEmpty()){
+                currentPrice = new BigDecimal(52L);
+            } else {
+                currentPrice = PriceUtils.getCurrentPrice(trip.getPrices());
+            }
+
+            TripShowDTO showTrip =  beanMappingService.mapTo(trip, TripShowDTO.class);
+            showTrip.setCurrentPrice(currentPrice);
+            result.add(showTrip);
+        }
+        return result;
     }
 }

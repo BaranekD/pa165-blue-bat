@@ -4,4 +4,5 @@ public abstract class ApiUris {
 
     public static final String ROOT_URI = "/pa165/rest";
     public static final String ROOT_URI_RESERVATIONS = "/reservations";
+    public static final String ROOT_URI_TRIPS = "/trips";
 }
