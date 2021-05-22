@@ -1,0 +1,18 @@
+<button
+  class="button-item"
+  (click)="onClick($event)"
+  type="{{submit ? 'submit' : 'button'}}"
+>
+  <span *ngIf="state == ButtonStateEnum.init">
+    {{label}}
+  </span>
+  <span *ngIf="state == ButtonStateEnum.error">
+    ✗
+  </span>
+  <span *ngIf="state == ButtonStateEnum.success">
+    ✓
+  </span>
+  <span *ngIf="state == ButtonStateEnum.loading">
+    <div class="lds-ring"><div></div><div></div><div></div><div></div></div>
+  </span>
+</button>

@@ -1,0 +1,6 @@
+<p>trip-detail works with id {{tripId}}!</p>
+
+<!--
+  Tady předáš trip, který získáš z API, povolit pouze pokud bude uživatel přihlášen
+-->
+<a routerLink="reservation" routerLinkActive="active" [state]="{ trip: this.trip }">Reserve</a>
