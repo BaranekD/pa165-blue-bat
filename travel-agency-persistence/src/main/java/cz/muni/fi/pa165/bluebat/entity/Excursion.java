@@ -8,7 +8,6 @@ import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinTable;
-import javax.persistence.ManyToMany;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OrderBy;
@@ -18,7 +17,6 @@ import javax.validation.constraints.NotNull;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.List;
 
 /**
@@ -31,44 +29,26 @@ public class Excursion {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Setter
-    @Getter
     private Long id;
 
-    @Setter
-    @Getter
     @NotBlank
     private String name;
 
-    @Setter
-    @Getter
     @NotNull
     private LocalDate dateFrom;
 
-    @Setter
-    @Getter
     @NotNull
     private Duration duration;
 
-    @Setter
-    @Getter
     @NotBlank
     private String destination;
 
-    @Setter
-    @Getter
     private String description;
-
 
     @OneToMany
     @OrderBy("validFrom DESC")
     @JoinTable
-    @Getter(AccessLevel.NONE)
     private List<Price> prices = new ArrayList<>();
-
-    public List<Price> getPrices() {
-        return Collections.unmodifiableList(prices);
-    }
 
     public void addPrice(Price price) {
         prices.add(price);

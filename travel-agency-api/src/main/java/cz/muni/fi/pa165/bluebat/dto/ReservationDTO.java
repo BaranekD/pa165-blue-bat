@@ -18,12 +18,15 @@ public class ReservationDTO {
     private Long id;
 
     @NotNull
-    private CustomerDTO customerDTO;
+    private CustomerDTO customer;
 
     @NotNull
-    private TripDTO tripDTO;
+    private TripDTO trip;
 
-    private Set<ExcursionDTO> excursionDTOs = new HashSet<>();
+    @NotNull
+    private PriceDTO price;
+
+    private Set<ExcursionDTO> excursions = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {
@@ -33,15 +36,17 @@ public class ReservationDTO {
 
         if (getId() != null ?!getId().equals(reservation.getId()) : reservation.getId() != null)
             return false;
-        if (getCustomerDTO() != null ? !getCustomerDTO().equals(reservation.getCustomerDTO()) : reservation.getCustomerDTO() != null)
+        if (getCustomer() != null ? !getCustomer().equals(reservation.getCustomer()) : reservation.getCustomer() != null)
             return false;
-        if (getTripDTO() != null ? !getTripDTO().equals(reservation.getTripDTO()) : reservation.getTripDTO() != null)
+        if (getTrip() != null ? !getTrip().equals(reservation.getTrip()) : reservation.getTrip() != null)
             return false;
-        return Objects.equals(excursionDTOs, reservation.getExcursionDTOs());
+        if (getPrice() != null ? !getPrice().equals(reservation.getPrice()) : reservation.getPrice() != null)
+            return false;
+        return Objects.equals(excursions, reservation.getExcursions());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(customerDTO, tripDTO, excursionDTOs);
+        return Objects.hash(customer, trip, price, excursions);
     }
 }
