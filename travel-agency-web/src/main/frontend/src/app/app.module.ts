@@ -10,6 +10,7 @@ import { TripDetailComponent } from './trip-detail/trip-detail.component';
 import {HttpClientModule} from "@angular/common/http";
 import { ButtonComponent } from './button/button.component';
 import {ReactiveFormsModule} from "@angular/forms";
+import { InfoboxComponent } from './infobox/infobox.component';
 
 @NgModule({
   declarations: [
@@ -18,7 +19,8 @@ import {ReactiveFormsModule} from "@angular/forms";
     CatalogComponent,
     ReservationComponent,
     TripDetailComponent,
-    ButtonComponent
+    ButtonComponent,
+    InfoboxComponent
   ],
   imports: [
     BrowserModule,

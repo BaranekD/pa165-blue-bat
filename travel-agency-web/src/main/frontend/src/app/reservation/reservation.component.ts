@@ -1,6 +1,7 @@
-import {Component, OnInit} from '@angular/core';
-import {ReservationService} from '../../services/reservation.service';
-import {ButtonStateEnum} from "../../models/button-state.enum";
+import { Component, OnInit } from '@angular/core';
+import { ReservationService } from '../../services/reservation.service';
+import { ButtonStateEnum } from "../../models/button-state.enum";
+import { InfoboxStateEnum } from 'src/models/infobox-state.enum';
 
 @Component({
   selector: 'app-reservation',
@@ -9,6 +10,7 @@ import {ButtonStateEnum} from "../../models/button-state.enum";
 })
 export class ReservationComponent implements OnInit {
   ButtonStateEnum = ButtonStateEnum;
+  InfoboxStateEnum = InfoboxStateEnum;
   submitState: ButtonStateEnum = ButtonStateEnum.init;
   created: boolean = false;
   error: any;

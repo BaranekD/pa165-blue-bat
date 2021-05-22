@@ -1,0 +1,9 @@
+<div class="infobox" [ngClass]="{'infobox-success': state == InfoboxStateEnum.success, 'infobox-error': state == InfoboxStateEnum.error}">
+  <p class="infobox-icon infobox-icon-success" *ngIf="state == InfoboxStateEnum.success">
+    ✓
+  </p>
+  <p class="infobox-icon infobox-icon-error" *ngIf="state == InfoboxStateEnum.error">
+    ✗
+  </p>
+  <ng-content></ng-content>
+</div>

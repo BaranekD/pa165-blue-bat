@@ -15,12 +15,11 @@
 
     <p>Overall price: {{price}}</p>
 
-    <div class="error" *ngIf="error">
-      <p class="error-icon">✗</p>
+    <app-infobox *ngIf="error" [state]="InfoboxStateEnum.error">
       <p>
         {{error.status}}: {{error.message}}
       </p>
-    </div>
+    </app-infobox>
 
     <app-button
       label="SEND"
@@ -39,3 +38,9 @@
     </p>
   </div>
 </div>
+
+<app-infobox *ngIf="created" [state]="InfoboxStateEnum.success">
+  <p>
+    Your reservation was successfully created!
+  </p>
+</app-infobox>
