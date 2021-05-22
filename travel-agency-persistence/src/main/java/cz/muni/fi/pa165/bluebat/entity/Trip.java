@@ -60,10 +60,10 @@ public class Trip {
 
 
     @OneToMany (mappedBy = "trip")
-    private Set<Excursion> excursions = new HashSet<>();
+    private List<Excursion> excursions = new ArrayList<>();
 
-    public Set<Excursion> getExcursions() {
-        return Collections.unmodifiableSet(excursions);
+    public List<Excursion> getExcursions() {
+        return Collections.unmodifiableList(excursions);
     }
 
     public List<Price> getPrices() {

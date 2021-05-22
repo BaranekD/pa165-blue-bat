@@ -4,8 +4,6 @@ import cz.muni.fi.pa165.bluebat.ServiceConfiguration;
 import cz.muni.fi.pa165.bluebat.dto.TripCreateDTO;
 import cz.muni.fi.pa165.bluebat.dto.TripDTO;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
-import cz.muni.fi.pa165.bluebat.facade.TripFacade;
-import cz.muni.fi.pa165.bluebat.facade.TripFacadeImpl;
 import cz.muni.fi.pa165.bluebat.service.*;
 import org.hibernate.service.spi.ServiceException;
 import org.mockito.Mock;
@@ -27,20 +25,16 @@ import static org.mockito.Mockito.*;
  * @since : 29. 4. 2021, Thu
  **/
 
-
 @ContextConfiguration(classes = ServiceConfiguration.class)
 public class TripFacadeImplTest extends AbstractTestNGSpringContextTests {
 
-
     @Autowired
     private BeanMappingService beanMappingService;
-
 
     @Mock
     private TripService tripService;
 
     private TripFacade tripFacade;
-
 
     @BeforeMethod
     public void setup() throws ServiceException {
@@ -52,7 +46,6 @@ public class TripFacadeImplTest extends AbstractTestNGSpringContextTests {
     }
 
     private TripCreateDTO prepareTripCreateDTO() {
-
         TripCreateDTO testTrip3 = new TripCreateDTO();
         testTrip3.setAvailableTrips(5);
         testTrip3.setDateFrom(LocalDate.of(2022,5,1));
@@ -64,7 +57,6 @@ public class TripFacadeImplTest extends AbstractTestNGSpringContextTests {
     }
 
     private TripDTO prepareTripDTO() {
-
         TripDTO testTrip3 = new TripDTO();
         testTrip3.setId(1L);
         testTrip3.setAvailableTrips(5);
@@ -77,7 +69,6 @@ public class TripFacadeImplTest extends AbstractTestNGSpringContextTests {
     }
 
     private Trip prepareTrip() {
-
         Trip testTrip3 = new Trip();
         testTrip3.setId(1L);
         testTrip3.setAvailableTrips(5);
@@ -91,7 +82,6 @@ public class TripFacadeImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void getTripById_valid() {
-
         Trip trip = prepareTrip();
         TripDTO dto = prepareTripDTO();
 
@@ -101,7 +91,6 @@ public class TripFacadeImplTest extends AbstractTestNGSpringContextTests {
 
         verify(tripService, times(1)).findById(trip.getId());
         Assert.assertEquals(result, dto);
-
     }
 
     @Test
@@ -109,9 +98,9 @@ public class TripFacadeImplTest extends AbstractTestNGSpringContextTests {
         tripFacade.createTrip(prepareTripCreateDTO());
         verify(tripService, times(1)).create(any());
     }
+
     @Test
     public void testUpdateTrip() {
-
         tripFacade.updateTrip(prepareTripDTO());
         verify(tripService, times(1)).update(any());
     }
@@ -121,5 +110,10 @@ public class TripFacadeImplTest extends AbstractTestNGSpringContextTests {
         tripFacade.deleteTrip(1L);
         verify(tripService, times(1)).delete(any());
     }
-}
 
+    @Test
+    public void testAllTrip() {
+        tripFacade.getAllTrips();
+        verify(tripService, times(1)).findAll();
+    }
+}

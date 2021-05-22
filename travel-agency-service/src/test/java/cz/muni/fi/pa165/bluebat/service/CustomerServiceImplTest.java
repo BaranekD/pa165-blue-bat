@@ -59,9 +59,9 @@ public class CustomerServiceImplTest extends AbstractTestNGSpringContextTests {
     }
 
     @Test
-    public void create_daoThrowsException_WrongDataAccessException() {
+    public void create_DataAccessException() {
         Customer customer = getDefaultCustomer();
-        doThrow(new IllegalArgumentException()).when(customerDao).create(customer);
+        doThrow(new IllegalArgumentException()).when(customerDao).create(any());
 
         Assertions.assertThrows(WrongDataAccessException.class, () -> customerService.addCustomer(customer));
     }
@@ -142,7 +142,7 @@ public class CustomerServiceImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void findCustomerById_daoThrows() {
-        when(customerService.findCustomerById(any())).thenThrow(IllegalArgumentException.class);
+        when(customerDao.findById(any())).thenThrow(IllegalArgumentException.class);
 
         Assertions.assertThrows(WrongDataAccessException.class, ()-> customerService.findCustomerById(1L));
     }

@@ -4,13 +4,11 @@ import cz.muni.fi.pa165.bluebat.ServiceConfiguration;
 import cz.muni.fi.pa165.bluebat.dto.CustomerCreateDTO;
 import cz.muni.fi.pa165.bluebat.dto.CustomerDTO;
 import cz.muni.fi.pa165.bluebat.entity.Customer;
-import cz.muni.fi.pa165.bluebat.facade.CustomerFacade;
-import cz.muni.fi.pa165.bluebat.facade.CustomerFacadeImpl;
 import cz.muni.fi.pa165.bluebat.service.BeanMappingService;
 import cz.muni.fi.pa165.bluebat.service.CustomerService;
+import org.junit.jupiter.api.Assertions;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
 import org.testng.Assert;
@@ -20,6 +18,7 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doAnswer;
 import static org.mockito.Mockito.times;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -29,8 +28,9 @@ import static org.mockito.Mockito.when;
  */
 @ContextConfiguration(classes = ServiceConfiguration.class)
 public class CustomerFacadeImplTest extends AbstractTestNGSpringContextTests {
+    private static final Long CUSTOMER_ID = 3L;
 
-    @Autowired
+    @Mock
     private BeanMappingService beanMappingService;
 
     @Mock
@@ -38,67 +38,101 @@ public class CustomerFacadeImplTest extends AbstractTestNGSpringContextTests {
 
     private CustomerFacade customerFacade;
 
+    Customer customer;
+    CustomerDTO customerDTO;
+    CustomerCreateDTO customerCreateDTO;
+    Customer insertedCustomer;
+    List<Customer> customers;
+    List<CustomerDTO> customerDTOs;
+
     @BeforeMethod
     public void setup() {
         MockitoAnnotations.openMocks(this);
         customerFacade = new CustomerFacadeImpl(customerService,beanMappingService);
+
+        customer=getDefaultCustomer();
+        insertedCustomer=getDefaultInsertedCustomer();
+        customerDTO=getDefaultCustomerDTO();
+        customerCreateDTO=getDefaultCustomerCreateDTO();
+        customers=new ArrayList<>();
+        customers.add(insertedCustomer);
+        customerDTOs=new ArrayList<>();
+        customerDTOs.add(customerDTO);
+
+        when(beanMappingService.mapTo(customerCreateDTO, Customer.class)).thenReturn(customer);
+        when(beanMappingService.mapTo(insertedCustomer, CustomerDTO.class)).thenReturn(customerDTO);
+        when(beanMappingService.mapTo(customerDTO, Customer.class)).thenReturn(insertedCustomer);
+        when(beanMappingService.mapTo(customers,CustomerDTO.class)).thenReturn(customerDTOs);
+
+        doAnswer(invocation -> {
+            ((Customer)invocation.getArgument(0)).setId(CUSTOMER_ID);
+            return null;
+        }).when(customerService).addCustomer(any());
     }
 
     @Test
     public void createCustomer_valid() {
-        Customer customer = getDefaultCustomer();
-        CustomerCreateDTO customerCreateDTO =getDefaultCustomerCreateDTO();
+        CustomerDTO result=customerFacade.createCustomer(customerCreateDTO);
+        verify(customerService, times(1)).addCustomer(any());
+        Assert.assertEquals(result,customerDTO);
+    }
 
-        customerFacade.createCustomer(customerCreateDTO);
-
-        verify(customerService, times(1)).addCustomer(customer);
+    @Test
+    public void createCustomer_null_IllegalArgumentException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> customerFacade.createCustomer(null));
     }
 
     @Test
     public void updateCustomer_valid() {
-        Long id = 1L;
-        Customer customer = getDefaultCustomer();
-        customer.setId(id);
-        CustomerDTO customerDTO = getDefaultCustomerDTO();
-        customerDTO.setId(id);
+        CustomerDTO result=customerFacade.updateCustomer(customerDTO);
 
-        customerFacade.updateCustomer(customerDTO);
+        verify(customerService, times(1)).updateCustomer(any());
+        Assert.assertEquals(result,customerDTO);
+    }
 
-        verify(customerService, times(1)).updateCustomer(customer);
+    @Test
+    public void updateCustomer_null_IllegalArgumentException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> customerFacade.updateCustomer(null));
     }
 
     @Test
     public void deleteCustomer_valid() {
-        Long id = 1L;
-        Customer customer = getDefaultCustomer();
-        customer.setId(id);
-        when(customerService.findCustomerById(id)).thenReturn(customer);
-
-        customerFacade.deleteCustomer(id);
+        when(customerService.findCustomerById(CUSTOMER_ID)).thenReturn(customer);
+        customerFacade.deleteCustomer(CUSTOMER_ID);
 
         verify(customerService, times(1)).deleteCustomer(customer);
     }
 
     @Test
-    public void getCustomerById_valid() {
-        Long id = 1L;
-        Customer customer = getDefaultCustomer();
-        customer.setId(id);
-        CustomerDTO customerDTO = getDefaultCustomerDTO();
-        customerDTO.setId(id);
-        when(customerService.findCustomerById(id)).thenReturn(customer);
-
-        CustomerDTO result = customerFacade.getCustomerById(id);
-
-        verify(customerService, times(1)).findCustomerById(id);
-        Assert.assertEquals(result.getId(), customerDTO.getId());
-        Assert.assertEquals(result.getAddress(), customerDTO.getAddress());
-        Assert.assertEquals(result.getName(), customerDTO.getName());
-        Assert.assertEquals(result.getBirthday(), customerDTO.getBirthday());
-        Assert.assertEquals(result.getEmail(), customerDTO.getEmail());
-        Assert.assertEquals(result.getSurname(), customerDTO.getSurname());
-        Assert.assertEquals(result.getPhoneNumber(), customerDTO.getPhoneNumber());
+    public void deleteCustomer_nullId_IllegalArgumentException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> customerFacade.deleteCustomer(null));
     }
+
+    @Test
+    public void deleteCustomer_negative_IllegalArgumentException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> customerFacade.deleteCustomer(-1L));
+    }
+
+    @Test
+    public void getCustomerById_valid() {
+        when(customerService.findCustomerById(CUSTOMER_ID)).thenReturn(insertedCustomer);
+
+        CustomerDTO result = customerFacade.getCustomerById(CUSTOMER_ID);
+
+        verify(customerService, times(1)).findCustomerById(CUSTOMER_ID);
+        Assert.assertEquals(result,customerDTO);
+    }
+
+    @Test
+    public void getCustomerById_nullId_IllegalArgumentException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> customerFacade.getCustomerById(null));
+    }
+
+    @Test
+    public void getCustomerById_negative_IllegalArgumentException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> customerFacade.getCustomerById(-1L));
+    }
+
     @Test
     public void getCustomerById_invalidId() {
         Long id = 1L;
@@ -111,38 +145,12 @@ public class CustomerFacadeImplTest extends AbstractTestNGSpringContextTests {
 
     @Test
     public void getAllCustomers_valid() {
-        Long idFirst= 1L;
-        Long idSecond= 2L;
-        Customer first = getDefaultCustomer();
-        Customer second=getDefaultCustomer();
-        first.setId(idFirst);
-        second.setId(idSecond);
-        List<Customer>customers = new ArrayList<>();
-        customers.add(0,first);
-        customers.add(1,second);
-
-        CustomerDTO customerDTOFirst=getDefaultCustomerDTO();
-        CustomerDTO customerDTOSecond=getDefaultCustomerDTO();
-        customerDTOFirst.setId(idFirst);
-        customerDTOSecond.setId(idSecond);
-        List<CustomerDTO>customersDTO = new ArrayList<>();
-        customersDTO.add(0,customerDTOFirst);
-        customersDTO.add(1,customerDTOSecond);
-
         when(customerService.findAllCustomers()).thenReturn(customers);
 
         List<CustomerDTO> result = customerFacade.getAllCustomers();
 
         verify(customerService, times(1)).findAllCustomers();
-        for(int i=0;i<2;i++) {
-            Assert.assertEquals(result.get(i).getId(), customersDTO.get(i).getId());
-            Assert.assertEquals(result.get(i).getAddress(), customersDTO.get(i).getAddress());
-            Assert.assertEquals(result.get(i).getName(), customersDTO.get(i).getName());
-            Assert.assertEquals(result.get(i).getBirthday(), customersDTO.get(i).getBirthday());
-            Assert.assertEquals(result.get(i).getEmail(), customersDTO.get(i).getEmail());
-            Assert.assertEquals(result.get(i).getSurname(), customersDTO.get(i).getSurname());
-            Assert.assertEquals(result.get(i).getPhoneNumber(), customersDTO.get(i).getPhoneNumber());
-        }
+        Assert.assertEquals(result,customerDTOs);
     }
 
     private static Customer getDefaultCustomer() {
@@ -161,6 +169,7 @@ public class CustomerFacadeImplTest extends AbstractTestNGSpringContextTests {
     private static CustomerDTO getDefaultCustomerDTO() {
         CustomerDTO result = new CustomerDTO();
 
+        result.setId(CUSTOMER_ID);
         result.setName("name");
         result.setSurname("surname");
         result.setBirthday(LocalDate.ofYearDay(1970, 1));
@@ -182,5 +191,11 @@ public class CustomerFacadeImplTest extends AbstractTestNGSpringContextTests {
         result.setPhoneNumber(111111111L);
 
         return result;
+    }
+
+    private Customer getDefaultInsertedCustomer() {
+        Customer customer = getDefaultCustomer();
+        customer.setId(CUSTOMER_ID);
+        return customer;
     }
 }

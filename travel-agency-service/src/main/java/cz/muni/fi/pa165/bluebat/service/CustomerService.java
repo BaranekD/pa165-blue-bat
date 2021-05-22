@@ -1,7 +1,6 @@
 package cz.muni.fi.pa165.bluebat.service;
 
 import cz.muni.fi.pa165.bluebat.entity.Customer;
-import cz.muni.fi.pa165.bluebat.entity.Reservation;
 import cz.muni.fi.pa165.bluebat.exceptions.WrongDataAccessException;
 
 import java.util.List;

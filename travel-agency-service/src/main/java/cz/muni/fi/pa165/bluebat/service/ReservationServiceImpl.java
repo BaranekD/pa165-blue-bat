@@ -1,16 +1,20 @@
 package cz.muni.fi.pa165.bluebat.service;
 
 import cz.muni.fi.pa165.bluebat.dao.ReservationDao;
+import cz.muni.fi.pa165.bluebat.entity.Customer;
 import cz.muni.fi.pa165.bluebat.entity.Excursion;
+import cz.muni.fi.pa165.bluebat.entity.Price;
 import cz.muni.fi.pa165.bluebat.entity.Reservation;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
 import cz.muni.fi.pa165.bluebat.exceptions.WrongDataAccessException;
 import cz.muni.fi.pa165.bluebat.utils.PriceUtils;
+import cz.muni.fi.pa165.bluebat.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
 import java.math.BigDecimal;
+import java.time.LocalDate;
 import java.util.List;
 import java.util.Set;
 
@@ -22,17 +26,31 @@ import java.util.Set;
 public class ReservationServiceImpl implements ReservationService {
 
     private final ReservationDao reservationDao;
+    private final PriceService priceService;
 
     @Autowired
-    public ReservationServiceImpl(ReservationDao reservationDao) {
+    public ReservationServiceImpl(ReservationDao reservationDao, PriceService priceService) {
         this.reservationDao = reservationDao;
+        this.priceService = priceService;
     }
 
     @Override
-    public void create(Reservation r) {
-        if (r == null) {
-            throw new IllegalArgumentException("Reservation can not be null");
-        }
+    public void create(Reservation r, Customer c, Trip t, Set<Excursion> e) {
+        Validator.NotNull(r, "Reservation");
+        Validator.NotNull(c, "Reservation");
+        Validator.NotNull(t, "Reservation");
+        Validator.NotNull(e, "Reservation");
+
+        r.setCustomer(c);
+        r.setTrip(t);
+        r.setExcursions(e);
+
+        Price price = new Price();
+        price.setValidFrom(LocalDate.now());
+        price.setAmount(getTotalReservationPrice(t, e));
+        priceService.create(price);
+
+        r.setPrice(price);
 
         try {
             reservationDao.create(r);
@@ -61,15 +79,9 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public void update(Reservation r) {
-        if (r == null) {
-            throw new IllegalArgumentException("Reservation can not be null");
-        }
-
+        Validator.NotNull(r, "Reservation");
         Reservation previous = reservationDao.findById(r.getId());
-
-        if (previous == null) {
-            throw new IllegalArgumentException("Reservation has not been found in database");
-        }
+        Validator.Found(previous, "Reservation");
 
         try {
             reservationDao.update(r);
@@ -81,7 +93,8 @@ public class ReservationServiceImpl implements ReservationService {
     @Override
     public void delete(Reservation r) {
         try {
-            reservationDao.delete(findById(r.getId()));
+            priceService.delete(r.getPrice());
+            reservationDao.delete(r);
         } catch (Exception ex) {
             throw new WrongDataAccessException("Error while deleting a reservation", ex);
         }
@@ -89,13 +102,8 @@ public class ReservationServiceImpl implements ReservationService {
 
     @Override
     public BigDecimal getTotalReservationPrice(Trip trip, Set<Excursion> excursions) {
-        if (trip == null) {
-            throw new IllegalArgumentException("Trip can not be null");
-        }
-
-        if (excursions == null) {
-            throw new IllegalArgumentException("Excursions can not be null");
-        }
+        Validator.NotNull(trip, "Trip");
+        Validator.NotNull(excursions, "Excursions");
 
         BigDecimal sum = PriceUtils.getCurrentPrice(trip.getPrices());
 

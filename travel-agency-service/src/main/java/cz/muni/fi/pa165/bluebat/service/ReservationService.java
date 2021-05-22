@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.bluebat.service;
 
+import cz.muni.fi.pa165.bluebat.entity.Customer;
 import cz.muni.fi.pa165.bluebat.entity.Excursion;
 import cz.muni.fi.pa165.bluebat.entity.Reservation;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
@@ -21,7 +22,7 @@ public interface ReservationService {
      *
      * @param r Reservation reservation to be created
      */
-    void create(Reservation r) throws WrongDataAccessException;
+    void create(Reservation r, Customer c, Trip t, Set<Excursion> e) throws WrongDataAccessException;
 
     /**
      * Finds a reservation by id

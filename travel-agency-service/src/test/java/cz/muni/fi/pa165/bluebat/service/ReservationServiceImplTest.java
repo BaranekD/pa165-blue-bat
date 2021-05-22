@@ -21,6 +21,7 @@ import org.testng.annotations.Test;
 import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -38,12 +39,22 @@ public class ReservationServiceImplTest extends AbstractTestNGSpringContextTests
     @Mock
     private ReservationDao reservationDao;
 
+    @Mock
+    private PriceService priceService;
+
     private ReservationService reservationService;
+
+    private Customer customer;
+    private Trip trip;
+    private final Set<Excursion> excursions = new HashSet<>();
 
     @BeforeMethod
     public void setup() throws ServiceException {
         MockitoAnnotations.openMocks(this);
-        reservationService = new ReservationServiceImpl(reservationDao);
+        reservationService = new ReservationServiceImpl(reservationDao, priceService);
+
+        this.customer = getDefaultCustomer();
+        this.trip = getDefaultTrip();
 
         doNothing().when(reservationDao).create(any());
         doNothing().when(reservationDao).update(any());
@@ -53,14 +64,29 @@ public class ReservationServiceImplTest extends AbstractTestNGSpringContextTests
     @Test
     public void create_valid() {
         Reservation reservation = getDefaultReservation();
-        reservationService.create(reservation);
+        reservationService.create(reservation, this.customer, this.trip, this.excursions);
 
         verify(reservationDao, times(1)).create(reservation);
     }
 
     @Test
-    public void create_null_IllegalArgumentException() {
-        Assertions.assertThrows(IllegalArgumentException.class, () -> reservationService.create(null));
+    public void create_nullReservation_IllegalArgumentException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> reservationService.create(null, this.customer, this.trip, this.excursions));
+    }
+
+    @Test
+    public void create_nullCustomer_IllegalArgumentException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> reservationService.create(getDefaultReservation(), null, this.trip, this.excursions));
+    }
+
+    @Test
+    public void create_nullTrip_IllegalArgumentException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> reservationService.create(getDefaultReservation(), this.customer, null, this.excursions));
+    }
+
+    @Test
+    public void create_nullExcursions_IllegalArgumentException() {
+        Assertions.assertThrows(IllegalArgumentException.class, () -> reservationService.create(getDefaultReservation(), this.customer, this.trip, null));
     }
 
     @Test
@@ -68,7 +94,7 @@ public class ReservationServiceImplTest extends AbstractTestNGSpringContextTests
         Reservation reservation = getDefaultReservation();
         doThrow(new IllegalArgumentException()).when(reservationDao).create(reservation);
 
-        Assertions.assertThrows(WrongDataAccessException.class, () -> reservationService.create(reservation));
+        Assertions.assertThrows(WrongDataAccessException.class, () -> reservationService.create(reservation, this.customer, this.trip, this.excursions));
     }
 
     @Test
@@ -140,6 +166,7 @@ public class ReservationServiceImplTest extends AbstractTestNGSpringContextTests
     @Test
     public void getTotalReservationPrice_emptyExcursions_valid() {
         Reservation reservation = getDefaultReservation();
+        reservation.setTrip(this.trip);
         reservation.setExcursions(new HashSet<>());
 
         List<Price> prices = new ArrayList<>();
@@ -157,6 +184,7 @@ public class ReservationServiceImplTest extends AbstractTestNGSpringContextTests
     @Test
     public void getTotalReservationPrice_valid() {
         Reservation reservation = getDefaultReservation();
+        reservation.setTrip(this.trip);
 
         Set<Excursion> excursions = new HashSet<>();
 
@@ -191,13 +219,7 @@ public class ReservationServiceImplTest extends AbstractTestNGSpringContextTests
     }
 
     private static Reservation getDefaultReservation() {
-        Reservation result = new Reservation();
-
-        result.setTrip(getDefaultTrip());
-        result.setCustomer(getDefaultCustomer());
-        result.setPrice(getDefaultPricePast());
-
-        return result;
+        return new Reservation();
     }
 
     private static Reservation getDefaultInsertedReservation() {
@@ -215,6 +237,7 @@ public class ReservationServiceImplTest extends AbstractTestNGSpringContextTests
         result.setDateFrom(LocalDate.now().plusDays(1));
         result.setDateTo(LocalDate.now().plusDays(2));
         result.setAvailableTrips(0);
+        result.setPrices(Collections.singletonList(getDefaultPricePast()));
 
         return result;
     }
