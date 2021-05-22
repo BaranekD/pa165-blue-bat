@@ -7,8 +7,15 @@
 <div class="menu-wrap">
   <nav>
     <ul class="menu">
-      <li class="menu-item"><a routerLink="/" routerLinkActive="active" class="menu-item-link">Catalog</a></li>
-      <li class="menu-item"><a routerLink="/login" routerLinkActive="active" class="menu-item-link">Log in</a></li>
+      <li class="menu-item">
+        <a routerLink="/" routerLinkActive="active" class="menu-item-link">Catalog</a>
+      </li>
+      <li class="menu-item" *ngIf="!authService.IsAuthenticated()">
+        <a routerLink="/login" routerLinkActive="active" class="menu-item-link">Log in</a>
+      </li>
+      <li class="menu-item" *ngIf="authService.IsAuthenticated()">
+        <a href="javascript:void(0)" (click)="authService.logout()" class="menu-item-link">Log out</a>
+      </li>
     </ul>
   </nav>
 </div>

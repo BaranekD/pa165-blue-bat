@@ -1,0 +1,49 @@
+.infobox {
+  border: 2px black solid;
+  border-radius: 5px;
+  text-align: center;
+  padding: 5px;
+  margin-bottom: 10px;
+}
+
+.infobox-success {
+  color: limegreen;
+  border-color: limegreen;
+}
+
+.infobox-error {
+  color: red;
+  border-color: red;
+}
+
+.infobox-icon {
+  border: 1px black solid;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.infobox-icon-success {
+  color: limegreen;
+  border-color: limegreen;
+}
+
+.infobox-icon-error {
+  color: red;
+  border-color: red;
+}
+
+@media screen and (min-width: 575px) {
+  .infobox {
+    width: 300px;
+  }
+}
+
+@media screen and (max-width: 575px) {
+  .infobox {
+    width: 100vw;
+    margin-left: calc(-50vw + 50%);
+  }
+}
