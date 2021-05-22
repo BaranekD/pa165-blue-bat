@@ -1,0 +1,8 @@
+<p>catalog works!</p>
+
+<!--
+  Tady ten odkaz tě převede na detail tripu, musíš mu nastavit tripId (místo té jedničky dáš to id)
+  pro výpis jednotlivých tripů použij https://angular.io/api/common/NgForOf#local-variables
+  'index as i; first as isFirst' asi nebudeš potřebovat
+ -->
+<a routerLink="/trip-detail" routerLinkActive="active" [state]="{ tripId: 1 }">link to detail</a>

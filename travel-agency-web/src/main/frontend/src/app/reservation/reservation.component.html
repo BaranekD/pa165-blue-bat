@@ -1,0 +1,41 @@
+<div *ngIf="!created">
+  <h3>Reservation for {{trip.name}}</h3>
+
+  <div class="form">
+    <span>Select excursions: </span>
+    <br />
+    <div *ngFor="let excursion of trip.excursions">
+      <input
+        class="form-checkbox"
+        type="checkbox"
+        (click)="setExcursion($event, excursion)"
+      >
+      <span>{{excursion.name}}</span>
+    </div>
+
+    <p>Overall price: {{price}}</p>
+
+    <div class="error" *ngIf="error">
+      <p class="error-icon">✗</p>
+      <p>
+        {{error.status}}: {{error.message}}
+      </p>
+    </div>
+
+    <app-button
+      label="SEND"
+      [(state)]="submitState"
+      (click)="onClick()"
+    ></app-button>
+  </div>
+</div>
+
+<div *ngIf="created">
+  <h3>Reservation for {{trip.name}}</h3>
+  <div class="success">
+    <p class="success-icon">✓</p>
+    <p>
+      Your reservation was successfully created!
+    </p>
+  </div>
+</div>
