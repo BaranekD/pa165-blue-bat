@@ -1,0 +1,66 @@
+<div *ngIf="!created">
+  <form
+    [formGroup]="tripForm">
+    <p>
+      Name:
+      <input
+        formControlName="name"
+      >
+    </p>
+    <p>
+      Date from:
+      <input
+        formControlName="dateFrom"
+        type="date"
+      >
+    </p>
+    <p>
+      Date to:
+      <input
+        formControlName="dateTo"
+        type="date"
+      >
+    </p>
+    <p>
+      Destination:
+      <input
+        formControlName="destination"
+      >
+    </p>
+    <p>
+      Available trips:
+      <input
+        formControlName="availableTrips"
+        type="number"
+      >
+    </p>
+    <div formArrayName="prices">
+      Prices:
+      <div *ngFor="let x of this.getPrices().controls; let i = index" class="price">
+        <div [formGroupName]="i">
+          Amount:
+          <input
+            formControlName="amount"
+            type="number"
+          >
+          Valid from:
+          <input
+            formControlName="validFrom"
+            type="date"
+          >
+          <app-button (click)="removePrice(i)" label="✗" class="add-price">
+          </app-button>
+        </div>
+      </div>
+      <p>
+        <app-button (click)="addPrice()" label="add price"></app-button>
+      </p>
+    </div>
+    <app-button
+      label="CREATE"
+      [(state)]="submitState"
+      (click)="onClick()"
+    ></app-button>
+  </form>
+
+</div>
