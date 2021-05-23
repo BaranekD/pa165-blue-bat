@@ -24,7 +24,7 @@ export class AuthService {
       result => {
         this.user.isAuthenticated = result;
         if (this.user.isAuthenticated) {
-          this.user.authData = window.btoa(model.nickname + ':' + model.password);
+          this.user.authData = window.btoa(model.nickName + ':' + model.password);
         }
         onAuth();
       },

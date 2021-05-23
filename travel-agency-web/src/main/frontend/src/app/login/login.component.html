@@ -1,1 +1,19 @@
-<p>login works!</p>
+<div *ngIf="!created">
+  <form
+    [formGroup]="loginForm">
+  <input
+    formControlName="username"
+  >
+  <input
+    formControlName="password"
+    type="password"
+  >
+    <app-button
+      label="LOGIN"
+      [(state)]="submitState"
+      (click)="onClick()"
+    ></app-button>
+
+  </form>
+
+</div>
