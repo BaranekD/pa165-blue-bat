@@ -10,7 +10,7 @@ import javax.persistence.JoinTable;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.validation.constraints.NotNull;
-import java.util.Collections;
+import java.util.HashSet;
 import java.util.Objects;
 import java.util.Set;
 
@@ -21,35 +21,28 @@ import java.util.Set;
  */
 @Entity
 @Setter
+@Getter
 public class Reservation {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Getter
     private Long id;
 
     @OneToOne
-    @Getter
     @NotNull
     private Customer customer;
 
     @OneToOne()
-    @Getter
     @NotNull
     private Trip trip;
 
     @OneToOne
-    @Getter
     @NotNull
     private Price price;
 
     @OneToMany()
     @JoinTable()
-    private Set<Excursion> excursions;
-
-    public Set<Excursion> getExcursions() {
-        return Collections.unmodifiableSet(excursions);
-    }
+    private Set<Excursion> excursions = new HashSet<>();
 
     @Override
     public boolean equals(Object o) {

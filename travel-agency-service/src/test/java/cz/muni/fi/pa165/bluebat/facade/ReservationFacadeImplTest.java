@@ -122,7 +122,7 @@ public class ReservationFacadeImplTest extends AbstractTestNGSpringContextTests 
     @Test
     public void updateReservation_valid() {
         ReservationDTO updatedReservationDTO = getDefaultReservationDTO();
-        updatedReservationDTO.setCustomerDTO(getDefaultCustomerDTO());
+        updatedReservationDTO.setCustomer(getDefaultCustomerDTO());
 
         Reservation updatedReservation = getDefaultInsertedReservation();
         updatedReservation.setCustomer(customer2);
