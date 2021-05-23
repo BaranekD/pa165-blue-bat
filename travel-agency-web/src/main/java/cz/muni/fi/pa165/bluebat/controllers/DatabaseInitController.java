@@ -7,11 +7,13 @@ import cz.muni.fi.pa165.bluebat.facade.ExcursionFacade;
 import cz.muni.fi.pa165.bluebat.facade.TripFacade;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
+import org.springframework.stereotype.Component;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RestController;
 
+import javax.annotation.PostConstruct;
 import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDate;
@@ -22,9 +24,7 @@ import java.util.List;
  * @author : Rudolf Madoran
  * @since : 22. 5. 2021, Sat
  **/
-
-@RestController
-@RequestMapping("/main")
+@Component
 public class DatabaseInitController {
 
     @Autowired
@@ -36,7 +36,7 @@ public class DatabaseInitController {
     @Autowired
     private TripFacade tripFacade;
 
-    @RequestMapping(value = "/database", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    @PostConstruct
     public String populateData(){
         populate();
         return "Database was populated";
@@ -51,6 +51,8 @@ public class DatabaseInitController {
         result.setEmail("a@b.c");
         result.setAddress("address");
         result.setPhoneNumber(111111111L);
+        result.setNickName("nickname");
+        result.setPassword("passowrd");
 
         return result;
     }
