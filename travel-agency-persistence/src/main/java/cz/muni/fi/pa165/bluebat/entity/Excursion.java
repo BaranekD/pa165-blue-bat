@@ -65,7 +65,6 @@ public class Excursion {
     @JoinTable
     private List<Price> prices = new ArrayList<>();
 
-
     public void addPrice(Price price) {
         prices.add(price);
     }

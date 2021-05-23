@@ -44,7 +44,6 @@ public class Reservation {
     @JoinTable()
     private Set<Excursion> excursions = new HashSet<>();
 
-
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
