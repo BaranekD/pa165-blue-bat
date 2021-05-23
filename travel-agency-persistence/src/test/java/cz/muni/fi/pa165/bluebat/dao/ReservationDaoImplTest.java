@@ -177,6 +177,9 @@ public class ReservationDaoImplTest extends AbstractTestNGSpringContextTests {
         customer.setEmail("karel.novak@test.cz");
         customer.setPhoneNumber(123456789L);
         customer.setBirthday(LocalDate.of(1990, 3, 25));
+        customer.setPasswordHash("ab123");
+        customer.setNickName("ab.ba");
+        customer.setAdmin(true);
 
         insertCustomer(customer);
     }
@@ -189,6 +192,9 @@ public class ReservationDaoImplTest extends AbstractTestNGSpringContextTests {
         notInsertedCustomer.setEmail("karel.novak@test.cz");
         notInsertedCustomer.setPhoneNumber(123456789L);
         notInsertedCustomer.setBirthday(LocalDate.of(1990, 3, 25));
+        notInsertedCustomer.setPasswordHash("11aa");
+        notInsertedCustomer.setNickName("cc.cc");
+        notInsertedCustomer.setAdmin(true);
 
         insertCustomer(notInsertedCustomer);
     }
@@ -201,6 +207,9 @@ public class ReservationDaoImplTest extends AbstractTestNGSpringContextTests {
         secondCustomer.setEmail("hampl@ics.muni.cz");
         secondCustomer.setPhoneNumber(123456789L);
         secondCustomer.setBirthday(LocalDate.of(1990, 3, 25));
+        secondCustomer.setPasswordHash("aa111");
+        secondCustomer.setNickName("bb.bb");
+        secondCustomer.setAdmin(false);
 
         insertCustomer(secondCustomer);
     }

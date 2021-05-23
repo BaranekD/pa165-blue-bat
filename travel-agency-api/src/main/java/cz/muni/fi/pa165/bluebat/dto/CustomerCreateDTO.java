@@ -39,6 +39,12 @@ public class CustomerCreateDTO {
     @Positive
     private Long phoneNumber;
 
+    @NotBlank
+    private String password;
+
+    @NotBlank
+    private String nickName;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

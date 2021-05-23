@@ -3,6 +3,8 @@ package cz.muni.fi.pa165.bluebat.entity;
 import cz.muni.fi.pa165.bluebat.PersistenceTravelAgencyApplicationContext;
 
 import org.junit.jupiter.api.Assertions;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.test.annotation.DirtiesContext;
 import org.springframework.test.context.ContextConfiguration;
 import org.springframework.test.context.testng.AbstractTestNGSpringContextTests;
@@ -47,6 +49,9 @@ public class CustomerTest extends AbstractTestNGSpringContextTests {
         result.setEmail("karel.novak@test.cz");
         result.setPhoneNumber(123456789L);
         result.setBirthday(LocalDate.of(1990, 3, 25));
+        result.setPasswordHash("ab123");
+        result.setNickName("ab.ba");
+        result.setAdmin(true);
 
         return result;
     }

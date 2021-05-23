@@ -5,6 +5,7 @@ import org.springframework.stereotype.Repository;
 import javax.persistence.EntityManager;
 import javax.persistence.PersistenceContext;
 import java.util.List;
+import java.util.Optional;
 
 /**
  * @author : Rudolf Madoran
@@ -39,5 +40,13 @@ public class CustomerDaoImpl implements CustomerDao{
     @Override
     public List<Customer> findAll() {
         return em.createQuery("select e from Customer e", Customer.class).getResultList();
+    }
+
+    @Override
+    public Customer findByNickName(String nickName){
+        Optional<Customer> customerOptimal=em.createQuery("select c from Customer c where nickName=:nickName",Customer.class)
+                .setParameter("nickName",nickName)
+                .getResultStream().findFirst();
+        return customerOptimal.isPresent()?customerOptimal.get():null;
     }
 }

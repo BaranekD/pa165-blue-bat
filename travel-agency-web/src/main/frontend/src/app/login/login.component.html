@@ -13,7 +13,15 @@
       [(state)]="submitState"
       (click)="onClick()"
     ></app-button>
-
   </form>
-
 </div>
+
+<div *ngIf="created">
+  <div class="success">
+    <p class="success-icon">✓</p>
+    <p>
+      Your reservation was successfully created!
+    </p>
+  </div>
+</div>
+

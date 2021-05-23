@@ -42,6 +42,12 @@ public class CustomerDTO {
     @Positive
     private Long phoneNumber;
 
+    @NotBlank
+    private String passwordHash;
+
+    @NotBlank
+    private String nickName;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -56,11 +62,13 @@ public class CustomerDTO {
             return false;
         if (getSurname() != null ? !getSurname().equals(customer.getSurname()) : customer.getSurname() != null)
             return false;
+        if (getNickName() != null ? !getNickName().equals(customer.getSurname()) : customer.getNickName() != null)
+            return false;
         return getPhoneNumber() != null ? getPhoneNumber().equals(customer.getPhoneNumber()) : customer.getPhoneNumber() == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getBirthday(),getName(),getEmail(),getSurname(),getPhoneNumber(),getAddress());
+        return Objects.hash(getBirthday(),getName(),getEmail(),getSurname(),getPhoneNumber(),getAddress(),getNickName());
     }
 }

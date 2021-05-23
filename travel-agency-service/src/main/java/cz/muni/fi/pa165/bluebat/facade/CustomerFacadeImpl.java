@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.bluebat.facade;
 
+import cz.muni.fi.pa165.bluebat.dto.CustomerAuthenticateDTO;
 import cz.muni.fi.pa165.bluebat.dto.CustomerCreateDTO;
 import cz.muni.fi.pa165.bluebat.dto.CustomerDTO;
 import cz.muni.fi.pa165.bluebat.entity.Customer;
@@ -33,7 +34,7 @@ public class CustomerFacadeImpl implements CustomerFacade {
     public CustomerDTO createCustomer(CustomerCreateDTO customerCreateDTO){
         Validator.NotNull(customerCreateDTO,"CustomerCreateDTO");
         Customer customer = beanMappingService.mapTo(customerCreateDTO, Customer.class);
-        customerService.addCustomer(customer);
+        customerService.addCustomer(customer,customerCreateDTO.getPassword());
         return beanMappingService.mapTo(customer, CustomerDTO.class);
     }
 
@@ -66,5 +67,25 @@ public class CustomerFacadeImpl implements CustomerFacade {
     @Override
     public List<CustomerDTO> getAllCustomers() {
         return beanMappingService.mapTo(customerService.findAllCustomers(),CustomerDTO.class);
+    }
+
+    @Override
+    public boolean authenticate(CustomerAuthenticateDTO customerAuthenticateDTO) {
+        return customerService.authenticate(customerAuthenticateDTO.getNickName(),customerAuthenticateDTO.getPassword());
+    }
+
+    @Override
+    public boolean isAdmin(CustomerDTO customerDTO) {
+        return customerService.isAdmin(beanMappingService.mapTo(customerDTO, Customer.class));
+    }
+
+    @Override
+    public CustomerDTO getCustomerByNickName(String nickName){
+        Validator.NotNull(nickName,"Nickname");
+        Customer customer = customerService.findCustomerByNickName(nickName);
+        if (customer == null) {
+            return null;
+        }
+        return beanMappingService.mapTo(customer, CustomerDTO.class);
     }
 }
