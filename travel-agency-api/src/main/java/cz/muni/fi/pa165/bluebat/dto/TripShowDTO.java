@@ -5,6 +5,7 @@ import lombok.Setter;
 
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.Objects;
 
@@ -28,6 +29,8 @@ public class TripShowDTO {
     private LocalDate dateTo;
 
     private String destination;
+
+    private BigDecimal currentPrice;
 
     @Override
     public boolean equals(Object obj) {

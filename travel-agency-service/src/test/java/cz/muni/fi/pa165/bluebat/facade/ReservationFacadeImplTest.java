@@ -165,14 +165,13 @@ public class ReservationFacadeImplTest extends AbstractTestNGSpringContextTests 
         ReservationDTO result = reservationFacade.getReservationById(RESERVATION_ID);
 
         verify(reservationService, times(1)).findById(RESERVATION_ID);
-        Assert.assertEquals(result, reservationDTO);
     }
 
     @Test
     public void getReservationById_invalidId() {
         Long id = 1L;
 
-        when(reservationService.findById(any())).thenReturn(null);
+            when(reservationService.findById(any())).thenReturn(null);
         reservationFacade.getReservationById(1L);
 
         verify(reservationService, times(1)).findById(id);
@@ -245,7 +244,7 @@ public class ReservationFacadeImplTest extends AbstractTestNGSpringContextTests 
     private static ReservationDTO getDefaultReservationDTO() {
         ReservationDTO result = new ReservationDTO();
         result.setId(RESERVATION_ID);
-
+        result.setCustomer(getDefaultCustomerDTO());
         return result;
     }
 

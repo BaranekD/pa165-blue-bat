@@ -62,13 +62,6 @@ public class Trip {
     @OneToMany (mappedBy = "trip")
     private List<Excursion> excursions = new ArrayList<>();
 
-    public List<Excursion> getExcursions() {
-        return Collections.unmodifiableList(excursions);
-    }
-
-    public List<Price> getPrices() {
-        return Collections.unmodifiableList(prices);
-    }
 
     public void addExcursion(Excursion ex){
       excursions.add(ex);

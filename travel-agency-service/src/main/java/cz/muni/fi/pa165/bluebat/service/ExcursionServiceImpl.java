@@ -2,6 +2,7 @@ package cz.muni.fi.pa165.bluebat.service;
 
 import cz.muni.fi.pa165.bluebat.dao.ExcursionDao;
 import cz.muni.fi.pa165.bluebat.entity.Excursion;
+import cz.muni.fi.pa165.bluebat.entity.Price;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
 import cz.muni.fi.pa165.bluebat.exceptions.WrongDataAccessException;
 import cz.muni.fi.pa165.bluebat.utils.Validator;
@@ -9,6 +10,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Tomáš Hampl on 3.3.21.
@@ -31,8 +34,14 @@ public class ExcursionServiceImpl implements ExcursionService {
     public void create(Excursion excursion, Trip trip) {
         Validator.NotNull(excursion, "Excursion");
         try {
+            List<Price> prices = excursion.getPrices();
+            excursion.setPrices(new ArrayList<>());
             excursion.setTrip(trip);
             excursionDao.create(excursion);
+            for (Price price: prices) {
+                priceService.create(price);
+                excursion.addPrice(price);
+            }
         } catch (Exception e) {
             throw new WrongDataAccessException("Excursion dao layer exception", e);
         }

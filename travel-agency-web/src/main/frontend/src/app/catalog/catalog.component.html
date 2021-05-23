@@ -1,8 +1,29 @@
-<p>catalog works!</p>
+<h3>Catalog of Trips</h3>
 
-<!--
-  Tady ten odkaz tě převede na detail tripu, musíš mu nastavit tripId (místo té jedničky dáš to id)
-  pro výpis jednotlivých tripů použij https://angular.io/api/common/NgForOf#local-variables
-  'index as i; first as isFirst' asi nebudeš potřebovat
- -->
-<a routerLink="/trip-detail" routerLinkActive="active" [state]="{ tripId: 1 }">link to detail</a>
+<div class="form">
+  <br />
+
+  <table style="width:100%" class="greyGridTable">
+    <thead>
+    <tr>
+      <th>Name</th>
+      <th>Date from</th>
+      <th>Date to</th>
+      <th>Destination</th>
+      <th>Current price</th>
+      <th>Link</th>
+    </tr>
+    </thead>
+    <tbody>
+    <tr *ngFor="let trip of trips">
+      <td>{{trip.name}}</td>
+      <td>{{trip.dateFrom.toLocaleDateString()}}</td>
+      <td>{{trip.dateTo.toLocaleDateString()}}</td>
+      <td>{{trip.destination}}</td>
+      <td>{{trip.currentPrice}}</td>
+      <td> <a routerLink="/trip-detail" routerLinkActive="active" [state]="{ tripId: trip.id }">link to detail</a></td>
+    </tr>
+    </tbody>
+  </table>
+</div>
+
