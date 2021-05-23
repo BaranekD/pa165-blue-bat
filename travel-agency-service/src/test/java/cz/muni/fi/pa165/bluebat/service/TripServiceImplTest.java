@@ -34,10 +34,13 @@ public class TripServiceImplTest extends AbstractTestNGSpringContextTests {
     @Mock
     private PriceService priceService;
 
+    @Mock
+    private ExcursionService excursionService;
+
     @BeforeMethod
     public void setup() throws ServiceException {
         MockitoAnnotations.openMocks(this);
-        tripService = new TripServiceImpl(tripDao,priceService);
+        tripService = new TripServiceImpl(tripDao,priceService,excursionService);
 
         doNothing().when(tripDao).create(any());
         doNothing().when(tripDao).update(any());

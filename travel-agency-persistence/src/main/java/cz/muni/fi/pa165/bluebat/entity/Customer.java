@@ -3,6 +3,7 @@ package cz.muni.fi.pa165.bluebat.entity;
 import lombok.Getter;
 import lombok.Setter;
 
+import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.Id;
@@ -54,6 +55,16 @@ public class Customer {
     @Positive
     private Long phoneNumber;
 
+    @NotNull
+    private boolean isAdmin;
+
+    @NotBlank
+    @Column(nullable = false, unique = true)
+    private String nickName;
+
+    @NotBlank
+    private String passwordHash;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -68,6 +79,8 @@ public class Customer {
             return false;
         if (getSurname() != null ? !getSurname().equals(customer.getSurname()) : customer.getSurname() != null)
             return false;
+        if (getNickName() != null ? !getNickName().equals(customer.getNickName()) : customer.getNickName() != null)
+            return false;
         return getPhoneNumber() != null ? getPhoneNumber().equals(customer.getPhoneNumber()) : customer.getPhoneNumber() == null;
     }
 
@@ -79,6 +92,7 @@ public class Customer {
         result = 31 * result + (getAddress() != null ? getAddress().hashCode() : 0);
         result = 31 * result + (getSurname() != null ? getSurname().hashCode() : 0);
         result = 31 * result + (getPhoneNumber() != null ? getPhoneNumber().hashCode() : 0);
+        result = 31 * result + (getNickName() != null ? getNickName().hashCode() : 0);
         return result;
     }
 }

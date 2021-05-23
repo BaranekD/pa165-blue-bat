@@ -1,7 +1,9 @@
 package cz.muni.fi.pa165.bluebat.facade;
 
+import cz.muni.fi.pa165.bluebat.dto.CustomerDTO;
 import cz.muni.fi.pa165.bluebat.dto.ReservationCreateDTO;
 import cz.muni.fi.pa165.bluebat.dto.ReservationDTO;
+import cz.muni.fi.pa165.bluebat.dto.TripDTO;
 import cz.muni.fi.pa165.bluebat.entity.Customer;
 import cz.muni.fi.pa165.bluebat.entity.Excursion;
 import cz.muni.fi.pa165.bluebat.entity.Reservation;
