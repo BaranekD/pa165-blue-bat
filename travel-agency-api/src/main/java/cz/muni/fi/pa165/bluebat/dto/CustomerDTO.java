@@ -48,6 +48,12 @@ public class CustomerDTO {
     @NotBlank
     private String nickName;
 
+    private boolean isAdmin;
+
+    public boolean getIsAdmin(){
+        return isAdmin;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;

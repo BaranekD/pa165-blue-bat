@@ -45,6 +45,8 @@ public class CustomerCreateDTO {
     @NotBlank
     private String nickName;
 
+    private boolean isAdmin;
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
