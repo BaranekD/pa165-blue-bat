@@ -25,12 +25,20 @@ export class AuthService {
         this.user.isAuthenticated = result;
         if (this.user.isAuthenticated) {
           this.user.authData = window.btoa(model.nickname + ':' + model.password);
+          this.getIsAdmin();
         }
         onAuth();
       },
       error => {
         onError(error);
     });
+  }
+
+  private getIsAdmin() {
+    this.http.get<boolean>("/pa165/rest/customer/isAdmin").subscribe(
+      result => {
+        this.user.isAdmin = result;
+      });
   }
 
   public logout() {
@@ -41,6 +49,10 @@ export class AuthService {
 
   public IsAuthenticated(): boolean {
     return this.user.isAuthenticated;
+  }
+
+  public IsAdmin(): boolean {
+    return this.user.isAdmin;
   }
 
   public getAuthHeader(): any {
