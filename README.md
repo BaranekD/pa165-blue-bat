@@ -1,5 +1,6 @@
 # Welcome to the REST API for Blue Bat.
 
+command to run - mvn clean package && cd travel-agency-web && mvn cargo:run
 
 
 HEADERS ARE -
