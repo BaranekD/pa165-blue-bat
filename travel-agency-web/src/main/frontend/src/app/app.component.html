@@ -14,7 +14,7 @@
         <a routerLink="/login" routerLinkActive="active" class="menu-item-link">Log in</a>
       </li>
       <li class="menu-item" *ngIf="authService.IsAuthenticated()">
-        <a href="javascript:void(0)" (click)="authService.logout()" class="menu-item-link">Log out</a>
+        <a routerLink="/logout" routerLinkActive="active" class="menu-item-link">Log out</a>
       </li>
     </ul>
   </nav>

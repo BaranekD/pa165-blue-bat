@@ -4,6 +4,7 @@ import { TripDetailComponent } from './trip-detail/trip-detail.component';
 import {ReservationComponent} from "./reservation/reservation.component";
 import {LoginComponent} from "./login/login.component";
 import {CatalogComponent} from "./catalog/catalog.component";
+import {LogoutComponent} from "./logout/logout.component";
 
 const routes: Routes = [
   {
@@ -20,7 +21,12 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    component: LoginComponent },
+    component: LoginComponent
+  },
+  {
+    path: 'logout',
+    component: LogoutComponent
+  },
 ];
 
 @NgModule({
