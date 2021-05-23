@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Positive;
+import java.math.BigDecimal;
 import java.time.Duration;
 import java.time.LocalDate;
 import java.util.ArrayList;
@@ -35,7 +36,7 @@ public class ExcursionDTO {
 
     private String description;
 
-    private List<PriceDTO> prices = new ArrayList<>();
+    private BigDecimal price;
 
     @Override
     public boolean equals(Object o) {
@@ -56,11 +57,11 @@ public class ExcursionDTO {
             return false;
         if (getDescription() != null ? !getDescription().equals(excursion.getDescription()) : excursion.getDescription() != null)
             return false;
-        return getPrices() != null ? getPrices().equals(excursion.getPrices()) : excursion.getPrices() == null;
+        return getPrice() != null ? getPrice().equals(excursion.getPrice()) : excursion.getPrice() == null;
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(getId(), getName(), getDateFrom(), getDuration(), getDestination(), getDescription(), getPrices());
+        return Objects.hash(getId(), getName(), getDateFrom(), getDuration(), getDestination(), getDescription(), getPrice());
     }
 }

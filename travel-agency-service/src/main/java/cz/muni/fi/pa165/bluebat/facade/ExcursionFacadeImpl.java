@@ -7,6 +7,7 @@ import cz.muni.fi.pa165.bluebat.entity.Trip;
 import cz.muni.fi.pa165.bluebat.service.BeanMappingService;
 import cz.muni.fi.pa165.bluebat.service.ExcursionService;
 import cz.muni.fi.pa165.bluebat.service.TripService;
+import cz.muni.fi.pa165.bluebat.utils.PriceUtils;
 import cz.muni.fi.pa165.bluebat.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -63,6 +64,9 @@ public class ExcursionFacadeImpl implements ExcursionFacade {
         if (excursion == null) {
             return null;
         }
-        return beanMappingService.mapTo(excursion, ExcursionDTO.class);
+
+        ExcursionDTO excursionDTO = beanMappingService.mapTo(excursion, ExcursionDTO.class);
+        excursionDTO.setPrice(PriceUtils.getCurrentPrice(excursion.getPrices()));
+        return excursionDTO;
     }
 }
