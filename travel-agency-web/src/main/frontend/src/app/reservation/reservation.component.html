@@ -29,15 +29,6 @@
   </div>
 </div>
 
-<div *ngIf="created">
-  <div class="success">
-    <p class="success-icon">✓</p>
-    <p>
-      Authentication was successful!
-    </p>
-  </div>
-</div>
-
 <app-infobox *ngIf="created" [state]="InfoboxStateEnum.success">
   <p>
     Your reservation was successfully created!

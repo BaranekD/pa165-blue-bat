@@ -9,7 +9,6 @@ import { InfoboxStateEnum } from 'src/models/infobox-state.enum';
   styleUrls: ['./reservation.component.css']
 })
 export class ReservationComponent implements OnInit {
-  ButtonStateEnum = ButtonStateEnum;
   InfoboxStateEnum = InfoboxStateEnum;
   submitState: ButtonStateEnum = ButtonStateEnum.init;
   created: boolean = false;
@@ -23,27 +22,6 @@ export class ReservationComponent implements OnInit {
 
   ngOnInit(): void {
     this.trip = window.history.state.trip;
-
-    // TODO: odebrat
-    this.trip = {
-      id: 1,
-      name: "Trip 123",
-      dateFrom: new Date(),
-      dateTo: new Date(),
-      destination: "",
-      availableTrips: 3,
-      price: 123,
-      excursions: [ {
-        id: 1,
-        name: "Excursion 1",
-        price: 20,
-      }, {
-        id: 2,
-        name: "Excursion 2",
-        price: 30,
-      } ]
-    }
-
     this.price = this.trip.price;
   }
 

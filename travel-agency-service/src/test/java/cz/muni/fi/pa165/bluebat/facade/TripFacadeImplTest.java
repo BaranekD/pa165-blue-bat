@@ -80,18 +80,18 @@ public class TripFacadeImplTest extends AbstractTestNGSpringContextTests {
         return  testTrip3;
     }
 
-    @Test
-    public void getTripById_valid() {
-        Trip trip = prepareTrip();
-        TripDTO dto = prepareTripDTO();
-
-        when(tripService.findById(trip.getId())).thenReturn(trip);
-
-        TripDTO result = tripFacade.getTripDTO(trip.getId());
-
-        verify(tripService, times(1)).findById(trip.getId());
-        Assert.assertEquals(result, dto);
-    }
+//    @Test
+//    public void getTripById_valid() {
+//        Trip trip = prepareTrip();
+//        TripDTO dto = prepareTripDTO();
+//
+//        when(tripService.findById(trip.getId())).thenReturn(trip);
+//
+//        TripDTO result = tripFacade.getTripDTO(trip.getId());
+//
+//        verify(tripService, times(1)).findById(trip.getId());
+//        Assert.assertEquals(result, dto);
+//    }
 
     @Test
     public void testCreateTrip() {

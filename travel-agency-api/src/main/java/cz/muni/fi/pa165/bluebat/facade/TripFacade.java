@@ -37,6 +37,12 @@ public interface TripFacade {
     TripDTO getTripDTO(Long id);
 
     /**
+     * Used for showing Trip from database
+     * @param id is id of Trip for showing
+     */
+    TripShowDTO getTripShowDTO(Long id);
+
+    /**
      * Used for showing striped Trips from database
      */
     List<TripShowDTO> getAllTrips();

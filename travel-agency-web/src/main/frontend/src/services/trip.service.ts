@@ -13,13 +13,12 @@ export class TripService {
   constructor(
     private http: HttpClient,
     private authService: AuthService) { }
-    private http: HttpClient) { }
 
   public findTripById(id: number): Observable<any> {
-    return this.http.get<TripViewModel>("/pa165/rest/main/trips/" + id);
+    return this.http.get<TripViewModel>("/pa165/rest/trips/" + id);
   }
 
   public createTrip(model: TripCreateModel): Observable<any> {
-    return this.http.post("/pa165/rest/main/trips/", model, { headers: this.authService.getAuthHeader() });
+    return this.http.post("/pa165/rest/trips/", model, { headers: this.authService.getAuthHeader() });
   }
 }

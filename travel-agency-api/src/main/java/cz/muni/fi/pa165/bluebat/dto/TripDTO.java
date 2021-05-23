@@ -6,6 +6,7 @@ import lombok.Setter;
 import javax.validation.constraints.Future;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Positive;
+import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.*;
 
@@ -33,7 +34,7 @@ public class TripDTO {
     @Positive
     private Integer availableTrips;
 
-    private List<PriceDTO> prices = new ArrayList<>();
+    private BigDecimal price;
 
     private List<ExcursionDTO> excursions = new ArrayList<>();
 

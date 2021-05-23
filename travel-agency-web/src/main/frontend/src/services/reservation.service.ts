@@ -13,6 +13,6 @@ export class ReservationService {
     private authService: AuthService) { }
 
   public createReservation(model: any): Observable<any> {
-    return this.http.post("/pa165/rest/reservation/create", model, {headers:this.authService.getAuthHeader()});
+    return this.http.post("/pa165/rest/reservations/create", model, {headers:this.authService.getAuthHeader()});
   }
 }
