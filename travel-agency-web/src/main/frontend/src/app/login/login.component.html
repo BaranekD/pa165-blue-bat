@@ -13,6 +13,16 @@
       [(state)]="submitState"
       (click)="onClick()"
     ></app-button>
+    <app-infobox  *ngIf="error" [state]="InfoboxStateEnum.error">
+      <p>
+        {{error.status}}: {{error.message}}
+      </p>
+    </app-infobox>
+    <app-infobox  *ngIf="loginAttempt" [state]="InfoboxStateEnum.error">
+      <p>
+        Invalid nickname or password
+      </p>
+    </app-infobox>
   </form>
 </div>
 
@@ -20,7 +30,7 @@
   <div class="success">
     <p class="success-icon">✓</p>
     <p>
-      Your are successfully logged in!
+      Authentication was successful!
     </p>
   </div>
 </div>
