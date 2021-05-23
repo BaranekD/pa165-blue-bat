@@ -33,17 +33,4 @@ public class ReservationController {
 
         return reservationFacade.getReservationById(id);
     }
-    /*
-    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
-    public int deleteReservation(@PathVariable("id") long id){
-        reservationFacade.deleteReservation(id);
-        return 200;
-    }
-
-
-    @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
-    public void updateReservation(@RequestBody ReservationDTO trip){
-        reservationFacade.updateReservation(trip);
-    }
-    */
 }

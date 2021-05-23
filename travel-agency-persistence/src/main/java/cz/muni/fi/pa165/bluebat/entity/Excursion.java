@@ -63,8 +63,6 @@ public class Excursion {
     @OneToMany
     @OrderBy("validFrom DESC")
     @JoinTable
-    @Getter
-    @Setter
     private List<Price> prices = new ArrayList<>();
 
 

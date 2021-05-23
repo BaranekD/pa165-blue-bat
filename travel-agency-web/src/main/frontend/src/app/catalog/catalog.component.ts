@@ -11,7 +11,6 @@ import {TripShowService} from "../../services/trip-show.service";
   styleUrls: ['./catalog.component.css']
 })
 export class CatalogComponent implements OnInit {
-  stringTrips : string[] = new Array(0);
   trips: { id:number,name:string,dateFrom: Date,dateTo:Date,destination:string,currentPrice:number }[] = new Array(0);
   constructor(public tripShowService: TripShowService) { }
 
@@ -20,8 +19,6 @@ export class CatalogComponent implements OnInit {
 
     this.tripShowService.showTrips().subscribe(
       result => {
-
-
         for(let trip of result){
           this.trips.push({
             id:trip.id,
@@ -32,12 +29,6 @@ export class CatalogComponent implements OnInit {
             currentPrice:trip.currentPrice,
           });
         }
-
-
-        console.log(result)
-        console.log(result.length)
-        console.log(typeof result)
-        console.log(this.trips);
       },
       error => {
         console.log(error);
