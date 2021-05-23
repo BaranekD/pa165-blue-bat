@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.bluebat.service;
 
 import cz.muni.fi.pa165.bluebat.dao.TripDao;
+import cz.muni.fi.pa165.bluebat.entity.Excursion;
 import cz.muni.fi.pa165.bluebat.entity.Price;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
 import cz.muni.fi.pa165.bluebat.exceptions.WrongDataAccessException;
@@ -15,16 +16,19 @@ import java.util.List;
  * @author Ondrej Vaca
  */
 @Service
-public class TripServiceImpl implements TripService{
+public class    TripServiceImpl implements TripService{
 
     private final TripDao tripDao;
 
     private final PriceService priceService;
 
+    private final ExcursionService excursionService;
+
     @Autowired
-    public TripServiceImpl(TripDao tripDao,PriceService priceService) {
+    public TripServiceImpl(TripDao tripDao,PriceService priceService,ExcursionService excursionService) {
         this.tripDao = tripDao;
         this.priceService = priceService;
+        this.excursionService =excursionService;
     }
 
     @Override
@@ -69,7 +73,9 @@ public class TripServiceImpl implements TripService{
     @Override
     public void delete(Trip trip) {
         Validator.NotNull(trip,"Trip");
-
+        for (Excursion excursions:trip.getExcursions()) {
+            excursionService.delete(excursions);
+        }
         try {
             tripDao.delete(trip);
         } catch (Exception ex) {

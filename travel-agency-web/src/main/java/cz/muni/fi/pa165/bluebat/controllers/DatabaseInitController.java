@@ -76,9 +76,9 @@ public class DatabaseInitController {
         return testTrip3;
 
     }
-    private static ExcursionCreateDTO getExcursion(long id){
+    private static ExcursionCreateDTO getExcursion(long id,String name){
         ExcursionCreateDTO result = new ExcursionCreateDTO();
-        result.setName("Test excursion");
+        result.setName(name);
         result.setDateFrom(LocalDate.of(2022, 4, 25));
         result.setDuration(Duration.ofHours(4));
         result.setDestination("Madrid");
@@ -99,7 +99,8 @@ public class DatabaseInitController {
     public int populate(){
         TripDTO tripDTO = tripFacade.createTrip(getTrip());
         customerFacade.createCustomer(getDefaultCustomerCreateDTO());
-        excursionFacade.createExcursion(getExcursion(tripDTO.getId()));
+        excursionFacade.createExcursion(getExcursion(tripDTO.getId(),"To Pyrenes mountains"));
+        excursionFacade.createExcursion(getExcursion(tripDTO.getId(),"to the Gibralatar Rock"));
 
         return 200;
 

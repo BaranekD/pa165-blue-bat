@@ -74,7 +74,7 @@ public class TripFacadeImpl implements TripFacade {
             BigDecimal currentPrice;
             List<Price> prices = trip.getPrices();
             if(prices== null || prices.isEmpty()){
-                currentPrice = new BigDecimal(52L);
+                currentPrice = new BigDecimal(0L);
             } else {
                 currentPrice = PriceUtils.getCurrentPrice(trip.getPrices());
             }

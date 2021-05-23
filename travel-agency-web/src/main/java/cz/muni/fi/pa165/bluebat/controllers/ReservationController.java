@@ -16,31 +16,32 @@ import org.springframework.web.bind.annotation.*;
  **/
 
 @RestController
-@RequestMapping("/main")
+@RequestMapping(ApiUris.ROOT_URI_RESERVATIONS)
 public class ReservationController {
 
     @Autowired
     private ReservationFacade reservationFacade;
 
-    @RequestMapping(value = ApiUris.ROOT_URI_RESERVATIONS+"/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
+    @RequestMapping(value ="/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public void createReservation(@RequestBody ReservationCreateDTO reservationCreateDTO){
         reservationFacade.createReservation(reservationCreateDTO);
     }
 
-    @RequestMapping(value = ApiUris.ROOT_URI_RESERVATIONS+"/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public ReservationDTO getTripByID(@PathVariable("id") long id){
+    @RequestMapping(value ="/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public ReservationDTO getReservationByID(@PathVariable("id") long id){
 
         return reservationFacade.getReservationById(id);
     }
-
-    @RequestMapping(value = ApiUris.ROOT_URI_RESERVATIONS+"/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
+    /*
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE, produces = MediaType.APPLICATION_JSON_VALUE)
     public int deleteReservation(@PathVariable("id") long id){
         reservationFacade.deleteReservation(id);
         return 200;
     }
-    /*
-    @RequestMapping(value = ApiUris.ROOT_URI_RESERVATIONS, method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
+
+
+    @RequestMapping(method = RequestMethod.PUT, produces = MediaType.APPLICATION_JSON_VALUE)
     public void updateReservation(@RequestBody ReservationDTO trip){
         reservationFacade.updateReservation(trip);
     }
