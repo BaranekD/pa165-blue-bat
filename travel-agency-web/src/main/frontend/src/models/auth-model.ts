@@ -1,4 +1,4 @@
 export interface AuthModel {
-  nickname: string;
+  nickName: string;
   password: string;
 }
