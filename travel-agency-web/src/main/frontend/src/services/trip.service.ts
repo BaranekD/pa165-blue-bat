@@ -13,6 +13,7 @@ export class TripService {
   constructor(
     private http: HttpClient,
     private authService: AuthService) { }
+    private http: HttpClient) { }
 
   public findTripById(id: number): Observable<any> {
     return this.http.get<TripViewModel>("/pa165/rest/main/trips/" + id);

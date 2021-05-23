@@ -1,6 +1,35 @@
-<p>trip-detail works with id {{tripId}}!</p>
+<h2> {{ trip.name }} </h2>
 
-<!--
-  Tady předáš trip, který získáš z API, povolit pouze pokud bude uživatel přihlášen
--->
-<a routerLink="reservation" routerLinkActive="active" [state]="{ trip: this.trip }">Reserve</a>
+<div>
+  <table>
+    <tr>
+      <th><b>Destination</b></th>
+      <th>{{ trip.destination }}</th>
+    </tr>
+    <tr>
+      <th><b>From:</b></th>
+      <th>{{ trip.dateFrom.monthValue }}/{{ trip.dateFrom.dayOfMonth }}/{{ trip.dateFrom.year }}</th>
+    </tr>
+    <tr>
+      <th><b>To:</b></th>
+      <th>{{ trip.dateTo.monthValue }}/{{ trip.dateTo.dayOfMonth }}/{{ trip.dateTo.year }}</th>
+    </tr>
+    <tr>
+      <th><b>Basic price:</b></th>
+      <th>TODO</th>
+    </tr>
+    <tr>
+      <th><b>Possible excursions:</b></th>
+      <th>
+        <ul>
+          <li *ngFor="let excursion of trip.excursions">
+            <b>{{ excursion.name }}:</b> {{ excursion.description }}
+          </li>
+        </ul>
+      </th>
+    </tr>
+  </table>
+</div>
+
+<a *ngIf="isAuthenticated" routerLink="reservation" routerLinkActive="active" [state]="{ trip: this.trip }">Reserve</a>
+<p *ngIf="!isAuthenticated">To make a reservation, please log in.</p>
