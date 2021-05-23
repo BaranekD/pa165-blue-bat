@@ -17,6 +17,6 @@ public class CustomerController{
 
     @RequestMapping(value = "/login",method = RequestMethod.POST)
     public boolean login(@RequestBody CustomerAuthenticateDTO customerAuthenticateDTO) {
-        return true;
+        return customerFacade.authenticate(customerAuthenticateDTO);
     }
 }
