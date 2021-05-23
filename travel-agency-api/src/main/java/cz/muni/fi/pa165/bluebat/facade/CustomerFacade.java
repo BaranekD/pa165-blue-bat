@@ -1,5 +1,6 @@
 package cz.muni.fi.pa165.bluebat.facade;
 
+import cz.muni.fi.pa165.bluebat.dto.CustomerAuthenticateDTO;
 import cz.muni.fi.pa165.bluebat.dto.CustomerCreateDTO;
 import cz.muni.fi.pa165.bluebat.dto.CustomerDTO;
 import java.util.List;
@@ -39,4 +40,27 @@ public interface CustomerFacade {
      * @return List of Customer DTOs
      */
     List<CustomerDTO> getAllCustomers();
+
+    /**
+     * Try to authenticate a customer.
+     *
+     * @param  customerAuthenticateDTO CustomerAuthenticateDTO object to authenticate
+     * @return true, on if the customer was authenticated
+     */
+    boolean authenticate(CustomerAuthenticateDTO customerAuthenticateDTO);
+
+    /**
+     * Check if the given customer is admin.
+     *
+     * @param customerDTO CustomerDTO object to test
+     * @return true, only if the customer is administrator.
+     */
+    boolean isAdmin(CustomerDTO customerDTO);
+
+    /**
+     * Find a customer in system
+     * @param nickName String nickName of customer to be found
+     * @return Customer DTO if exists, null otherwise
+     */
+    CustomerDTO getCustomerByNickName(String nickName);
 }

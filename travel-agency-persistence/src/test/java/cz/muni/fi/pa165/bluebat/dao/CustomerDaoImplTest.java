@@ -153,6 +153,9 @@ public class CustomerDaoImplTest extends AbstractTestNGSpringContextTests {
         customer.setEmail("karel.novak@test.cz");
         customer.setPhoneNumber(123456789L);
         customer.setBirthday(LocalDate.of(1990, 3, 25));
+        customer.setPasswordHash("ab123");
+        customer.setNickName("ab.ba");
+        customer.setAdmin(true);
 
         insertCustomer(customer);
     }
@@ -165,6 +168,9 @@ public class CustomerDaoImplTest extends AbstractTestNGSpringContextTests {
         secondCustomer.setEmail("hampl@ics.muni.cz");
         secondCustomer.setPhoneNumber(123456789L);
         secondCustomer.setBirthday(LocalDate.of(1990, 3, 25));
+        secondCustomer.setPasswordHash("aa111");
+        secondCustomer.setNickName("bb.bb");
+        secondCustomer.setAdmin(false);
     }
 
     private void setupNotInsertedCustomer() {
@@ -175,6 +181,9 @@ public class CustomerDaoImplTest extends AbstractTestNGSpringContextTests {
         notInsertedCustomer.setEmail("karel.novak@test.cz");
         notInsertedCustomer.setPhoneNumber(123456789L);
         notInsertedCustomer.setBirthday(LocalDate.of(1990, 3, 25));
+        notInsertedCustomer.setPasswordHash("11aa");
+        notInsertedCustomer.setNickName("cc.cc");
+        notInsertedCustomer.setAdmin(true);
     }
 
     private void insertCustomer(Customer customer) {

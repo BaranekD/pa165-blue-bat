@@ -102,6 +102,9 @@ public class ReservationTest extends AbstractTestNGSpringContextTests {
         customer.setEmail("karel.novak@test.cz");
         customer.setPhoneNumber(123456789L);
         customer.setBirthday(LocalDate.of(1990, 3, 25));
+        customer.setPasswordHash("ab123");
+        customer.setNickName("ab.ba");
+        customer.setAdmin(true);
 
         persistCustomer(customer);
 

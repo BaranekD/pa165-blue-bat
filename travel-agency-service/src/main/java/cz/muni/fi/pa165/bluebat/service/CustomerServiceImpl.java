@@ -5,6 +5,8 @@ import cz.muni.fi.pa165.bluebat.entity.Customer;
 import cz.muni.fi.pa165.bluebat.exceptions.WrongDataAccessException;
 import cz.muni.fi.pa165.bluebat.utils.Validator;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.crypto.argon2.Argon2PasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -19,6 +21,8 @@ import java.util.List;
 public class CustomerServiceImpl implements CustomerService{
 
     private final CustomerDao customerDao;
+
+    private final PasswordEncoder encoder = new Argon2PasswordEncoder();
 
     @Autowired
     public CustomerServiceImpl(CustomerDao customerDao) {
@@ -37,8 +41,10 @@ public class CustomerServiceImpl implements CustomerService{
     }
 
     @Override
-    public void addCustomer(Customer customer) {
+    public void addCustomer(Customer customer,String password) {
         Validator.NotNull(customer,"Customer");
+        Validator.NotNull(password,"Password");
+        customer.setPasswordHash(encoder.encode(password));
         try {
             customerDao.create(customer);
         } catch (Exception ex) {
@@ -59,9 +65,32 @@ public class CustomerServiceImpl implements CustomerService{
         }
 
         Validator.Found(previous, "Customer");
+        customer.setPasswordHash(previous.getPasswordHash());
 
         try {
             customerDao.update(customer);
+        } catch (Exception ex) {
+            throw new WrongDataAccessException("Error while updating a customer", ex);
+        }
+    }
+
+    @Override
+    public void updatePassword(Customer customer,String newPassword){
+        Validator.NotNull(customer,"Customer");
+        Validator.NotNull(newPassword,"Password");
+        Customer previous;
+
+        try {
+            previous = customerDao.findById(customer.getId());
+        } catch (Exception e) {
+            throw new WrongDataAccessException("Customer dao layer exception", e);
+        }
+
+        Validator.Found(previous, "Customer");
+        previous.setPasswordHash(encoder.encode(newPassword));
+
+        try {
+            customerDao.update(previous);
         } catch (Exception ex) {
             throw new WrongDataAccessException("Error while updating a customer", ex);
         }
@@ -86,4 +115,33 @@ public class CustomerServiceImpl implements CustomerService{
             throw new WrongDataAccessException("Error while finding customers", ex);
         }
     }
+
+    @Override
+    public boolean isAdmin(Customer customer) {
+        Validator.NotNull(customer,"Customer");
+        return findCustomerById(customer.getId()).isAdmin();
+    }
+
+    @Override
+    public boolean authenticate(String nickName, String password) {
+        Validator.NotNull(nickName,"Nickname");
+        Validator.NotNull(password,"Password");
+        Customer customer=customerDao.findByNickName(nickName);
+        if(customer==null){
+            return false;
+        }
+        return encoder.matches(password, customer.getPasswordHash());
+    }
+
+    @Override
+    public Customer findCustomerByNickName(String nickName) {
+        Validator.NotNull(nickName, "Nickname");
+
+        try {
+            return customerDao.findByNickName(nickName);
+        } catch (Exception ex) {
+            throw new WrongDataAccessException("Error while finding a customer", ex);
+        }
+    }
+
 }

@@ -48,22 +48,24 @@ public class CustomerServiceImplTest extends AbstractTestNGSpringContextTests {
     @Test
     public void create_valid() {
         Customer customer = getDefaultCustomer();
-        customerService.addCustomer(customer);
+        String password=getPassword();
+        customerService.addCustomer(customer,password);
         verify(customerDao, times(1)).create(customer);
     }
 
     @Test
     public void create_null_IllegalArgumentException() {
         Assertions.assertThrows(IllegalArgumentException.class,
-                () -> customerService.addCustomer(null));
+                () -> customerService.addCustomer(null,null));
     }
 
     @Test
     public void create_DataAccessException() {
         Customer customer = getDefaultCustomer();
+        String password=getPassword();
         doThrow(new IllegalArgumentException()).when(customerDao).create(any());
 
-        Assertions.assertThrows(WrongDataAccessException.class, () -> customerService.addCustomer(customer));
+        Assertions.assertThrows(WrongDataAccessException.class, () -> customerService.addCustomer(customer,password));
     }
 
     @Test
@@ -147,7 +149,7 @@ public class CustomerServiceImplTest extends AbstractTestNGSpringContextTests {
         Assertions.assertThrows(WrongDataAccessException.class, ()-> customerService.findCustomerById(1L));
     }
 
-    @Test
+     @Test
     public void findAllCustomers_valid() {
         Customer first = getDefaultInsertedCustomer();
         Customer second = getDefaultInsertedCustomer();
@@ -195,4 +197,9 @@ public class CustomerServiceImplTest extends AbstractTestNGSpringContextTests {
         result.setId(1L);
         return result;
     }
+
+    private static String getPassword(){
+        return (new String("aa123"));
+    }
+
 }

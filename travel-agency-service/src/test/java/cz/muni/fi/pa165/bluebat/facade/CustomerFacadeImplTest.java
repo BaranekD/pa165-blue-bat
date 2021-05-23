@@ -67,13 +67,13 @@ public class CustomerFacadeImplTest extends AbstractTestNGSpringContextTests {
         doAnswer(invocation -> {
             ((Customer)invocation.getArgument(0)).setId(CUSTOMER_ID);
             return null;
-        }).when(customerService).addCustomer(any());
+        }).when(customerService).addCustomer(any(),any());
     }
 
     @Test
     public void createCustomer_valid() {
         CustomerDTO result=customerFacade.createCustomer(customerCreateDTO);
-        verify(customerService, times(1)).addCustomer(any());
+        verify(customerService, times(1)).addCustomer(any(),any());
         Assert.assertEquals(result,customerDTO);
     }
 
@@ -198,4 +198,5 @@ public class CustomerFacadeImplTest extends AbstractTestNGSpringContextTests {
         customer.setId(CUSTOMER_ID);
         return customer;
     }
+
 }
