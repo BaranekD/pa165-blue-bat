@@ -12,6 +12,7 @@ import { ButtonComponent } from './button/button.component';
 import {ReactiveFormsModule} from "@angular/forms";
 import { InfoboxComponent } from './infobox/infobox.component';
 import { LogoutComponent } from './logout/logout.component';
+import { TripCreateComponent } from './trip-create/trip-create.component';
 
 @NgModule({
   declarations: [
@@ -22,7 +23,8 @@ import { LogoutComponent } from './logout/logout.component';
     TripDetailComponent,
     ButtonComponent,
     InfoboxComponent,
-    LogoutComponent
+    LogoutComponent,
+    TripCreateComponent
   ],
   imports: [
     BrowserModule,
