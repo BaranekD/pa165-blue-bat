@@ -19,6 +19,6 @@ export class TripService {
   }
 
   public createTrip(model: TripCreateModel): Observable<any> {
-    return this.http.post("/pa165/rest/trips/", model, { headers: this.authService.getAuthHeader() });
+    return this.http.post("/pa165/rest/trips/create", model, { headers: this.authService.getAuthHeader() });
   }
 }

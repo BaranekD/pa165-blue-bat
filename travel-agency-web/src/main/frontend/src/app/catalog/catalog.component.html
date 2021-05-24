@@ -1,6 +1,6 @@
 <h3>Catalog of Trips</h3>
 
-<div class="form">
+<div class="catalog">
   <br />
 
   <table style="width:100%" class="greyGridTable">
@@ -26,4 +26,7 @@
     </tbody>
   </table>
 </div>
+
+<a routerLink="/trip-create" routerLinkActive="active" *ngIf="authService.IsAdmin()">Create trip</a>
+
 

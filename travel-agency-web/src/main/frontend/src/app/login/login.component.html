@@ -1,13 +1,19 @@
 <div *ngIf="!created">
   <form
     [formGroup]="loginForm">
-  <input
-    formControlName="username"
-  >
-  <input
-    formControlName="password"
-    type="password"
-  >
+    <p>
+      Nickname:
+      <input
+        formControlName="username"
+      >
+    </p>
+    <p>
+      Password:
+      <input
+        formControlName="password"
+        type="password"
+      >
+    </p>
     <app-button
       label="LOGIN"
       [(state)]="submitState"
@@ -26,11 +32,8 @@
   </form>
 </div>
 
-<div *ngIf="created">
-  <div class="success">
-    <p class="success-icon">✓</p>
-    <p>
-      Authentication was successful!
-    </p>
-  </div>
-</div>
+<app-infobox *ngIf="created" [state]="InfoboxStateEnum.success">
+  <p>
+    Authentication was successful!
+  </p>
+</app-infobox>
