@@ -59,7 +59,7 @@ curl -L -X POST 'localhost:8080/pa165/rest/trips/create' -H 'Accept: application
 PUT - localhost:8080/pa165/rest/trips
 BODY-{"id": number, "name":string,"dateFrom": Date,"dateTo":Date,"destination":string,"availableTrips": positive number,"prices":[]}
 
-TEST - curl -L -X PUT 'localhost:8080/pa165/rest/trips' -H 'Accept: application/json' -H 'Content-Type: application/json' -H 'Authorization: Basic YWRtaW46YWRtaW4=' --data-raw '{   "id":1,
+TEST - curl -L -X PUT 'localhost:8080/pa165/rest/trips' -H 'Accept: application/json' -H 'Content-Type: application/json' -H 'Authorization: Basic YWRtaW46YWRtaW4=' --data-raw '{   "id":2,
 "name": "Yucatan",
 "dateFrom": "2023-05-01",
 "dateTo": "2022-05-15",
@@ -89,4 +89,4 @@ TEST- curl -L -X POST 'localhost:8080/pa165/rest/reservations/create' -H 'Accept
 #Get the reservation  
 GET - localhost:8080/pa165/rest/trips/{id}
 
-TEST - curl -L -X GET 'localhost:8080/pa165/rest/reservations/1' -H 'Accept: application/json' -H 'Content-Type: application/json''
+TEST - curl -L -X GET 'localhost:8080/pa165/rest/reservations/1' -H 'Accept: application/json' -H 'Content-Type: application/json'
