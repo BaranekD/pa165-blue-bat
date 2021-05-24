@@ -29,7 +29,6 @@ export class ReservationComponent implements OnInit {
     this.submitState = ButtonStateEnum.loading;
     this.reservationService.createReservation({
       tripId: this.trip.id,
-      customerId: 1,
       excursionIds: this.excursions
     })
       .subscribe(
