@@ -38,6 +38,12 @@ public class TripController {
         return tripFacade.getTripDTO(id);
     }
 
+    @RequestMapping(value = "/show/{id}", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public TripShowDTO getTripShowByID(@PathVariable("id") long id){
+
+        return tripFacade.getTripShowDTO(id);
+    }
+
     @RequestMapping(value = "/create", method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE,
             produces = MediaType.APPLICATION_JSON_VALUE)
     public void createTrip(@RequestBody TripCreateDTO trip){

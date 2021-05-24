@@ -35,7 +35,7 @@ export class AuthService {
   }
 
   private getIsAdmin() {
-    this.http.get<boolean>("/pa165/rest/customer/isAdmin").subscribe(
+    this.http.get<boolean>("/pa165/rest/customer/isAdmin", { headers: this.getAuthHeader() }).subscribe(
       result => {
         this.user.isAdmin = result;
       });

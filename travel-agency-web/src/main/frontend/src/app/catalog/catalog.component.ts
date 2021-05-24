@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import {TripShowService} from "../../services/trip-show.service";
+import {AuthService} from "../../services/auth.service";
 
 
 
@@ -12,7 +13,9 @@ import {TripShowService} from "../../services/trip-show.service";
 })
 export class CatalogComponent implements OnInit {
   trips: { id:number,name:string,dateFrom: Date,dateTo:Date,destination:string,currentPrice:number }[] = new Array(0);
-  constructor(public tripShowService: TripShowService) { }
+  constructor(
+    public tripShowService: TripShowService,
+    public authService: AuthService) { }
 
 
   ngOnInit(): void {

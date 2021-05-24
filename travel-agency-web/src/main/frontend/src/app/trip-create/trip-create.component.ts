@@ -3,6 +3,8 @@ import {FormArray, FormControl, FormGroup, Validators} from "@angular/forms";
 import {ButtonStateEnum} from "../../models/button-state.enum";
 import {TripService} from "../../services/trip.service";
 import {TripCreateModel} from "../../models/trip-create.model";
+import {Router} from "@angular/router";
+import { InfoboxStateEnum } from 'src/models/infobox-state.enum';
 
 @Component({
   selector: 'app-trip-create',
@@ -10,6 +12,7 @@ import {TripCreateModel} from "../../models/trip-create.model";
   styleUrls: ['./trip-create.component.css']
 })
 export class TripCreateComponent implements OnInit {
+  InfoboxStateEnum = InfoboxStateEnum;
   created: boolean = false;
   attempt: boolean = false;
   submitState: ButtonStateEnum = ButtonStateEnum.init;
@@ -17,7 +20,9 @@ export class TripCreateComponent implements OnInit {
 
   tripForm: FormGroup;
 
-  constructor(private tripService: TripService) {
+  constructor(
+    private router: Router,
+    private tripService: TripService) {
     this.tripForm = new FormGroup({
       name: new FormControl('', Validators.required),
       dateFrom: new FormControl(null, Validators.required),
@@ -32,9 +37,8 @@ export class TripCreateComponent implements OnInit {
   }
 
   onClick(): void {
-    this.attempt = true;
     this.submitState = ButtonStateEnum.loading;
-
+    this.tripForm.controls.prices.updateValueAndValidity();
     if (this.tripForm.valid && this.tripForm.controls.prices.valid) {
       let resultPrices = [];
       for (let price of this.getPrices().controls) {
@@ -57,15 +61,16 @@ export class TripCreateComponent implements OnInit {
       this.tripService.createTrip(result).subscribe(
         () => {
           this.submitState = ButtonStateEnum.success;
-          this.created = true;
+          this.router.navigate(['/']);
         },
         error => {
-          this.submitState = ButtonStateEnum.success;
+          this.submitState = ButtonStateEnum.error;
           this.error = error;
         }
       );
     }
     else {
+      this.attempt = true;
       this.submitState = ButtonStateEnum.error;
     }
   }

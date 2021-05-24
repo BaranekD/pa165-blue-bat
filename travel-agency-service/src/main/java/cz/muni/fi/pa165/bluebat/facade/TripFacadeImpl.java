@@ -1,6 +1,7 @@
 package cz.muni.fi.pa165.bluebat.facade;
 
 import cz.muni.fi.pa165.bluebat.dto.*;
+import cz.muni.fi.pa165.bluebat.entity.Excursion;
 import cz.muni.fi.pa165.bluebat.entity.Price;
 import cz.muni.fi.pa165.bluebat.entity.Trip;
 import cz.muni.fi.pa165.bluebat.service.BeanMappingService;
@@ -64,7 +65,23 @@ public class TripFacadeImpl implements TripFacade {
         Validator.Positive(id, "Trip id");
         Trip found = tripService.findById(id);
         Validator.Found(found,"TripDTO");
-        return beanMappingService.mapTo(found, TripDTO.class);
+
+        TripDTO tripDTO = beanMappingService.mapTo(found, TripDTO.class);
+        tripDTO.setPrice(PriceUtils.getCurrentPrice(found.getPrices()));
+
+        for (int i = 0; i < tripDTO.getExcursions().size(); i++) {
+            tripDTO.getExcursions().get(i).setPrice(PriceUtils.getCurrentPrice(found.getExcursions().get(i).getPrices()));
+        }
+
+        return tripDTO;
+    }
+
+    @Override
+    public TripShowDTO getTripShowDTO(Long id) {
+        Validator.Positive(id, "Trip id");
+        Trip found = tripService.findById(id);
+        Validator.Found(found,"TripDTO");
+        return beanMappingService.mapTo(found, TripShowDTO.class);
     }
 
     @Override
