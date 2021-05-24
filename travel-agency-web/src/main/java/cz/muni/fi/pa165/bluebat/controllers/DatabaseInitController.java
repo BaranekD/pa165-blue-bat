@@ -53,6 +53,23 @@ public class DatabaseInitController {
         result.setPhoneNumber(111111111L);
         result.setNickName("nickname");
         result.setPassword("passowrd");
+        result.setAdmin(false);
+
+        return result;
+    }
+
+    private static CustomerCreateDTO getAdminCustomerDTO() {
+        CustomerCreateDTO result = new CustomerCreateDTO();
+
+        result.setName("Karel");
+        result.setSurname("Omáčka");
+        result.setBirthday(LocalDate.ofYearDay(1970, 1));
+        result.setEmail("karel@omacka.cz");
+        result.setAddress("address");
+        result.setPhoneNumber(111111111L);
+        result.setNickName("admin");
+        result.setPassword("admin");
+        result.setAdmin(true);
 
         return result;
     }
@@ -101,6 +118,7 @@ public class DatabaseInitController {
     public int populate(){
         TripDTO tripDTO = tripFacade.createTrip(getTrip());
         customerFacade.createCustomer(getDefaultCustomerCreateDTO());
+        customerFacade.createCustomer(getAdminCustomerDTO());
         excursionFacade.createExcursion(getExcursion(tripDTO.getId(),"To Pyrenes mountains"));
         excursionFacade.createExcursion(getExcursion(tripDTO.getId(),"to the Gibralatar Rock"));
 

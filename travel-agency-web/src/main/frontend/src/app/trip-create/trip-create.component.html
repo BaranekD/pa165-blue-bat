@@ -56,6 +56,11 @@
         <app-button (click)="addPrice()" label="add price"></app-button>
       </p>
     </div>
+
+    <app-infobox [state]="InfoboxStateEnum.error" *ngIf="attempt">
+      <p>Form is not correctly filled!</p>
+    </app-infobox>
+
     <app-button
       label="CREATE"
       [(state)]="submitState"

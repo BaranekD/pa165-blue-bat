@@ -4,6 +4,8 @@ import cz.muni.fi.pa165.bluebat.dto.CustomerAuthenticateDTO;
 import cz.muni.fi.pa165.bluebat.dto.CustomerDTO;
 import cz.muni.fi.pa165.bluebat.facade.CustomerFacade;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.context.support.WebApplicationContextUtils;
+
 import javax.servlet.Filter;
 import javax.servlet.FilterChain;
 import javax.servlet.FilterConfig;
@@ -17,9 +19,6 @@ import java.util.Base64;
 
 
 public abstract class ProtectFilter implements Filter {
-
-    @Autowired
-    private CustomerFacade customerFacade;
 
     private boolean onlyAdmins;
 
@@ -42,6 +41,7 @@ public abstract class ProtectFilter implements Filter {
         String nickName = creds[0];
         String password = creds[1];
 
+        CustomerFacade customerFacade = WebApplicationContextUtils.getWebApplicationContext(r.getServletContext()).getBean(CustomerFacade.class);
         CustomerDTO matchingCustomer = customerFacade.getCustomerByNickName(nickName);
         if (matchingCustomer == null) {
             response401(response);
