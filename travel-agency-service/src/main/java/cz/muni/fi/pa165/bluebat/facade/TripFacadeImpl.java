@@ -69,8 +69,10 @@ public class TripFacadeImpl implements TripFacade {
         TripDTO tripDTO = beanMappingService.mapTo(found, TripDTO.class);
         tripDTO.setPrice(PriceUtils.getCurrentPrice(found.getPrices()));
 
-        for (int i = 0; i < tripDTO.getExcursions().size(); i++) {
-            tripDTO.getExcursions().get(i).setPrice(PriceUtils.getCurrentPrice(found.getExcursions().get(i).getPrices()));
+        if (tripDTO.getExcursions().size() > 0) {
+            for (int i = 0; i < tripDTO.getExcursions().size(); i++) {
+                tripDTO.getExcursions().get(i).setPrice(PriceUtils.getCurrentPrice(found.getExcursions().get(i).getPrices()));
+            }
         }
 
         return tripDTO;
