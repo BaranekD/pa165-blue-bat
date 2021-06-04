@@ -37,6 +37,7 @@ export class TripCreateComponent implements OnInit {
   }
 
   onClick(): void {
+    this.attempt = true;
     this.submitState = ButtonStateEnum.loading;
     this.tripForm.controls.prices.updateValueAndValidity();
     if (this.tripForm.valid && this.tripForm.controls.prices.valid) {
@@ -91,5 +92,14 @@ export class TripCreateComponent implements OnInit {
 
   getPrices(): FormArray {
     return this.tripForm.controls.prices as FormArray;
+  }
+
+  isFieldInvalid(fieldName: string): boolean {
+    return this.attempt && !(this.tripForm.get(fieldName)?.valid ?? false);
+  }
+
+  isPriceFieldInvalid(index: number, fieldName: string): boolean {
+    let control = this.tripForm.controls.prices as FormArray;
+    return this.attempt && !(control.controls[index].get(fieldName)?.valid ?? false);
   }
 }
