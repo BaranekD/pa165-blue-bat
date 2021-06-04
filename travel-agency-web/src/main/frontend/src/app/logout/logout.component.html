@@ -1,11 +1,11 @@
-<app-infobox [state]="InfoboxStateEnum.success" *ngIf="login">
+<app-button
+  label="log out"
+  (click)="onLogout()"
+  *ngIf="login"
+></app-button>
+
+<app-infobox [state]="InfoboxStateEnum.success" *ngIf="!login">
   <p>
     You have been successfully log out!
-  </p>
-</app-infobox>
-
-<app-infobox [state]="InfoboxStateEnum.error" *ngIf="!login">
-  <p>
-    You have not been log in yet! You can log in <a routerLink="/login" routerLinkActive="active">here</a>
   </p>
 </app-infobox>
