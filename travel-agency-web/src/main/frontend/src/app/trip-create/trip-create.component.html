@@ -99,8 +99,8 @@
       </p>
     </div>
 
-    <app-infobox [state]="InfoboxStateEnum.error" *ngIf="attempt">
-      <p>Form is not correctly filled!</p>
+    <app-infobox [state]="InfoboxStateEnum.error" *ngIf="error">
+      <p>{{error}}</p>
     </app-infobox>
 
     <app-button

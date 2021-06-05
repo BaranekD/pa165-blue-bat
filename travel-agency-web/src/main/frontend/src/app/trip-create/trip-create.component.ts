@@ -71,7 +71,6 @@ export class TripCreateComponent implements OnInit {
       );
     }
     else {
-      this.attempt = true;
       this.submitState = ButtonStateEnum.error;
     }
   }
