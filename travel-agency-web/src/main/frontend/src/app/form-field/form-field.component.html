@@ -1,0 +1,7 @@
+<div class="row">
+  <div class="cell">{{label}}</div>
+  <div class="cell" [ngClass]="{'error-field': invalid}">
+    <ng-content></ng-content>
+    <span *ngIf="invalid">* {{errorMessage}}</span>
+  </div>
+</div>

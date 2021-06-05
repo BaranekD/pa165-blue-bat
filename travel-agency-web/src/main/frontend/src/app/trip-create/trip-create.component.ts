@@ -5,6 +5,7 @@ import {TripService} from "../../services/trip.service";
 import {TripCreateModel} from "../../models/trip-create.model";
 import {Router} from "@angular/router";
 import { InfoboxStateEnum } from 'src/models/infobox-state.enum';
+import {MinDateValidator} from "../../utils/min-date.directive";
 
 @Component({
   selector: 'app-trip-create',
@@ -17,16 +18,23 @@ export class TripCreateComponent implements OnInit {
   attempt: boolean = false;
   submitState: ButtonStateEnum = ButtonStateEnum.init;
   error: any;
+  today: string;
+  todayDate: Date;
 
   tripForm: FormGroup;
 
   constructor(
     private router: Router,
     private tripService: TripService) {
+
+    this.todayDate = new Date();
+    this.todayDate.setHours(0, 0, 0, 0);
+    this.today = (new Date()).toISOString().substring(0, 10);
+
     this.tripForm = new FormGroup({
       name: new FormControl('', Validators.required),
-      dateFrom: new FormControl(null, Validators.required),
-      dateTo: new FormControl(null, Validators.required),
+      dateFrom: new FormControl(null, [Validators.required, MinDateValidator(this.todayDate)]),
+      dateTo: new FormControl(null, [Validators.required, MinDateValidator(this.todayDate)]),
       destination: new FormControl('', Validators.required),
       availableTrips: new FormControl(0, Validators.min(0)),
       prices: new FormArray([])
@@ -37,6 +45,7 @@ export class TripCreateComponent implements OnInit {
   }
 
   onClick(): void {
+    this.attempt = true;
     this.submitState = ButtonStateEnum.loading;
     this.tripForm.controls.prices.updateValueAndValidity();
     if (this.tripForm.valid && this.tripForm.controls.prices.valid) {
@@ -70,7 +79,6 @@ export class TripCreateComponent implements OnInit {
       );
     }
     else {
-      this.attempt = true;
       this.submitState = ButtonStateEnum.error;
     }
   }
@@ -79,7 +87,7 @@ export class TripCreateComponent implements OnInit {
     let control = this.tripForm.controls.prices as FormArray;
     control.controls.push(new FormGroup({
       amount: new FormControl(0, Validators.min(0)),
-      validFrom: new FormControl(null, Validators.required),
+      validFrom: new FormControl(null, [Validators.required, MinDateValidator(this.todayDate)]),
     }));
     console.log(control.controls);
   }
@@ -91,5 +99,14 @@ export class TripCreateComponent implements OnInit {
 
   getPrices(): FormArray {
     return this.tripForm.controls.prices as FormArray;
+  }
+
+  isFieldInvalid(fieldName: string): boolean {
+    return this.attempt && !(this.tripForm.get(fieldName)?.valid ?? false);
+  }
+
+  isPriceFieldInvalid(index: number, fieldName: string): boolean {
+    let control = this.tripForm.controls.prices as FormArray;
+    return this.attempt && !(control.controls[index].get(fieldName)?.valid ?? false);
   }
 }

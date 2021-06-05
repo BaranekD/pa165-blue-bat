@@ -13,6 +13,7 @@ import {ReactiveFormsModule} from "@angular/forms";
 import { InfoboxComponent } from './infobox/infobox.component';
 import { LogoutComponent } from './logout/logout.component';
 import { TripCreateComponent } from './trip-create/trip-create.component';
+import { FormFieldComponent } from './form-field/form-field.component';
 
 @NgModule({
   declarations: [
@@ -24,7 +25,8 @@ import { TripCreateComponent } from './trip-create/trip-create.component';
     ButtonComponent,
     InfoboxComponent,
     LogoutComponent,
-    TripCreateComponent
+    TripCreateComponent,
+    FormFieldComponent
   ],
   imports: [
     BrowserModule,

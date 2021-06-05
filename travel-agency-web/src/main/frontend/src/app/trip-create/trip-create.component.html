@@ -1,53 +1,100 @@
 <div *ngIf="!created">
+  <h3>Create trip</h3>
+
   <form
     [formGroup]="tripForm">
-    <p>
-      Name:
+
+    <app-form-field
+      label="Name"
+      errorMessage="Field is mandatory"
+      [invalid]="isFieldInvalid('name')"
+    >
       <input
         formControlName="name"
+        class="inp-fix"
       >
-    </p>
-    <p>
-      Date from:
+    </app-form-field>
+
+    <app-form-field
+      label="Date from"
+      errorMessage="Date must be in the future"
+      [invalid]="isFieldInvalid('dateFrom')"
+    >
       <input
         formControlName="dateFrom"
         type="date"
+        [min]="today"
+        class="inp-fix"
       >
-    </p>
-    <p>
-      Date to:
+    </app-form-field>
+
+    <app-form-field
+      label="Date to"
+      errorMessage="Date must be in the future"
+      [invalid]="isFieldInvalid('dateTo')"
+    >
       <input
         formControlName="dateTo"
         type="date"
+        [min]="today"
+        class="inp-fix"
       >
-    </p>
-    <p>
-      Destination:
+    </app-form-field>
+
+    <app-form-field
+      label="Destination"
+      errorMessage="Field is mandatory"
+      [invalid]="isFieldInvalid('destination')"
+    >
       <input
         formControlName="destination"
+        class="inp-fix"
       >
-    </p>
-    <p>
-      Available trips:
+    </app-form-field>
+
+    <app-form-field
+      label="Available trips"
+      errorMessage="Must be greater than 0"
+      [invalid]="isFieldInvalid('availableTrips')"
+    >
       <input
         formControlName="availableTrips"
         type="number"
+        class="inp-fix"
       >
-    </p>
-    <div formArrayName="prices">
-      Prices:
+    </app-form-field>
+
+    <div formArrayName="prices" class="row">
+      <h4>
+        Prices:
+      </h4>
       <div *ngFor="let x of this.getPrices().controls; let i = index" class="price">
         <div [formGroupName]="i">
-          Amount:
-          <input
-            formControlName="amount"
-            type="number"
+          <app-form-field
+            label="Amount"
+            errorMessage="Must be greater than 0"
+            [invalid]="isPriceFieldInvalid(i, 'amount')"
           >
-          Valid from:
-          <input
-            formControlName="validFrom"
-            type="date"
+            <input
+              formControlName="amount"
+              type="number"
+              class="inp-fix"
+            >
+          </app-form-field>
+
+          <app-form-field
+            label="Valid from"
+            errorMessage="Date must be in the future"
+            [invalid]="isPriceFieldInvalid(i, 'validFrom')"
           >
+            <input
+              formControlName="validFrom"
+              type="date"
+              [min]="today"
+              class="inp-fix"
+            >
+          </app-form-field>
+
           <app-button (click)="removePrice(i)" label="✗" class="add-price">
           </app-button>
         </div>
@@ -57,8 +104,8 @@
       </p>
     </div>
 
-    <app-infobox [state]="InfoboxStateEnum.error" *ngIf="attempt">
-      <p>Form is not correctly filled!</p>
+    <app-infobox [state]="InfoboxStateEnum.error" *ngIf="error">
+      <p>{{error}}</p>
     </app-infobox>
 
     <app-button
