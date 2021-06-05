@@ -1,4 +1,25 @@
 /* You can add global styles to this file, and also import other style files */
+@media all and (min-width: 769px) {
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
+
+  .cell {
+    float: left;
+    width: 50%;
+  }
+}
+
+.row {
+  margin-bottom: 15px;
+  max-width: 400px;
+}
+
+.row .row {
+  width: 100%;
+}
 
 .inp-fix {
   width: 100%;

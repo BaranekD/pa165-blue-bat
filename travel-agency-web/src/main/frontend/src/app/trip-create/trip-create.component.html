@@ -1,4 +1,6 @@
 <div *ngIf="!created">
+  <h3>Create trip</h3>
+
   <form
     [formGroup]="tripForm">
 
@@ -15,24 +17,26 @@
 
     <app-form-field
       label="Date from"
-      errorMessage="Field is mandatory"
+      errorMessage="Date must be in the future"
       [invalid]="isFieldInvalid('dateFrom')"
     >
       <input
         formControlName="dateFrom"
         type="date"
+        [min]="today"
         class="inp-fix"
       >
     </app-form-field>
 
     <app-form-field
       label="Date to"
-      errorMessage="Field is mandatory"
+      errorMessage="Date must be in the future"
       [invalid]="isFieldInvalid('dateTo')"
     >
       <input
         formControlName="dateTo"
         type="date"
+        [min]="today"
         class="inp-fix"
       >
     </app-form-field>
@@ -60,10 +64,10 @@
       >
     </app-form-field>
 
-    <div formArrayName="prices">
-      <p>
+    <div formArrayName="prices" class="row">
+      <h4>
         Prices:
-      </p>
+      </h4>
       <div *ngFor="let x of this.getPrices().controls; let i = index" class="price">
         <div [formGroupName]="i">
           <app-form-field
@@ -80,12 +84,13 @@
 
           <app-form-field
             label="Valid from"
-            errorMessage="Field is mandatory"
+            errorMessage="Date must be in the future"
             [invalid]="isPriceFieldInvalid(i, 'validFrom')"
           >
             <input
               formControlName="validFrom"
               type="date"
+              [min]="today"
               class="inp-fix"
             >
           </app-form-field>
